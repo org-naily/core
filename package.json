@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm -F @naily/core dev"
+    "dev": "pnpm -F @naily/core dev",
+    "dev:test": "pnpm -F @naily/test dev",
+    "build:core": "pnpm -F @naily/core build",
+    "build:express": "pnpm -F @naily/adapter-express build"
   },
   "keywords": [],
   "author": "",

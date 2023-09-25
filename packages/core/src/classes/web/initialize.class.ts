@@ -32,7 +32,11 @@ export class InitializeMethod {
         method: method,
         path: this.getPath(this.path, singleMethodPath),
         request: (req) => req,
-        response: this.singleMethod(),
+        response: this.singleMethod.call(this.object),
+        params: {},
+        query: {},
+        body: {},
+        ip: "",
       },
       {
         getInstance: () => this.target,

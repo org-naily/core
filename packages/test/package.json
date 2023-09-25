@@ -1,0 +1,15 @@
+{
+  "name": "@naily/test",
+  "private": true,
+  "scripts": {
+    "dev": "tsc && node dist/main.js",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@naily/core": "workspace:^",
+    "@naily/adapter-express": "workspace:^"
+  }
+}

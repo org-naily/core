@@ -1,0 +1,13 @@
+typeorm:
+  username: naily
+  password: 14789632
+  database: naily
+  host: localhost:3306
+  type: mysql
+  app: 
+    host: localhost:3000
+    ast: 
+      saaa: 1
+      sss: true
+str: 
+  test: str

@@ -1,0 +1,1 @@
+declare global{type NailyConfig="typeorm.username"|"typeorm.password"|"typeorm.database"|"typeorm.host"|"typeorm.type"|"typeorm.app.host"|"typeorm.app.ast.saaa"|"typeorm.app.ast.sss"|"str.test"} export {};
