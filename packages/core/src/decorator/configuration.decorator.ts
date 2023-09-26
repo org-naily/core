@@ -2,7 +2,7 @@
  * @Author: Zero的Mac 1203970284@qq.com
  * @Date: 2023-09-25 00:04:54
  * @LastEditors: Zero的Mac 1203970284@qq.com
- * @LastEditTime: 2023-09-26 00:22:54
+ * @LastEditTime: 2023-09-26 08:56:26
  * @FilePath: /v5/packages/core/src/decorator/configuration.decorator.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -22,13 +22,13 @@ namespace ConfigurationNamespace {
     return Reflect.ownKeys(target.prototype).filter((item) => (item === "constructor" ? undefined : item));
   }
 
-  function initializeValue(ControllerAdapter: Type<NailyControllerAdapter>, adapter: NailyControllerAdapter) {
+  function initializeValue() {
     injectableContainer.forEach(({ object }, index) => {
       const valueKeys: { key: string; propertyKey: string | symbol }[] = Reflect.getMetadata(VALUE_WATERMARK, object);
       if (!valueKeys) return;
-      valueKeys.forEach((item) => {
-        const value = PropertiesParser.getPropertiesValue(item.key);
-        injectableContainer[index].object[item.propertyKey] = value;
+      valueKeys.forEach(({ key, propertyKey }) => {
+        const value = PropertiesParser.getPropertiesValue(key);
+        injectableContainer[index].object[propertyKey] = value;
       });
     });
   }
@@ -57,6 +57,14 @@ namespace ConfigurationNamespace {
           .initTrace()
           .initAll();
       });
+    });
+  }
+
+  function initializeMounted() {
+    injectableContainer.forEach(({ object }, index) => {
+      if (object.handleMounted) {
+        object.handleMounted();
+      }
     });
   }
 
@@ -98,10 +106,12 @@ namespace ConfigurationNamespace {
       if (configuration.controllerAdapter) {
         const adapterNewed = new configuration.controllerAdapter();
         // 1: 加载配置文件
-        initializeValue(configuration.controllerAdapter, adapterNewed);
+        initializeValue();
         // 2: 加载web适配器
         initializeWeb(configuration.controllerAdapter, adapterNewed);
         adapterNewed.listenerIntercept(port);
+        // 3: 调用mounted钩子
+        initializeMounted();
       }
     };
   }

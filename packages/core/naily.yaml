@@ -9,5 +9,7 @@ typeorm:
     ast: 
       saaa: aaa
       sss: true
+      ssp:
+        app: str
 str: 
   test: str
