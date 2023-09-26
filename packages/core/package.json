@@ -1,0 +1,7 @@
+{
+  "name": "@naily/core",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  }
+}

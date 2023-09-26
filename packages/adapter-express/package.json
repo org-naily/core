@@ -1,0 +1,7 @@
+{
+  "name": "@naily/adapter-express",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  }
+}

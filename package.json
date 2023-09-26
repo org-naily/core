@@ -1,0 +1,19 @@
+{
+  "name": "naily",
+  "version": "6.0.0",
+  "description": "A web based framework for node.js",
+  "scripts": {
+    "dev": "pnpm -F @naily/core-test run dev",
+    "build:core": "pnpm -F @naily/core run build",
+    "build:express": "pnpm -F @naily/adapter-express run build",
+    "build:web": "pnpm -F @naily/adapter-web run build"
+  },
+  "keywords": [],
+  "author": "Zero <gczgroup@qq.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^20.7.0",
+    "reflect-metadata": "^0.1.13",
+    "typescript": "^5.2.2"
+  }
+}

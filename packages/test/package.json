@@ -1,0 +1,10 @@
+{
+  "name": "@naily/core-test",
+  "private": true,
+  "scripts": {
+    "dev": "tsc && node dist/main.js"
+  },
+  "dependencies": {
+    "@naily/core": "workspace:^"
+  }
+}
