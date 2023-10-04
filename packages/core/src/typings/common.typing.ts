@@ -1,15 +1,3 @@
-export interface Type<T = any, P = any> extends Function {
-  new (...args: P[]): T;
-}
-
-export interface RxType<T = any> extends Function {
-  new (): T;
-}
-
-export interface ObType<T = any> extends Function {
-  new (...args: object[]): T;
-}
-
 export interface NailyLifeCircle {
   /**
    * [ZH] handleInit生命周期
@@ -70,7 +58,8 @@ export interface NailyLifeCircle {
 
 export interface INailyApplication {
   /**
-   * 排除文件路径
+   * [ZH] 排除文件路径
+   * [EN] Exclude file path
    *
    * @author Zero <gczgroup@qq.com>
    * @date 2023/10/04
@@ -80,7 +69,8 @@ export interface INailyApplication {
   exclude: string[];
 
   /**
-   * 扫描的文件夹 支持glob路径
+   * [ZH] 扫描的文件夹 支持glob路径
+   * [EN] Scanned folder supports glob path
    *
    * @author Zero <gczgroup@qq.com>
    * @date 2023/10/04
