@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "sourceMap": true,
+    "declaration": true,
+    "outDir": "dist",
+    "module": "CommonJS",
+    "target": "ES6",
+    "rootDir": "./"
+  },
+  "include": ["src", "./node_modules/@naily/build/**/*.ts"]
+}

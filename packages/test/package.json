@@ -1,0 +1,12 @@
+{
+  "name": "test",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc && node dist/src/main",
+    "generate": "tsc && node dist/src/main.spec"
+  },
+  "dependencies": {
+    "@naily/core": "workspace:*"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "@naily/core",
+  "version": "7.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "Zero <gczgroup@qq.com>",
+  "license": "MIT",
+  "dependencies": {
+    "glob": "^10.3.10",
+    "is-class": "^0.0.9",
+    "md5": "2.3.0",
+    "@types/md5": "2.3.3"
+  }
+}
