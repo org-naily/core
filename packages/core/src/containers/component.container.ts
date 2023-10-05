@@ -1,3 +1,4 @@
+import { InitializeTool } from "../classes/initialize.class";
 import { WATERMARK } from "../constants/watermark.constant";
 import { Type, NailyLifeCircle, RxType } from "../typings";
 import { ContainerImpl, IRxContainer, IRxContainerBase } from "../typings/container.typing";
@@ -21,31 +22,13 @@ export class ComponentContainer implements ContainerImpl {
     return ComponentContainer.componentContainer[key];
   }
 
-  private signInjectable(id: string, metadata: IComponent, name: string) {
+  private signInjectable(id: string, metadata: IComponent, componentName: string) {
     if (!metadata.providers) return;
+    // 给当前组件的所有依赖注入的类添加组件ID标记
     metadata.providers.forEach((provider) => {
       Reflect.defineMetadata(WATERMARK.COMPONENT_ID, id, provider);
     });
-
-    InjectableContainer.forEach((provider) => {
-      // 获取到当前组件的组件ID
-      const componentID = Reflect.getMetadata(WATERMARK.COMPONENT_ID, provider.target);
-      // 如果当前组件ID不存在，则不进行检验
-      if (!componentID) return;
-      // 获取到当前组件的所有属性
-      const propertyKeys = CheckerUtils.getPropertyKey(provider.target);
-      // 遍历所有属性
-      propertyKeys.forEach((propertyKey) => {
-        // 获取到当前属性的注入信息
-        const injectMetadata = Reflect.getMetadata(WATERMARK.INJECT, provider.newed, propertyKey);
-        // 如果当前属性没有注入信息，则不进行检验
-        if (!injectMetadata) return;
-        // 获取到当前属性的已经注入的类
-        const propertyClass = provider.target.prototype[propertyKey];
-        const propertyClassComponentID = Reflect.getMetadata(WATERMARK.COMPONENT_ID, propertyClass);
-        if (!propertyClassComponentID || propertyClassComponentID !== id) throw new Error(`${propertyClass.name} is not in ${name} component.`);
-      });
-    });
+    InitializeTool.initComponentCheck(id, componentName);
   }
 
   public create(target: RxType<NailyLifeCircle>): void {

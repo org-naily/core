@@ -3,8 +3,7 @@ import { RootService } from "./root.service";
 
 @Controller()
 export class RootController implements NailyLifeCircle {
-  @Autowired
-  private readonly rootService: RootService;
+  constructor(private readonly rootService: RootService) {}
 
   @Value()
   private readonly typeorm: string;

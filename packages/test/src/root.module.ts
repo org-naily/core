@@ -5,4 +5,4 @@ import { RootController } from "./root.controller";
 @Component({
   providers: [RootController, RootService],
 })
-export class MainModule {}
+export class RootModule {}
