@@ -1,6 +1,6 @@
 import { Injectable } from "@naily/core";
 
-@Injectable
+@Injectable()
 export class RootService {
   app = 2;
 }

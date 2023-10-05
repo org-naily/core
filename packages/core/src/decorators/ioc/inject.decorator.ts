@@ -3,7 +3,9 @@ import { Type } from "../../typings";
 import { WATERMARK } from "../../constants/watermark.constant";
 
 /**
- * Inject a injectable class
+ * [ZH] 根据类型注入
+ *
+ * [EN] Inject a injectable class
  *
  * @author Zero <gczgroup@qq.com>
  * @date 2023/10/04
@@ -20,7 +22,9 @@ export function Resource<T extends Type>(value: T): PropertyDecorator {
 }
 
 /**
- * Auto inject a injectable class
+ * [ZH] 根据类型注入
+ *
+ * [EN] Auto inject a injectable class
  *
  * @author Zero <gczgroup@qq.com>
  * @date 2023/10/04

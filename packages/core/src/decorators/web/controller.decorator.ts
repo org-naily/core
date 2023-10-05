@@ -4,7 +4,7 @@ import { Injectable } from "../ioc/injectable.decorator";
 
 export function Controller(path = "/") {
   return (target: Type) => {
-    Injectable(target);
+    Injectable()(target);
     Reflect.defineMetadata(WATERMARK.CONTROLLER, path, target);
   };
 }

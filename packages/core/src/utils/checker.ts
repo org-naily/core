@@ -1,5 +1,6 @@
 import { Type } from "../typings";
 import { WATERMARK } from "../constants/watermark.constant";
+import { InjectableContainer } from "../containers/injectable.container";
 
 export class CheckerUtils {
   /**

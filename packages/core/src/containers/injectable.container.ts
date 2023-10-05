@@ -8,31 +8,18 @@ import { InitializeTool } from "../classes/initialize.class";
 export class InjectableContainer implements ContainerImpl {
   private static readonly injectableContainer: IContainer = {};
 
-  public getAll(): IContainer {
+  public static getAll(): IContainer {
     return InjectableContainer.injectableContainer;
   }
 
-  public forEach(callback: (item: IContainerBase, index: string) => void): void {
+  public static forEach(callback: (item: IContainerBase, index: string) => void): void {
     for (const item in InjectableContainer.injectableContainer) {
       callback(InjectableContainer.injectableContainer[item], item);
     }
   }
 
-  public getOneByKey(key: string): IContainerBase {
+  public static getOneByKey(key: string): IContainerBase {
     return InjectableContainer.injectableContainer[key];
-  }
-
-  private initParameter(target: Type) {
-    const paramMetadata: Type[] = Reflect.getMetadata("design:paramtypes", target) || [];
-    const param: object[] = [];
-    paramMetadata.forEach((item) => {
-      const paramInjectableKey = CheckerUtils.getInjectableKey(item);
-      if (!isClass(item) || !paramInjectableKey) {
-        throw new Error(`${item.name} is not a @Injectable class. Please check ${target.name}'s parameter`);
-      }
-      param.push(this.getOneByKey(paramInjectableKey).newed);
-    });
-    return param;
   }
 
   public create(target: Type<NailyLifeCircle>): void {
@@ -48,6 +35,8 @@ export class InjectableContainer implements ContainerImpl {
     if (newed.handleInit) newed.handleInit();
     // 使用装载工具装载@Inject和@Autowried
     initializeTool.initResource(target, newed);
+    // 装载配置文件
+    initializeTool.initValue(target, newed);
     // 装载到容器
     InjectableContainer.injectableContainer[injectableKey] = {
       target: target,

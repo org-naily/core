@@ -31,7 +31,6 @@ export interface NailyLifeCircle {
    */
   handleMount?(): void;
 }
-
 export interface INailyApplication {
   /**
    * [ZH] 排除文件路径
