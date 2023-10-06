@@ -1,8 +1,8 @@
 import { INailyApplication, Type } from "../../typings";
-import { scanDependency } from "../../vendors";
+import { NailyDependency } from "../../vendors";
 
 export function NailyApplication(configure: INailyApplication) {
   return (target: Type) => {
-    scanDependency(configure.scan, configure.exclude);
+    NailyDependency.addDependencyByGlob(configure.scan, configure.exclude).save("核心包扫描完成");
   };
 }

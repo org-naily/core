@@ -1,0 +1,11 @@
+{
+  "name": "@naily/web-express",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@naily/core": "workspace:*",
+    "@naily/web": "workspace:*"
+  }
+}

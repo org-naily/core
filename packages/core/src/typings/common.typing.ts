@@ -34,6 +34,7 @@ export interface NailyLifeCircle {
 export interface INailyApplication {
   /**
    * [ZH] 排除文件路径
+   *
    * [EN] Exclude file path
    *
    * @author Zero <gczgroup@qq.com>
@@ -45,6 +46,7 @@ export interface INailyApplication {
 
   /**
    * [ZH] 扫描的文件夹 支持glob路径
+   *
    * [EN] Scanned folder supports glob path
    *
    * @author Zero <gczgroup@qq.com>

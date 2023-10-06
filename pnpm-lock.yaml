@@ -47,10 +47,31 @@ importers:
       '@naily/core':
         specifier: workspace:*
         version: link:../core
+      '@naily/web':
+        specifier: workspace:*
+        version: link:../web
+      '@naily/web-express':
+        specifier: workspace:*
+        version: link:../web-express
     devDependencies:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
+
+  packages/web:
+    dependencies:
+      '@naily/core':
+        specifier: workspace:*
+        version: link:../core
+
+  packages/web-express:
+    dependencies:
+      '@naily/core':
+        specifier: workspace:*
+        version: link:../core
+      '@naily/web':
+        specifier: workspace:*
+        version: link:../web
 
 packages:
 

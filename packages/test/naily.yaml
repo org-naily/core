@@ -1,1 +1,2 @@
-typeorm: "aaa"
+web:
+  adapter: "@naily/web-express"

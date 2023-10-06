@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "build:core": "pnpm -F @naily/core build",
+    "build:web": "pnpm -F @naily/web build",
+    "build:express": "pnpm -F @naily/web-express build",
     "build:test": "pnpm -F test build",
     "dev": "pnpm -F test dev",
     "generate": "pnpm -F test generate",
-    "prepare": "pnpm build:core && pnpm -F test generate"
+    "prepare": "pnpm build:core; pnpm build:web; pnpm build:express; pnpm -F test generate"
   },
   "dependencies": {
     "@types/node": "^20.8.2",

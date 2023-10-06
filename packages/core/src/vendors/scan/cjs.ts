@@ -1,23 +1,44 @@
 import { sync } from "glob";
 import { join } from "path";
 import { rewriteFile } from "./rewrite";
+import { readFileSync } from "fs";
 
-export function scanDependency(scan: string, exclude: string[]) {
-  const paths = sync(scan).filter((item) => {
-    for (let i = 0; i < exclude.length; i++) {
-      if (item.includes(exclude[i])) {
-        return undefined;
+class NailyDependencyClass {
+  private path = join(process.cwd(), "node_modules/@naily/build/index.ts");
+  private content = ``;
+
+  addDependencyByGlob(scan: string, exclude: string[]): this {
+    const paths = sync(scan).filter((item) => {
+      for (let i = 0; i < exclude.length; i++) {
+        if (item.includes(exclude[i])) {
+          return undefined;
+        }
       }
-    }
-    return item;
-  });
+      return item;
+    });
 
-  let content = ``;
-  paths.forEach((item) => {
-    const splitPath = item.replace(`${process.cwd()}/`, "").replace(/.ts$/, "");
+    paths.forEach((item) => {
+      this.addDependencyByAbsolutePath(item);
+    });
+
+    return this;
+  }
+
+  addDependencyByAbsolutePath(path: string): this {
+    const splitPath = path.replace(`${process.cwd()}/`, "").replace(/.ts$/, "");
     const realPath = join("..", "..", "..", splitPath);
-    content = content + `import "${realPath}";`;
-  });
+    this.content = this.content + `import "${realPath}";`;
+    return this;
+  }
 
-  rewriteFile(join(process.cwd(), "node_modules/@naily/build/index.ts"), content);
+  addDependencyByRelativePath(path: string): this {
+    this.content = this.content + `import "${path}";`;
+    return this;
+  }
+
+  save(message?: string): void {
+    rewriteFile(this.path, this.content, message);
+  }
 }
+
+export const NailyDependency = new NailyDependencyClass();

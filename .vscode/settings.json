@@ -1,4 +1,16 @@
 {
   "material-icon-theme.activeIconPack": "nest",
-  "yaml.schemas": {}
+  "yaml.schemas": {
+    ".vscode/schemas/naily.schema.json": ["naily.*.yaml", "naily.yaml"]
+  },
+  "material-icon-theme.files.associations": {
+    "*.container.ts": "nest-controller",
+    "*.typing.ts": "typescript-def",
+    "*.constant.ts": "nest-pipe",
+    "*.class.ts": "nest-module"
+  },
+  "material-icon-theme.folders.associations": {
+    "ioc": "container",
+    "bootstrap": "lib"
+  }
 }

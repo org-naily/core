@@ -2,8 +2,6 @@ import { InitializeTool } from "../classes/initialize.class";
 import { WATERMARK } from "../constants/watermark.constant";
 import { Type, NailyLifeCircle, RxType } from "../typings";
 import { ContainerImpl, IRxContainer, IRxContainerBase } from "../typings/container.typing";
-import { CheckerUtils } from "../utils";
-import { InjectableContainer } from "./injectable.container";
 
 export class ComponentContainer implements ContainerImpl {
   private static readonly componentContainer: IRxContainer = {};

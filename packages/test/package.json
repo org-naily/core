@@ -7,7 +7,9 @@
     "generate": "tsc && node dist/src/main.spec"
   },
   "dependencies": {
-    "@naily/core": "workspace:*"
+    "@naily/core": "workspace:*",
+    "@naily/web": "workspace:*",
+    "@naily/web-express": "workspace:*"
   },
   "devDependencies": {
     "cross-env": "^7.0.3"

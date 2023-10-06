@@ -1,4 +1,4 @@
-import { Component } from "@naily/core";
+import { Component, Type } from "@naily/core";
 import { RootService } from "./root.service";
 import { RootController } from "./root.controller";
 

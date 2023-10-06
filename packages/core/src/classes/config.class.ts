@@ -1,6 +1,7 @@
 import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 import { parse } from "yaml";
+import * as jexl from "jexl";
 
 export class ConfigurationTool {
   public getEnvironment() {
@@ -20,5 +21,10 @@ export class ConfigurationTool {
     } else {
       throw new Error(`naily.yaml is not found in ${process.cwd()}. Please created it.`);
     }
+  }
+
+  public getNailyConfigurationByJexl(expression: string) {
+    const res = this.getNailyConfiguration();
+    return jexl.evalSync(expression, res);
   }
 }

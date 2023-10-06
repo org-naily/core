@@ -2,7 +2,7 @@ import { dirname } from "path";
 import { mkdir, writeFile } from "fs";
 
 // 定义一个函数，根据路径重写某个文件
-export function rewriteFile(filePath: string, content: string) {
+export function rewriteFile(filePath: string, content: string, message?: string) {
   return new Promise<true>((res, rej) => {
     // 使用path.dirname方法，获取文件所在的文件夹路径
     const dirPath = dirname(filePath);
@@ -21,7 +21,7 @@ export function rewriteFile(filePath: string, content: string) {
             rej(err);
           } else {
             // 否则，打印成功信息
-            console.log("扫描已完成");
+            if (message) console.log(message);
             res(true);
           }
         });

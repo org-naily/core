@@ -1,0 +1,17 @@
+{
+  "title": "[ZH] Naily Web包配置 \n [EN] Naily Web Configuration",
+  "required": ["web"],
+  "properties": {
+    "web": {
+      "type": "object",
+      "required": ["adapter"],
+      "description": "[ZH] Naily Web配置 \n [EN] Naily Web Configuration",
+      "properties": {
+        "adapter": {
+          "type": "string",
+          "description": "[ZH] Naily Web适配器设置 \n [EN] Naily Web Adapter Setting"
+        }
+      }
+    }
+  }
+}
