@@ -4,7 +4,7 @@ import * as express from "express";
 
 @Configuration
 export class ExpressConfiguation implements NailyLifeCircle {
-  @Value("web.express.port")
+  @Value("web.options.port")
   public readonly port: number;
 
   private app: Express;
@@ -14,6 +14,8 @@ export class ExpressConfiguation implements NailyLifeCircle {
   }
 
   handleMount(): void {
-    this.app.listen(this.port);
+    this.app.listen(this.port, () => {
+      console.log(`Server is running on port ${this.port}`);
+    });
   }
 }

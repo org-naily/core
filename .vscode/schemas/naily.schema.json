@@ -2,7 +2,7 @@
   "title": "Naily V7 Schema",
   "allOf": [
     {
-      "$ref": "./common/web.schema.json"
+      "$ref": "./common/web/web.schema.json"
     }
   ]
 }

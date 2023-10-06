@@ -1,0 +1,10 @@
+{
+  "title": "Express - Node.js web application framework",
+  "required": ["port"],
+  "properties": {
+    "port": {
+      "type": "number",
+      "description": "Port to listen"
+    }
+  }
+}

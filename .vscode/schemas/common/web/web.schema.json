@@ -4,12 +4,20 @@
   "properties": {
     "web": {
       "type": "object",
-      "required": ["adapter"],
+      "required": ["adapter", "options"],
       "description": "[ZH] Naily Web配置 \n [EN] Naily Web Configuration",
       "properties": {
         "adapter": {
           "type": "string",
           "description": "[ZH] Naily Web适配器设置 \n [EN] Naily Web Adapter Setting"
+        },
+        "options": {
+          "type": "object",
+          "oneOf": [
+            {
+              "$ref": "./express.schema.json"
+            }
+          ]
         }
       }
     }

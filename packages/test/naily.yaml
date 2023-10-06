@@ -1,2 +1,4 @@
 web:
   adapter: "@naily/web-express"
+  options:
+    port: 4000
