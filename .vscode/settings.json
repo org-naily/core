@@ -7,7 +7,8 @@
     "*.container.ts": "nest-controller",
     "*.typing.ts": "typescript-def",
     "*.constant.ts": "nest-pipe",
-    "*.class.ts": "nest-module"
+    "*.class.ts": "nest-module",
+    "*.configuration.ts": "nest"
   },
   "material-icon-theme.folders.associations": {
     "ioc": "container",

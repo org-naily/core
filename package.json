@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "pnpm build:core; pnpm build:web; pnpm build:express",
     "build:core": "pnpm -F @naily/core build",
     "build:web": "pnpm -F @naily/web build",
     "build:express": "pnpm -F @naily/web-express build",

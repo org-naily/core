@@ -1,7 +1,6 @@
 import { sync } from "glob";
 import { join } from "path";
 import { rewriteFile } from "./rewrite";
-import { readFileSync } from "fs";
 
 class NailyDependencyClass {
   private path = join(process.cwd(), "node_modules/@naily/build/index.ts");
