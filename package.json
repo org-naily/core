@@ -1,0 +1,15 @@
+{
+  "name": "v10",
+  "scripts": {
+    "build:core": "pnpm -F @naily/core build",
+    "build:web": "pnpm -F @naily/web build",
+    "build:express": "pnpm -F @naily/web-express build",
+    "dev": "pnpm -F test dev"
+  },
+  "dependencies": {
+    "@types/node": "^20.8.6",
+    "reflect-metadata": "^0.1.13",
+    "ts-morph": "^20.0.0",
+    "typescript": "^5.2.2"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@naily/web",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@naily/core": "workspace:*"
+  }
+}

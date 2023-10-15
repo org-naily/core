@@ -1,0 +1,19 @@
+{
+  "name": "@naily/core",
+  "version": "10.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/md5": "^2.3.3",
+    "glob": "^10.3.10",
+    "is-class": "^0.0.9",
+    "md5": "^2.3.0"
+  }
+}
