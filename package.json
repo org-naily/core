@@ -4,7 +4,8 @@
     "build:core": "pnpm -F @naily/core build",
     "build:web": "pnpm -F @naily/web build",
     "build:express": "pnpm -F @naily/web-express build",
-    "dev": "pnpm -F test dev"
+    "dev": "pnpm -F test dev",
+    "dev:docs": "pnpm -F @naily/docs docs:dev"
   },
   "dependencies": {
     "@types/node": "^20.8.6",
