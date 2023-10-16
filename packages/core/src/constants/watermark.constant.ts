@@ -3,4 +3,5 @@ export const enum WATERMARK {
   INJECT = "__INJECT__",
   BEFORE_EXECUTE = "__BEFORE_EXECUTE__",
   AFTER_EXECUTE = "__AFTER_EXECUTE__",
+  VALUE = "__VALUE__",
 }
