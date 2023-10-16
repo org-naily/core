@@ -1,6 +1,6 @@
 # Decorator
 
-## @Injectable
+## @Injectable <Badge type="tip" text="Class Decorator" />
 
 ### Description
 
@@ -21,7 +21,7 @@ export class MyService {
 
 The `@Injectable` class's constructor only can have another `@Injectable` class as parameter.
 
-## @Inject
+## @Inject <Badge type="tip" text="Property Decorator" />
 
 ### Description
 
@@ -43,7 +43,7 @@ export class MyService {
 
 The `@Inject` decorator only can be used in `@Injectable` class，and only can inject another `@Injectable` class.
 
-## @Autowired
+## @Autowired <Badge type="tip" text="Property Decorator" />
 
 ### Description
 
@@ -66,11 +66,11 @@ export class MyService {
 
 The `@Autowired` decorator only can be used in `@Injectable` class，and only can inject another `@Injectable` class.
 
-## @NailyApplication
+## @NailyApplication <Badge type="tip" text="Class Decorator" />
 
 ### Description
 
-The `@NailyApplication` decorator marks a class as a naily IOC application. It will `transform TypeScript AST` and scan the files automatically to find all `@Injectable` classes and inject them.
+The `@NailyApplication` decorator marks a class as a naily IOC application. It will `scan the files automatically` and `transform TypeScript AST` to find all `@Injectable` classes and inject them.
 
 ### Usage
 
@@ -89,3 +89,75 @@ export class MyApplication {};
 ### Note
 
 When execute this file, they will transform AST and change output file. So you should execute this file `before` execute the entry file.
+
+## @Before <Badge type="tip" text="Method Decorator" />
+
+### Description
+
+The `@Before` decorator will `modify the prototype chain` of the class, so it will be executed before the method.
+
+### Parameters
+
+- before: `Type<INailyBeanBeforeExecute>[]`. The `INailyBeanBeforeExecute` is a interface, it has a method `beforeExecute` which will be executed before the method.
+
+### Usage
+
+```typescript{5}
+import { Injectable, Before, INailyBeanBeforeExecute } from "@naily/core";
+
+@Injectable()
+export class ListenService implments INailyBeanBeforeExecute {
+  beforeExecute() {
+    console.log("Before execute");
+  }
+}
+
+@Injectable()
+export class MyService {
+  @Before([MyBeforeExecute])
+  public myMethod() {
+    // ...
+  }
+};
+```
+
+### Note
+
+- The `@Before` decorator only can be used in `@Injectable` class，if you manual to new the class, the `@Before` decorator will `not work`.
+- Static method will `not work` with `@Before` decorator.
+
+## @After <Badge type="tip" text="Method Decorator" />
+
+### Description
+
+The `@After` decorator will `modify the prototype chain` of the class, so it will be executed after the method.
+
+### Parameters
+
+- after: `Type<INailyBeanAfterExecute>[]`. The `INailyBeanAfterExecute` is a interface, it has a method `afterExecute` which will be executed after the method.
+
+### Usage
+
+```typescript{5}
+import { Injectable, After, INailyBeanAfterExecute } from "@naily/core";
+
+@Injectable()
+export class ListenService implments INailyBeanAfterExecute {
+  afterExecute() {
+    console.log("After execute");
+  }
+}
+
+@Injectable()
+export class MyService {
+  @After([MyAfterExecute])
+  public myMethod() {
+    // ...
+  }
+};
+```
+
+### Note
+
+- The `@After` decorator only can be used in `@Injectable` class，if you manual to new the class, the `@After` decorator will `not work`.
+- Static method will `not work` with `@After` decorator.

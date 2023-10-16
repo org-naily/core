@@ -21,3 +21,9 @@
 [2023-10-17T00:28:12.550] [INFO] NAILY - Middleware cookieParser is loaded
 [2023-10-17T00:28:12.553] [INFO] NAILY - Middleware jsonParser is loaded
 [2023-10-17T00:28:12.555] [INFO] NAILY - App is running at http://localhost:3000
+[2023-10-17T07:10:59.808] [INFO] NAILY - [0abcdd44456c3e5abe3529b265444a75] MainService is initialized
+[2023-10-17T07:10:59.816] [INFO] NAILY - [ffea0a9d0188fb198aff33998e3c652e] MainController is initialized
+[2023-10-17T07:11:00.972] [INFO] NAILY - App is running at http://localhost:3000
+[2023-10-17T07:11:00.966] [INFO] NAILY - Middleware cookieParser is loaded
+[2023-10-17T07:11:00.970] [INFO] NAILY - Middleware jsonParser is loaded
+[2023-10-17T07:10:59.815] [INFO] NAILY - [8827c4a64ea96ce473073b2c7fc4bd49] ListenerAspect is initialized
