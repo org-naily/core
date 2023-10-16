@@ -1,3 +1,5 @@
+import { HttpMethod } from "../constants/method.constant";
+
 export interface IAdapterHandler {
   query: any;
   params: any;
@@ -16,7 +18,7 @@ export interface IAdapterOptions<Request = any, Response = any, NextFunction = a
    * @date 2023/10/15
    * @memberof IAdapterOptions
    */
-  listen(port: number, afterListen: () => void): void;
+  listen(port: number, afterListen: () => void): any;
   /**
    * Implment middleware.
    *
@@ -24,7 +26,8 @@ export interface IAdapterOptions<Request = any, Response = any, NextFunction = a
    * @date 2023/10/15
    * @memberof IAdapterOptions
    */
-  middleware(req: Request, res: Response, next: NextFunction): void;
+  middleware<T = any>(...args: any[]): T;
+
   /**
    * Implement handler.
    *
@@ -34,7 +37,7 @@ export interface IAdapterOptions<Request = any, Response = any, NextFunction = a
    */
   handler(
     path: string,
-    method: "get" | "post" | "put" | "delete" | "patch" | "head" | "options" | "trace" | "all",
+    method: HttpMethod,
     handler: (req: Request, res: Response, next: NextFunction, option: IAdapterHandler) => any | Promise<any>
   ): void;
 }

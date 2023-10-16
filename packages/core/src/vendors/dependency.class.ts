@@ -22,7 +22,7 @@ export class AbstractNailyDependency {
     const parsed = this.parseParameter(childrenParameter);
     const newed = new target(...parsed);
     this.parseInject(target, newed);
-    this.parseBean(target, newed, key);
+    this.parseAspect(target, newed, key);
 
     this.container.set(key, {
       target: target,
@@ -93,7 +93,7 @@ export class AbstractNailyDependency {
     }
   }
 
-  protected parseBean(target: Type, newed: object, key: string) {
+  protected parseAspect(target: Type, newed: object, key: string) {
     const propertyMethods: (string | symbol)[] = Reflect.ownKeys(target.prototype).filter((item) => item !== "constructor");
 
     // 遍历所有方法键值
@@ -139,6 +139,7 @@ export class AbstractNailyDependency {
       const val = Reflect.getMetadata(WATERMARK.INJECT, target.prototype, item);
       if (!val) return;
       const info = this.findOneByTarget(val);
+      if (!info) throw new Error("Inject instance not found in Naily container");
       newed[item] = info.newed;
     });
   }

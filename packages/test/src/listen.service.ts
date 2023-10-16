@@ -1,10 +1,10 @@
-import { INailyBeanAfterExecute, INailyBeanBeforeExecute, INailyBeanContext, INailyBeanContextAfterExecute, Injectable } from "@naily/core";
+import { Aspect, INailyBeanAfterExecute, INailyBeanBeforeExecute, INailyBeanContext, INailyBeanContextAfterExecute, Injectable } from "@naily/core";
 
-@Injectable()
-export class ListenService implements INailyBeanBeforeExecute, INailyBeanAfterExecute {
+@Aspect()
+export class ListenerAspect implements INailyBeanBeforeExecute, INailyBeanAfterExecute {
   beforeExecute(context: INailyBeanContext): void | Promise<void> {}
 
   afterExecute(context: INailyBeanContextAfterExecute): void | Promise<void> {
-    console.log(context.getReturnValue());
+    console.log(context.getArgs());
   }
 }

@@ -1,12 +1,18 @@
-import { Bean } from "@naily/core";
-import { Controller, Get } from "@naily/web";
-import { ListenService } from "./listen.service";
+import { Before, After, Autowired } from "@naily/core";
+import { Controller, Cookies, Get } from "@naily/web";
+import { ListenerAspect } from "./listen.service";
+import { MainService } from "./main.service";
 
 @Controller()
 export class MainController {
+  @Autowired
+  private readonly mainService: MainService;
+
   @Get()
-  @Bean([ListenService], [ListenService])
-  public getHello() {
-    return "hello world";
+  @Before([ListenerAspect])
+  @After([ListenerAspect])
+  public getHello(@Cookies cookies) {
+    this.mainService.testMethod();
+    return cookies;
   }
 }
