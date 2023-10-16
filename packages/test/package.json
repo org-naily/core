@@ -1,7 +1,7 @@
 {
   "name": "test",
   "scripts": {
-    "dev": "tsc && node dist/main.js && node dist/main.js"
+    "dev": "tsc && node dist/ioc.js && node dist/main.js"
   },
   "dependencies": {
     "@naily/core": "workspace:*",

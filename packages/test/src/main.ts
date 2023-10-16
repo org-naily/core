@@ -1,8 +1,7 @@
-import { NailyApplication } from "@naily/core";
+import { Logger } from "@naily/core";
 import { createWebServer } from "@naily/web";
 import { ExpressAdapter } from "@naily/web-express";
 
-@NailyApplication({ entry: "./src/main.ts", scan: "./src/**/*.ts" })
-export class BootStrap {}
-
-createWebServer(ExpressAdapter);
+createWebServer(ExpressAdapter).listen(3000, () => {
+  new Logger().log("App is running at http://localhost:3000");
+});
