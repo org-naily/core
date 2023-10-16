@@ -5,6 +5,6 @@ export class ListenService implements INailyBeanBeforeExecute, INailyBeanAfterEx
   beforeExecute(context: INailyBeanContext): void | Promise<void> {}
 
   afterExecute(context: INailyBeanContextAfterExecute): void | Promise<void> {
-    console.log(context.getNailyKey());
+    console.log(context.getReturnValue());
   }
 }

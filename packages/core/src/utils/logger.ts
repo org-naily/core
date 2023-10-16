@@ -1,41 +1,60 @@
-import { getLogger } from "log4js";
+import { getLogger, configure, Configuration } from "log4js";
 
 export class Logger {
-  private readonly logger = getLogger(this.context);
+  protected logger = getLogger(this.context);
+  protected options: Configuration = {
+    appenders: {
+      files: {
+        type: "dateFile",
+        filename: "log/access",
+        pattern: "yyyy.MM.dd.log",
+        alwaysIncludePattern: true,
+      },
+      out: {
+        type: "stdout",
+        layout: {
+          type: "colored",
+        },
+      },
+    },
+    categories: {
+      default: {
+        appenders: ["files", "out"],
+        level: "all",
+      },
+    },
+  };
 
   constructor(private readonly context = "NAILY") {
     this.logger.level = "all";
+    configure(this.options);
   }
 
-  log(message: string) {
-    this.logger.log(message);
+  public log(message: string, ...args: any[]) {
+    this.logger.log(message, ...args);
   }
 
-  info(message: string) {
-    this.logger.info(message);
+  public info(message: string, ...args: any[]) {
+    this.logger.info(message, ...args);
   }
 
-  warn(message: string) {
-    this.logger.warn(message);
+  public warn(message: string, ...args: any[]) {
+    this.logger.warn(message, ...args);
   }
 
-  error(message: string) {
-    this.logger.error(message);
+  public error(message: string, ...args: any[]) {
+    this.logger.error(message, ...args);
   }
 
-  debug(message: string) {
-    this.logger.debug(message);
+  public debug(message: string, ...args: any[]) {
+    this.logger.debug(message, ...args);
   }
 
-  trace(message: string) {
-    this.logger.trace(message);
+  public trace(message: string, ...args: any[]) {
+    this.logger.trace(message, ...args);
   }
 
-  fatal(message: string) {
-    this.logger.fatal(message);
-  }
-
-  level(level: string) {
-    this.logger.level = level;
+  public fatal(message: string, ...args: any[]) {
+    this.logger.fatal(message, ...args);
   }
 }
