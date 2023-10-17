@@ -11,9 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "@types/glob": "^8.1.0",
+    "@types/jexl": "^2.3.2",
     "@types/md5": "^2.3.3",
     "glob": "^10.3.10",
     "is-class": "^0.0.9",
+    "jexl": "^2.3.0",
     "log4js": "^6.9.1",
     "md5": "^2.3.0"
   }

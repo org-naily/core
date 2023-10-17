@@ -104,6 +104,7 @@ export class AbstractNailyDependency {
       const afters: Type[] = Reflect.getMetadata(WATERMARK.AFTER_EXECUTE, target.prototype, item) || [];
       // 先把原始方法保存起来 等待后续调用
       const originalMethod: Function = target.prototype[item];
+      if (typeof originalMethod !== "function") continue;
 
       // 重写原始方法
       target.prototype[item] = (...args: any[]) => {

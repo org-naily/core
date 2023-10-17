@@ -1,5 +1,5 @@
-import { Before, After, Autowired } from "@naily/core";
-import { Controller, Cookies, Get } from "@naily/web";
+import { Before, After, Autowired, Value } from "@naily/core";
+import { Controller, Get } from "@naily/web";
 import { ListenerAspect } from "./listen.service";
 import { MainService } from "./main.service";
 
@@ -7,12 +7,13 @@ import { MainService } from "./main.service";
 export class MainController {
   @Autowired
   private readonly mainService: MainService;
+  @Value("aaa")
+  private readonly aaa: string;
 
   @Get()
   @Before([ListenerAspect])
   @After([ListenerAspect])
-  public getHello(@Cookies cookies) {
-    this.mainService.testMethod();
-    return cookies;
+  public getHello() {
+    console.log(this.aaa);
   }
 }

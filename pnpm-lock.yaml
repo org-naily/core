@@ -26,6 +26,9 @@ importers:
       '@types/glob':
         specifier: ^8.1.0
         version: 8.1.0
+      '@types/jexl':
+        specifier: ^2.3.2
+        version: 2.3.2
       '@types/md5':
         specifier: ^2.3.3
         version: 2.3.3
@@ -35,6 +38,9 @@ importers:
       is-class:
         specifier: ^0.0.9
         version: 0.0.9
+      jexl:
+        specifier: ^2.3.0
+        version: 2.3.0
       log4js:
         specifier: ^6.9.1
         version: 6.9.1
@@ -251,6 +257,13 @@ packages:
     hasBin: true
     dependencies:
       '@babel/types': 7.23.0
+    dev: false
+
+  /@babel/runtime@7.23.2:
+    resolution: {integrity: sha512-mM8eg4yl5D6i3lu2QKPuPH4FArvJ8KhTofbE7jwMUv9KX5mBvwPAqnV3MlyBNqdp9RyRKP6Yck8TrfYrPvX3bg==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.14.0
     dev: false
 
   /@babel/types@7.23.0:
@@ -602,6 +615,10 @@ packages:
 
   /@types/http-errors@2.0.2:
     resolution: {integrity: sha512-lPG6KlZs88gef6aD85z3HNkztpj7w2R7HmR3gygjfXCQmsLloWNARFkMuzKiiY8FGdh1XDpgBdrSf4aKDiA7Kg==}
+    dev: false
+
+  /@types/jexl@2.3.2:
+    resolution: {integrity: sha512-VLRRvwq+aSZfG0fHZR0r22aETiOa/IETkSimJ18eYr4sC1xX+kZf+g4sCVIQ6pUtU4c/5+qZcYTkHHEcKp/yjg==}
     dev: false
 
   /@types/linkify-it@3.0.3:
@@ -1372,6 +1389,12 @@ packages:
       '@pkgjs/parseargs': 0.11.0
     dev: false
 
+  /jexl@2.3.0:
+    resolution: {integrity: sha512-ecqln4kTWNkMwbFvTukOMDq1jy1GcPzvshhMp/s4pxU86xdLDq7HbDRa87DfMfbSAOS8V6EwvCdfs0S+w/iycA==}
+    dependencies:
+      '@babel/runtime': 7.23.2
+    dev: false
+
   /jsonc-parser@3.2.0:
     resolution: {integrity: sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==}
     dev: false
@@ -1621,6 +1644,10 @@ packages:
 
   /reflect-metadata@0.1.13:
     resolution: {integrity: sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==}
+    dev: false
+
+  /regenerator-runtime@0.14.0:
+    resolution: {integrity: sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==}
     dev: false
 
   /reusify@1.0.4:
