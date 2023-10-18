@@ -696,3 +696,25 @@
 [2023-10-18T13:59:04.594] [INFO] NAILY - Middleware cookieParser is loaded
 [2023-10-18T13:59:04.597] [INFO] NAILY - Middleware jsonParser is loaded
 [2023-10-18T13:59:04.599] [INFO] NAILY - App is running at http://localhost:3000
+[2023-10-18T14:04:16.181] [INFO] NAILY - ./main scanned
+[2023-10-18T14:04:16.183] [INFO] NAILY - ./main.service scanned
+[2023-10-18T14:04:16.183] [INFO] NAILY - ./controllers/main.controller scanned
+[2023-10-18T14:04:17.223] [INFO] NAILY - Naily application bootstrap successfully
+[2023-10-18T14:04:16.183] [INFO] NAILY - ./listen.service scanned
+[2023-10-18T14:04:17.982] [INFO] NAILY - [69ea015c3d8838896af273083280f82a] MainService is initialized
+[2023-10-18T14:04:17.984] [INFO] NAILY - [051f33b1412541a02c64564fc900ca73] ListenerAspect is initialized
+[2023-10-18T14:04:17.989] [INFO] NAILY - [8975c716046721a978343382fc580571] MainController is initialized
+[2023-10-18T14:04:18.067] [INFO] NAILY - Middleware cookieParser is loaded
+[2023-10-18T14:04:18.074] [INFO] NAILY - App is running at http://localhost:3000
+[2023-10-18T14:04:18.072] [INFO] NAILY - Middleware jsonParser is loaded
+[2023-10-18T14:06:11.442] [INFO] NAILY - ./main scanned
+[2023-10-18T14:06:11.444] [INFO] NAILY - ./listen.service scanned
+[2023-10-18T14:06:11.444] [INFO] NAILY - ./controllers/main.controller scanned
+[2023-10-18T14:06:12.483] [INFO] NAILY - Naily application bootstrap successfully
+[2023-10-18T14:06:11.444] [INFO] NAILY - ./main.service scanned
+[2023-10-18T14:06:13.197] [INFO] NAILY - [1104a65dcca9b97ae290d84448554464] MainService is initialized
+[2023-10-18T14:06:13.200] [INFO] NAILY - [de21241f53778d682cf439f853be5aa6] ListenerAspect is initialized
+[2023-10-18T14:06:13.205] [INFO] NAILY - [d01826f516095728a11bef483f03ffff] MainController is initialized
+[2023-10-18T14:06:13.279] [INFO] NAILY - Middleware cookieParser is loaded
+[2023-10-18T14:06:13.282] [INFO] NAILY - Middleware jsonParser is loaded
+[2023-10-18T14:06:13.284] [INFO] NAILY - App is running at http://localhost:3000

@@ -7,13 +7,11 @@ import { MainService } from "../main.service";
 export class MainController {
   @Autowired
   private readonly mainService: MainService;
-  @Value("naily", true)
-  private readonly aaa: string;
 
   @Get()
   @Before([ListenerAspect])
   @After([ListenerAspect])
   public getHello() {
-    console.log(this.aaa);
+    return this.mainService.testMethod();
   }
 }

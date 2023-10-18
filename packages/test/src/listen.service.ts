@@ -4,7 +4,5 @@ import { Aspect, INailyBeanAfterExecute, INailyBeanBeforeExecute, INailyBeanCont
 export class ListenerAspect implements INailyBeanBeforeExecute, INailyBeanAfterExecute {
   beforeExecute(context: INailyBeanContext): void | Promise<void> {}
 
-  afterExecute(context: INailyBeanContextAfterExecute): void | Promise<void> {
-    console.log(context.getArgs());
-  }
+  afterExecute(context: INailyBeanContextAfterExecute): void | Promise<void> {}
 }
