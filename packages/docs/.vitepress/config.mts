@@ -19,9 +19,11 @@ export default defineConfig({
               modal: {
                 noResultsText: "无法找到相关结果",
                 resetButtonTitle: "清除查询条件",
+                displayDetails: "显示详情",
                 footer: {
                   selectText: "选择",
                   navigateText: "切换",
+                  closeText: "关闭",
                 },
               },
             },
@@ -33,14 +35,14 @@ export default defineConfig({
   locales: {
     root: {
       label: "English",
-      lang: "en",
+      lang: "/en/",
       link: "/en/",
       themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
         nav: [
           {
             text: "Home",
-            link: "/en/index",
+            link: "/en/",
           },
           {
             text: "Guide",
@@ -74,13 +76,22 @@ export default defineConfig({
     },
     zh: {
       label: "简体中文",
-      lang: "zh",
+      lang: "/zh/",
       link: "/zh/",
+      description: "轻量的企业级Web框架",
       themeConfig: {
+        docFooter: {
+          next: "下一页",
+          prev: "上一页",
+        },
+        returnToTopLabel: "返回顶部",
+        sidebarMenuLabel: "菜单",
+        langMenuLabel: "切换语言",
+        darkModeSwitchLabel: "切换夜间",
         nav: [
           {
             text: "主页",
-            link: "/zh/index",
+            link: "/zh/",
           },
           {
             text: "上手",
@@ -88,7 +99,11 @@ export default defineConfig({
           },
           {
             text: "参考",
-            link: "/zh/reference/core/decorator",
+            link: "/zh/reference/core/decorator/ioc/injectable",
+          },
+          {
+            text: "哲学",
+            link: "/zh/philosophy/talk",
           },
         ],
         sidebar: {
@@ -98,13 +113,67 @@ export default defineConfig({
               link: "/zh/guide/start",
             },
           ],
+          "/zh/philosophy/": [
+            {
+              text: "探讨",
+              link: "/zh/philosophy/talk",
+            },
+          ],
           "/zh/reference/": [
             {
-              text: "Core",
+              text: "核心",
               items: [
                 {
                   text: "装饰器",
-                  link: "/zh/reference/core/decorator",
+                  items: [
+                    {
+                      text: "IOC",
+                      items: [
+                        {
+                          text: "@Injectable",
+                          link: "/zh/reference/core/decorator/ioc/injectable",
+                        },
+                        {
+                          text: "@Inject",
+                          link: "/zh/reference/core/decorator/ioc/inject",
+                        },
+                        {
+                          text: "@Autowired",
+                          link: "/zh/reference/core/decorator/ioc/autowired",
+                        },
+                      ],
+                    },
+                    {
+                      text: "AOP",
+                      items: [
+                        {
+                          text: "@Aspect",
+                          link: "/zh/reference/core/decorator/aop/aspect",
+                        },
+                        {
+                          text: "@Before",
+                          link: "/zh/reference/core/decorator/aop/before",
+                        },
+                        {
+                          text: "@After",
+                          link: "/zh/reference/core/decorator/aop/after",
+                        },
+                      ],
+                    },
+                    {
+                      text: "@NailyApplication",
+                      link: "/zh/reference/core/decorator/nailyApplication",
+                    },
+                  ],
+                },
+                {
+                  text: "类型",
+                  items: [
+                    {
+                      text: "IOC",
+                      link: "/zh/reference/core/typings/ioc",
+                    },
+                  ],
                 },
               ],
             },

@@ -12,7 +12,7 @@ hero:
       link: /zh/guide/start
     - theme: alt
       text: 哲学
-      link: /zh/philosophy
+      link: /zh/philosophy/talk
 
 features:
   - title: 渐进式
