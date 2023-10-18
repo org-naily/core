@@ -141,12 +141,3 @@
 .VPNavBarMenu {
   padding: 0 16px;
 }
-
-.VPNavBarMenu .active {
-  border-bottom: 1px solid var(--vp-c-brand-1);
-}
-
-.VPNavBarMenu .active {
-  position: relative;
-  top: 0.5px;
-}

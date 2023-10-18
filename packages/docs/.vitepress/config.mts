@@ -35,7 +35,7 @@ export default defineConfig({
   locales: {
     root: {
       label: "English",
-      lang: "/en/",
+      lang: "en",
       link: "/en/",
       themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
@@ -76,7 +76,7 @@ export default defineConfig({
     },
     zh: {
       label: "简体中文",
-      lang: "/zh/",
+      lang: "zh",
       link: "/zh/",
       description: "轻量的企业级Web框架",
       themeConfig: {
