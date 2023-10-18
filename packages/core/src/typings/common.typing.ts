@@ -1,7 +1,44 @@
 export interface Type<T = any> extends Function {
   new (...args: any[]): T;
 }
-
+export interface INailyApplication {
+  /**
+   * 入口文件路径
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2023/10/18
+   * @type {string}
+   * @memberof INailyApplication
+   */
+  entry: string;
+  /**
+   * 需要扫描的文件 glob路径
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2023/10/18
+   * @type {string}
+   * @memberof INailyApplication
+   */
+  scan: string;
+  /**
+   * ioch执行文件类路径
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2023/10/18
+   * @type {string}
+   * @memberof INailyApplication
+   */
+  iocDir: string;
+  /**
+   * 代码根目录路径
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2023/10/18
+   * @type {string}
+   * @memberof INailyApplication
+   */
+  rootDir: string;
+}
 /**
  * Bean监听器的上下文
  *
@@ -52,7 +89,6 @@ export interface INailyBeanContext<IArgs = any, INewed = object> {
    */
   getNailyKey(): string;
 }
-
 export interface INailyBeanContextAfterExecute<T = any> extends INailyBeanContext {
   /**
    * 获取到此方法的返回值
@@ -64,7 +100,6 @@ export interface INailyBeanContextAfterExecute<T = any> extends INailyBeanContex
    */
   getReturnValue(): T;
 }
-
 export interface INailyBeanBeforeExecute {
   /**
    * 执行Bean前的前置方法
@@ -77,7 +112,6 @@ export interface INailyBeanBeforeExecute {
    */
   beforeExecute(context: INailyBeanContext): void | Promise<void>;
 }
-
 export interface INailyBeanAfterExecute {
   /**
    * 执行Bean后的后置方法

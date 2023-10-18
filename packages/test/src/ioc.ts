@@ -4,6 +4,7 @@ import { join } from "path";
 @NailyApplication({
   entry: join(process.cwd(), "./src/main.ts"),
   scan: join(process.cwd(), "./src/**/*.ts"),
-  filename: __filename,
+  rootDir: "./src",
+  iocDir: "./src/ioc.ts",
 })
 export class BootStrap {}

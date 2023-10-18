@@ -1,3 +1,9 @@
 {
-  "aaa": "aaa"
+  "$schema": "./naily.schema.json",
+  "naily": {
+    "scan": "./src/**/*.ts",
+    "entry": "./src/main.ts",
+    "rootDir": "./src"
+  },
+  "aaa": "12"
 }

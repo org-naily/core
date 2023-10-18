@@ -6,6 +6,7 @@
     "emitDecoratorMetadata": true,
     "target": "ES6",
     "module": "CommonJS",
-    "outDir": "dist"
+    "outDir": "dist",
+    "rootDir": "./src"
   }
 }

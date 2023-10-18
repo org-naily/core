@@ -1,0 +1,8 @@
+{
+  "title": "Naily Schema Reference",
+  "allOf": [
+    {
+      "$ref": "./node_modules/@naily/schema/naily/core.schema.json"
+    }
+  ]
+}

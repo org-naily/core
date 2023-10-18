@@ -1,0 +1,27 @@
+{
+  "title": "Naily Core Schema",
+  "description": "Naily Core Schema",
+  "type": "object",
+  "required": ["naily"],
+  "properties": {
+    "naily": {
+      "title": "Naily Core Configure",
+      "type": "object",
+      "required": ["scan", "entry", "rootDir"],
+      "properties": {
+        "scan": {
+          "type": "string",
+          "description": "Scan dir glob"
+        },
+        "entry": {
+          "type": "string",
+          "description": "The execute entry"
+        },
+        "rootDir": {
+          "type": "string",
+          "description": "Specify the root folder within your source files"
+        }
+      }
+    }
+  }
+}

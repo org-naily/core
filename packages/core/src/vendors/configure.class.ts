@@ -29,6 +29,16 @@ class NailyAbstractConfigure {
       throw error;
     }
   }
+
+  public getConfigureByJexlDynamic<T extends any = any>(jexl: string): T {
+    try {
+      const configure = this.getNailyConfig();
+      return JEXL.evalSync(jexl, configure);
+    } catch (error) {
+      new Logger().error(error.message ? error.message : error);
+      throw error;
+    }
+  }
 }
 
 export const NailyConfigure = new NailyAbstractConfigure();

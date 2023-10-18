@@ -54,11 +54,16 @@ importers:
         specifier: 1.0.0-rc.22
         version: 1.0.0-rc.22(@algolia/client-search@4.20.0)(@types/node@20.8.6)(search-insights@2.9.0)
 
+  packages/schema: {}
+
   packages/test:
     dependencies:
       '@naily/core':
         specifier: workspace:*
         version: link:../core
+      '@naily/schema':
+        specifier: workspace:^
+        version: link:../schema
       '@naily/web':
         specifier: workspace:*
         version: link:../web

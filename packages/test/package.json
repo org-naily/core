@@ -5,6 +5,7 @@
   },
   "dependencies": {
     "@naily/core": "workspace:*",
+    "@naily/schema": "workspace:^",
     "@naily/web": "workspace:*",
     "@naily/web-express": "workspace:*",
     "@types/body-parser": "^1.19.3",
