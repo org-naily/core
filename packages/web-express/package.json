@@ -1,10 +1,11 @@
 {
   "name": "@naily/web-express",
   "version": "10.0.0",
-  "description": "Naily Express Adapter",
+  "description": "Naily Web Express Adapter",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "prepublishOnly": "tsc"
   },
   "dependencies": {
     "@naily/core": "workspace:*",
