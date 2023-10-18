@@ -1,5 +1,7 @@
 {
   "name": "@naily/web",
+  "version": "10.0.0",
+  "description": "Naily Web",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc"

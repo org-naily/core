@@ -1,7 +1,7 @@
 {
   "name": "@naily/web-express",
-  "version": "1.0.0",
-  "description": "",
+  "version": "10.0.0",
+  "description": "Naily Express Adapter",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc"

@@ -1,5 +1,6 @@
 {
   "name": "test",
+  "private": true,
   "scripts": {
     "dev": "tsc && node dist/ioc.js && node dist/main.js"
   },

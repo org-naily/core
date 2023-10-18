@@ -16,3 +16,17 @@ Naily 出现的初衷，其实就是一堆人聚在一起，为了极致的、�
 - npm, yarn, cnpm, **pnpm**, 或者其他包管理器也行 (推荐`pnpm`)
 
 ### 安装
+
+:::code-group
+
+```bash [npm]
+npm i @naily/core
+```
+
+```bash [yarn]
+yarn add @naily/core
+```
+
+```bash [pnpm]
+pnpm add @naily/core
+```

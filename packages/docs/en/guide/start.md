@@ -8,3 +8,19 @@
 
 - Node.js >= 16
 - npm, yarn, cnpm, **pnpm**, or other node package manager. (`pnpm` is recommended)
+
+### Install
+
+:::code-group
+
+```bash [npm]
+npm i @naily/core
+```
+
+```bash [yarn]
+yarn add @naily/core
+```
+
+```bash [pnpm]
+pnpm add @naily/core
+```
