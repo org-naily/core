@@ -9,5 +9,10 @@
   },
   "dependencies": {
     "@naily/core": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest",
+    "registry": "https://registry.npmjs.org"
   }
 }
