@@ -1,5 +1,4 @@
 import { Project } from "ts-morph";
-import { sync } from "glob";
 
 const project = new Project({
   tsConfigFilePath: "./tsconfig.json",

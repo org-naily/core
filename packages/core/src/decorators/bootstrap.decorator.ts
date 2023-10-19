@@ -17,7 +17,7 @@ export function NailyApplication(options: INailyApplication) {
         // 去除rootDir
         .replace(join(options.rootDir), ".");
 
-      if (join(process.cwd(), options.iocDir) === item) return;
+      if (join(process.cwd(), options.iocDir) === join(process.cwd(), item)) return;
 
       content = content + `import "${relativePath}";\n`;
       new Logger().info(`${relativePath} scanned`);
