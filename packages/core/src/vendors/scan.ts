@@ -12,8 +12,8 @@ function transformArrayToImport(array: string[]) {
 }
 
 export function nailyScanSync(options: INailyApplication, callBack: (filePath: string) => void) {
-  if (isRelativePath(options.entry)) options.entry = join(process.cwd(), options.entry);
-  if (isRelativePath(options.scan)) options.scan = join(process.cwd(), options.scan);
+  if (isRelativePath(options.entry)) options.entry = join(options.entry);
+  if (isRelativePath(options.scan)) options.scan = join(options.scan);
   const scanParsed = parse(options.scan);
   // 根据已知的exclude数组 获取被排除的文件路径数组
   const excludeFiles = transformArrayToExclude(options.exclude);
