@@ -186,6 +186,20 @@ export default defineConfig({
                 },
               ],
             },
+            {
+              text: "Web",
+              items: [
+                {
+                  text: "装饰器",
+                  items: [
+                    {
+                      text: "控制器",
+                      link: "/zh/reference/web/decorator/controller",
+                    },
+                  ],
+                },
+              ],
+            },
           ],
         },
       },
