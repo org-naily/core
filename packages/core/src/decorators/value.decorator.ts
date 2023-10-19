@@ -9,6 +9,7 @@ export function Value<T extends string>(jexl?: T, dynamic: boolean = false) {
       get: function () {
         return dynamic ? NailyConfigure.getConfigureByJexlDynamic(jexl) : NailyConfigure.getConfigureByJexl(jexl);
       },
+      writable: false,
     });
   };
 }

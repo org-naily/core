@@ -1,0 +1,33 @@
+[2023-10-19T07:59:13.111] [INFO] NAILY - ./main scanned
+[2023-10-19T07:59:13.113] [INFO] NAILY - ./main.service scanned
+[2023-10-19T07:59:13.113] [INFO] NAILY - ./controllers/main.controller scanned
+[2023-10-19T07:59:14.128] [INFO] NAILY - Naily application bootstrap successfully
+[2023-10-19T07:59:13.113] [INFO] NAILY - ./listen.service scanned
+[2023-10-19T07:59:14.814] [INFO] NAILY - [4c462d0a9cc2dfef7a7f5bd019a96baf] MainService is initialized
+[2023-10-19T07:59:14.817] [INFO] NAILY - [ab9d303981e364c0cd33473cdbc7a6d1] ListenerAspect is initialized
+[2023-10-19T07:59:14.894] [INFO] NAILY - Middleware cookieParser is loaded
+[2023-10-19T07:59:14.898] [INFO] NAILY - Middleware jsonParser is loaded
+[2023-10-19T07:59:14.820] [INFO] NAILY - [8907c9d9d2dbadc357501a77d71ab63e] MainController is initialized
+[2023-10-19T07:59:14.900] [INFO] NAILY - App is running at http://localhost:3000
+[2023-10-19T08:01:04.186] [INFO] NAILY - ./main scanned
+[2023-10-19T08:01:04.189] [INFO] NAILY - ./listen.service scanned
+[2023-10-19T08:01:04.188] [INFO] NAILY - ./main.service scanned
+[2023-10-19T08:01:05.264] [INFO] NAILY - Naily application bootstrap successfully
+[2023-10-19T08:01:04.189] [INFO] NAILY - ./controllers/main.controller scanned
+[2023-10-19T08:01:05.969] [INFO] NAILY - [2af56cf4da964b87e65c3e28730c8087] MainService is initialized
+[2023-10-19T08:01:05.971] [INFO] NAILY - [08569b4756e5a23156ec43b669b4fa5c] ListenerAspect is initialized
+[2023-10-19T08:01:06.027] [INFO] NAILY - Middleware cookieParser is loaded
+[2023-10-19T08:01:05.974] [INFO] NAILY - [5192d1ba71aab3a63cf1517752f16327] MainController is initialized
+[2023-10-19T08:01:06.030] [INFO] NAILY - Middleware jsonParser is loaded
+[2023-10-19T08:01:06.032] [INFO] NAILY - App is running at http://localhost:3000
+[2023-10-19T08:04:42.168] [INFO] NAILY - ./main scanned
+[2023-10-19T08:04:42.169] [INFO] NAILY - ./main.service scanned
+[2023-10-19T08:04:42.170] [INFO] NAILY - ./controllers/main.controller scanned
+[2023-10-19T08:04:43.216] [INFO] NAILY - Naily application bootstrap successfully
+[2023-10-19T08:04:42.170] [INFO] NAILY - ./listen.service scanned
+[2023-10-19T08:04:43.910] [INFO] NAILY - [7365b87cb83cacfb1fa380dd44c46a9e] MainService is initialized
+[2023-10-19T08:04:43.912] [INFO] NAILY - [ef2f307ff2387b3160ca66e2f9b4a417] ListenerAspect is initialized
+[2023-10-19T08:04:43.988] [INFO] NAILY - Middleware cookieParser is loaded
+[2023-10-19T08:04:43.917] [INFO] NAILY - [73782c10449aaa3058e2a45138b87797] MainController is initialized
+[2023-10-19T08:04:43.991] [INFO] NAILY - Middleware jsonParser is loaded
+[2023-10-19T08:04:43.993] [INFO] NAILY - App is running at http://localhost:3000
