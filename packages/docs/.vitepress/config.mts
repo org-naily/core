@@ -161,6 +161,15 @@ export default defineConfig({
                       ],
                     },
                     {
+                      text: "配置",
+                      items: [
+                        {
+                          text: "@Value",
+                          link: "/zh/reference/core/decorator/configuration/value",
+                        },
+                      ],
+                    },
+                    {
                       text: "@NailyApplication",
                       link: "/zh/reference/core/decorator/nailyApplication",
                     },
