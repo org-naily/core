@@ -4,6 +4,5 @@
     "scan": "./src/**/*.ts",
     "entry": "./src/main.ts",
     "rootDir": "./src"
-  },
-  "aaa": "12"
+  }
 }

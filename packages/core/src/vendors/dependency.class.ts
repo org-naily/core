@@ -28,6 +28,11 @@ export class AbstractNailyDependency {
       target: target,
       newed: newed,
     });
+
+    return {
+      target,
+      newed,
+    };
   }
 
   public findOneByKey(key: string) {
@@ -61,7 +66,7 @@ export class AbstractNailyDependency {
    * @param {INailyBeanContext} context
    * @memberof AbstractNailyDependency
    */
-  private async parseBeforeExecute(befores: Type[], context: INailyBeanContext) {
+  private async parseBeforeExecute(befores: Type[], context: INailyBeanContext): Promise<void> {
     for (let i = 0; i < befores.length; i++) {
       const before = befores[i];
       const beforeInstance = this.findOneByTarget<INailyBeanBeforeExecute>(before);
@@ -82,7 +87,7 @@ export class AbstractNailyDependency {
    * @param {INailyBeanContextAfterExecute} context
    * @memberof AbstractNailyDependency
    */
-  private async parseAfterExecute(afters: Type[], context: INailyBeanContextAfterExecute) {
+  private async parseAfterExecute(afters: Type[], context: INailyBeanContextAfterExecute): Promise<void> {
     for (let i = 0; i < afters.length; i++) {
       const after = afters[i];
       const afterInstance = this.findOneByTarget<INailyBeanAfterExecute>(after);
@@ -93,7 +98,7 @@ export class AbstractNailyDependency {
     }
   }
 
-  protected parseAspect(target: Type, newed: object, key: string) {
+  protected parseAspect(target: Type, newed: object, key: string): void {
     const propertyMethods: (string | symbol)[] = Reflect.ownKeys(target.prototype).filter((item) => item !== "constructor");
 
     // 遍历所有方法键值
@@ -134,13 +139,18 @@ export class AbstractNailyDependency {
     }
   }
 
-  protected parseInject(target: Type, newed: object) {
+  protected parseInject(target: Type, newed: object): void {
     const propertyMethods: (string | symbol)[] = Reflect.ownKeys(target.prototype).filter((item) => item !== "constructor");
     propertyMethods.forEach((item) => {
-      const val = Reflect.getMetadata(WATERMARK.INJECT, target.prototype, item);
+      const val: Type = Reflect.getMetadata(WATERMARK.INJECT, target.prototype, item);
       if (!val) return;
       const info = this.findOneByTarget(val);
-      if (!info) throw new Error("Inject instance not found in Naily container");
+      if (!info) {
+        const children = this.add(val);
+        this.parseInject(children.target, children.newed);
+        newed[item] = children.newed;
+        return;
+      }
       newed[item] = info.newed;
     });
   }
