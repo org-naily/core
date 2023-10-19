@@ -1,6 +1,6 @@
 {
   "name": "@naily/core",
-  "version": "10.0.2",
+  "version": "10.0.3",
   "description": "Naily Core",
   "main": "dist/index.js",
   "scripts": {
