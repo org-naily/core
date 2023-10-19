@@ -43,7 +43,7 @@ export class AbstractNailyDependency {
   protected parseParameter(param: Type[]): object[] {
     const result: object[] = [];
     for (let i = 0; i < param.length; i++) {
-      if (isClass(param[i])) throw new TypeError("Parameter must be a class");
+      if (!isClass(param[i])) throw new TypeError("Parameter must be a class");
       const childrenParameter: Type[] = Reflect.getMetadata("design:paramtypes", param[i]) || [];
       const parsed = this.parseParameter(childrenParameter);
       result.push(new param[i](...parsed));
