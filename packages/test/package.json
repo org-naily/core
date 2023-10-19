@@ -2,7 +2,7 @@
   "name": "test",
   "private": true,
   "scripts": {
-    "dev": "tsc && node dist/ioc.js && node dist/main.js"
+    "dev": "tsc && node dist/src/ioc.js && node dist/src/main.js"
   },
   "dependencies": {
     "@naily/core": "workspace:*",

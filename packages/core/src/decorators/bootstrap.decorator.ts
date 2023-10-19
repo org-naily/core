@@ -1,28 +1,16 @@
-import { sync } from "glob";
 import { INailyApplication, Type } from "../typings";
-import { transform } from "../vendors/transform";
 import { Logger } from "../utils";
-import { join } from "path";
+import { nailyScanSync } from "../vendors/scan";
+import { magentaBright } from "chalk";
+import * as ora from "ora";
 
 export function NailyApplication(options: INailyApplication) {
-  return (target: Type) => {
-    let content = ``;
-
-    sync(options.scan).forEach((item) => {
-      const relativePath = item
-        // 去除扩展名
-        .replace(/.ts$/, "")
-        // 去除根目录
-        .replace(`${process.cwd()}/`, "")
-        // 去除rootDir
-        .replace(join(options.rootDir), ".");
-
-      if (join(process.cwd(), options.iocDir) === require.main.filename) return;
-
-      content = content + `import "${relativePath}";\n`;
-      new Logger().info(`${relativePath} scanned`);
+  return (_target: Type) => {
+    const spinner = ora("Naily application bootstrap starting... \n").start();
+    nailyScanSync(options, (filePath) => {
+      spinner.info(new Logger().ora(`${filePath} scanned`, magentaBright));
+      spinner.start();
     });
-    transform(options.entry, content);
-    new Logger().info(`Naily application bootstrap successfully`);
+    spinner.succeed(new Logger().ora(`Naily application bootstrap successfully`, magentaBright));
   };
 }

@@ -1,10 +1,8 @@
 import { NailyApplication } from "@naily/core";
-import { join } from "path";
 
 @NailyApplication({
-  entry: join(process.cwd(), "./src/main.ts"),
-  scan: join(process.cwd(), "./src/**/*.ts"),
-  rootDir: "./src",
-  iocDir: "./src/ioc.ts",
+  entry: "src/main.ts",
+  scan: "src/**/*.ts",
+  exclude: ["./src/ioc.ts", "./src/main.ts"],
 })
 export class BootStrap {}

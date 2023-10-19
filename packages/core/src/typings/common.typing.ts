@@ -21,23 +21,14 @@ export interface INailyApplication {
    */
   scan: string;
   /**
-   * ioch执行文件类路径
+   * 排除扫描的文件glob路径
    *
    * @author Zero <gczgroup@qq.com>
-   * @date 2023/10/18
-   * @type {string}
+   * @date 2023/10/19
+   * @type {string[]}
    * @memberof INailyApplication
    */
-  iocDir: string;
-  /**
-   * 代码根目录路径
-   *
-   * @author Zero <gczgroup@qq.com>
-   * @date 2023/10/18
-   * @type {string}
-   * @memberof INailyApplication
-   */
-  rootDir: string;
+  exclude: string[];
 }
 /**
  * Bean监听器的上下文

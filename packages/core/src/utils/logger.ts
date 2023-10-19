@@ -13,13 +13,15 @@ export class Logger {
       out: {
         type: "stdout",
         layout: {
-          type: "colored",
+          type: "pattern",
+          pattern: "  %[[%d{yyyy-MM-ssThh:mm:ss.SSSZ}] [%p] [%c] -%] %m",
         },
       },
     },
     categories: {
       default: {
         appenders: ["files", "out"],
+        enableCallStack: true,
         level: "all",
       },
     },
@@ -56,5 +58,9 @@ export class Logger {
 
   public fatal(message: string, ...args: any[]) {
     this.logger.fatal(message, ...args);
+  }
+
+  public ora(message: string, chalk: (text: string) => void) {
+    return `${chalk(`[${new Date().toISOString()}] [INFO] [NAILY] -`)} ${message}`;
   }
 }
