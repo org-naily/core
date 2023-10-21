@@ -1,6 +1,6 @@
 import { join, parse } from "path";
 import { INailyApplication } from "../typings";
-import { getCommonPrefix, isRelativePath, transform, transformArrayToExclude } from "./transform";
+import { isRelativePath, transform, transformArrayToExclude } from "./transform";
 import { sync } from "glob";
 
 function transformArrayToImport(array: string[]) {
@@ -9,6 +9,10 @@ function transformArrayToImport(array: string[]) {
     content = content + `import "${item}";\n`;
   });
   return content;
+}
+
+function parsePathEnd(path: string) {
+  return path.substring(path.length - 1, path.length) === "/" ? path.replace(/\/$/, "") : path;
 }
 
 export function nailyScanSync(options: INailyApplication, callBack: (filePath: string) => void) {
@@ -34,12 +38,12 @@ export function nailyScanSync(options: INailyApplication, callBack: (filePath: s
   });
 
   // 获取到公共前缀
-  const commonPrefix = getCommonPrefix(filePaths);
+  const commonPrefix = isRelativePath(options.rootDir) ? join(options.rootDir) : options.rootDir.replace(`${process.cwd()}/`, "");
 
   filePaths.forEach((item) => {
     let importPath = item;
     // 去除公共前缀
-    importPath = importPath.replace(commonPrefix, "./");
+    importPath = importPath.replace(parsePathEnd(commonPrefix), ".");
     // 去除文件扩展名
     importPath = importPath.replace(new RegExp(`${scanParsed.ext}$`), "");
     // 添加进数组

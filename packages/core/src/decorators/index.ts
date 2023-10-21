@@ -4,3 +4,4 @@ export * from "./aspect.decorator";
 export * from "./bootstrap.decorator";
 export * from "./value.decorator";
 export * from "./readonly.decorator";
+export * from "./component.decorator";

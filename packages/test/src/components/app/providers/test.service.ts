@@ -1,11 +1,11 @@
 import { Injectable, Value } from "@naily/core";
 
-@Injectable("AppService")
-export class AppService {
-  @Value("app.name")
+@Injectable()
+export class TestService {
+  @Value("app.name", true)
   private readonly name: string;
 
-  getName() {
+  public getName() {
     return this.name;
   }
 }

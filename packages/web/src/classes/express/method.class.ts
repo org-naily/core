@@ -1,9 +1,9 @@
 import { INailyContainer, NailyDependency } from "@naily/core";
 import { join } from "path";
-import { IAdapterHandler, IAdapterOptions } from "../typings";
-import { HttpMethod } from "../constants/method.constant";
-import { WATERMARK } from "../constants/watermark.constant";
-import { INFO_WATERMARK } from "../constants/info.constant";
+import { IAdapterHandler, IAdapterOptions } from "../../typings";
+import { HttpMethod } from "../../constants/method.constant";
+import { WATERMARK } from "../../constants/watermark.constant";
+import { INFO_WATERMARK } from "../../constants/info.constant";
 
 export class NailyWeb {
   private readonly dependency = NailyDependency.getAll();

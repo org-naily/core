@@ -21,6 +21,15 @@ export interface INailyApplication {
    */
   scan: string;
   /**
+   * 扫码根目录路径
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2023/10/21
+   * @type {string}
+   * @memberof INailyApplication
+   */
+  rootDir: string;
+  /**
    * 排除扫描的文件glob路径
    *
    * @author Zero <gczgroup@qq.com>

@@ -1,3 +1,9 @@
 [2023-10-20T01:22:09.322] [INFO] NAILY - Middleware cookieParser is loaded
 [2023-10-20T01:22:09.326] [INFO] NAILY - Middleware jsonParser is loaded
 [2023-10-20T01:22:09.328] [INFO] NAILY - App is running at http://localhost:3000
+[2023-10-20T17:43:10.339] [INFO] NAILY - Middleware cookieParser is loaded
+[2023-10-20T17:43:10.343] [INFO] NAILY - Middleware jsonParser is loaded
+[2023-10-20T17:43:10.363] [INFO] NAILY - App is running at http://localhost:3000
+[2023-10-20T20:35:57.426] [INFO] NAILY - Middleware cookieParser is loaded
+[2023-10-20T20:35:57.430] [INFO] NAILY - Middleware jsonParser is loaded
+[2023-10-20T20:35:57.457] [INFO] NAILY - App is running at http://localhost:3000
