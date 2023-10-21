@@ -1,12 +1,12 @@
 import * as express from "express";
 import { Request, Response, NextFunction } from "express";
-import { createAdapter } from "@naily/web";
+import { createExpressAdapter } from "@naily/web";
 import { HttpMethod } from "@naily/web/dist/constants/method.constant";
 
 const app = express();
 type ExpressHttpMethod = "get" | "post" | "put" | "delete" | "patch" | "options" | "head" | "all" | "trace";
 
-export const ExpressAdapter = createAdapter<Request, Response, NextFunction>(() => ({
+export const ExpressAdapter = createExpressAdapter<Request, Response, NextFunction>(() => ({
   listen(port, afterListen) {
     app.listen(port, afterListen);
   },
