@@ -1,6 +1,6 @@
 import { isClass } from "is-class";
 import { WATERMARK } from "../constants/watermark.constant";
-import { INailyContainer, Type } from "../typings";
+import { INailyComponentInit, INailyContainer, Type } from "../typings";
 import { NailyDependency } from "./dependency.class";
 
 export class AbstractNailyComponent {
@@ -14,9 +14,10 @@ export class AbstractNailyComponent {
     return this.container.get(key);
   }
 
-  public add(target: Type) {
+  public async add(target: Type) {
     const key: string = Reflect.getMetadata(WATERMARK.INJECTABLE, target);
-    const targetDependency = NailyDependency.findOneByTarget(target);
+    const targetDependency = NailyDependency.findOneByTarget<INailyComponentInit>(target);
+    if (targetDependency.newed.onComponentInit) await targetDependency.newed.onComponentInit();
     this.container.set(key, targetDependency);
     this.analyzeDependency(key, target.name);
   }
@@ -25,17 +26,19 @@ export class AbstractNailyComponent {
     const target = this.findOneByKey(key);
     if (!target) throw new Error(`Cannot find component with key ${key}`);
     const metadata: Partial<INailyComponent> = Reflect.getMetadata(WATERMARK.COMPONENT, target.target) || {};
+    const exports = metadata.exports || [];
     const providers = metadata.providers || [];
-    const keys = this.analyzeProvider(providers);
+    const analyzedProviders = this.analyzeProvider(providers);
+    this.analyzeExport(exports, analyzedProviders, componentName);
 
-    keys.forEach((singleKey) => {
-      const singleProviderTarget = NailyDependency.findOneByKey(singleKey);
+    analyzedProviders.forEach((providerKey) => {
+      const singleProviderTarget = NailyDependency.findOneByKey(providerKey);
       if (!target) throw new Error(`Cannot find provider ${singleProviderTarget.target.name} in naily container.`);
 
       let isHave = false;
       for (let i = 0; i < providers.length; i++) {
         const sinlgeProviderKey = Reflect.getMetadata(WATERMARK.INJECTABLE, providers[i]);
-        if (sinlgeProviderKey === singleKey) {
+        if (sinlgeProviderKey === providerKey) {
           isHave = true;
           break;
         }
@@ -59,6 +62,18 @@ export class AbstractNailyComponent {
       keys.push(...parameterParsed);
       keys.push(...this.parseInject(item));
       keys.push(...this.parseAspect(item));
+    }
+    return keys;
+  }
+
+  public analyzeExport(exports: Type[], providerKeys: string[], componentName: string) {
+    const keys: string[] = [];
+    for (let i = 0; i < exports.length; i++) {
+      const item = exports[i];
+      const key: string = Reflect.getMetadata(WATERMARK.INJECTABLE, item);
+      if (!key) throw new TypeError(`Export instance ${item.name} not found in Naily container`);
+      if (!providerKeys.includes(key)) throw new TypeError(`Export instance ${item.name} not found in ${componentName} providers`);
+      keys.push(key);
     }
     return keys;
   }

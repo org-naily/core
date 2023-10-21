@@ -124,3 +124,11 @@ export interface INailyBeanAfterExecute {
    */
   afterExecute(context: INailyBeanContextAfterExecute): void | Promise<void>;
 }
+export interface INailyComponentInit {
+  /**
+   * 初始化勾子
+   *
+   * @memberof INailyComponentInit
+   */
+  onComponentInit(): void | Promise<void>;
+}

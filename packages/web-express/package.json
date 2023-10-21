@@ -1,6 +1,6 @@
 {
   "name": "@naily/web-express",
-  "version": "10.0.1",
+  "version": "10.0.2",
   "description": "Naily Web Express Adapter",
   "main": "dist/index.js",
   "scripts": {

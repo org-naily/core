@@ -7,6 +7,7 @@ declare global {
   interface INailyComponent {
     key?: string;
     providers?: Type[];
+    exports?: Type[];
   }
 }
 
