@@ -1,0 +1,15 @@
+{
+  "name": "@naily/conf",
+  "version": "11.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "Zero <1203970284@qq.com>",
+  "dependencies": {
+    "@types/jexl": "^2.3.3",
+    "jexl": "^2.3.0"
+  }
+}

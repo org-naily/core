@@ -1,0 +1,21 @@
+{
+  "scripts": {
+    "dev": "pnpm -F test dev",
+    "build": "pnpm -F test build",
+    "build:core": "pnpm -F @naily/core build",
+    "build:scan": "pnpm -F @naily/scan build",
+    "build:conf": "pnpm -F @naily/conf build"
+  },
+  "dependencies": {
+    "@types/node": "^20.8.7",
+    "reflect-metadata": "^0.1.13",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.3"
+  },
+  "packageManager": "pnpm@8.8.0",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

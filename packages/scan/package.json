@@ -1,0 +1,17 @@
+{
+  "name": "@naily/scan",
+  "version": "11.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@naily/core": "workspace:*",
+    "@types/glob": "^8.1.0",
+    "glob": "^10.3.10",
+    "ts-morph": "^20.0.0"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "@naily/aop",
+  "version": "11.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "Zero <1203970284@qq.com>",
+  "dependencies": {
+    "@naily/core": "workspace:*"
+  }
+}

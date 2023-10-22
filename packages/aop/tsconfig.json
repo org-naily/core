@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "declaration": true,
+    "outDir": "dist",
+    "target": "ES6",
+    "module": "NodeNext",
+    "emitDecoratorMetadata": true
+  },
+  "include": ["src/**/*"]
+}

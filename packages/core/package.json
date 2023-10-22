@@ -1,0 +1,15 @@
+{
+  "name": "@naily/core",
+  "description": "Naily Core is a simple IOC & AOP Node.js library for building.",
+  "version": "11.0.0",
+  "author": "Zero <1203970284@qq.com>",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@types/md5": "^2.3.4",
+    "is-class": "^0.0.9",
+    "md5": "^2.3.0"
+  }
+}
