@@ -10,6 +10,8 @@
     "@naily/core": "workspace:*",
     "@naily/scan": "workspace:*",
     "@naily/aop": "workspace:*",
-    "@naily/conf": "workspace:*"
+    "@naily/conf": "workspace:*",
+    "@naily/web": "workspace:*",
+    "@naily/web-express": "workspace:*"
   }
 }

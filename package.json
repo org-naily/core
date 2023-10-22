@@ -4,7 +4,9 @@
     "build": "pnpm -F test build",
     "build:core": "pnpm -F @naily/core build",
     "build:scan": "pnpm -F @naily/scan build",
-    "build:conf": "pnpm -F @naily/conf build"
+    "build:conf": "pnpm -F @naily/conf build",
+    "build:web": "pnpm -F @naily/web build",
+    "build:express": "pnpm -F @naily/web-express build"
   },
   "dependencies": {
     "@types/node": "^20.8.7",

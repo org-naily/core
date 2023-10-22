@@ -1,0 +1,15 @@
+{
+  "name": "@naily/web-express",
+  "version": "11.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "@types/express": "^4.17.20",
+    "@types/express-serve-static-core": "^4.17.39",
+    "@naily/core": "workspace:*"
+  }
+}
