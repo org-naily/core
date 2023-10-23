@@ -1,11 +1,13 @@
 import "reflect-metadata";
 import { Injectable, Type } from "@naily/core";
 import { NailyWebWatermark } from "../constants/watermark.constant";
+import { NailyControllerContext } from "../containers";
 
 export function Controller(path: string = "/") {
   return (target: Type) => {
     Reflect.defineMetadata(NailyWebWatermark.CONTROLLER, path, target);
     Injectable(target);
+    NailyControllerContext.add(target);
   };
 }
 

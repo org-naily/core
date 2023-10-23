@@ -1,5 +1,5 @@
 export interface NailyStaticConfiguration {
-  get<T>(): T;
+  get<T>(jexl: string): T;
 }
 export interface NailyConfigration extends NailyStaticConfiguration {
   set<T>(val: T): T;
