@@ -1,9 +1,9 @@
-import { Autowired } from "@naily/core";
 import { Controller } from "@naily/web";
-import { AppService } from "./app.service";
+import { Configure, NailyConfigure, Value } from "@naily/conf";
 
+@Configure(NailyConfigure)
 @Controller()
 export class AppController {
-  @Autowired
-  private readonly appService: AppService;
+  @Value("test")
+  private readonly test: string;
 }

@@ -10,6 +10,8 @@
   "author": "Zero <1203970284@qq.com>",
   "dependencies": {
     "@types/jexl": "^2.3.3",
-    "jexl": "^2.3.0"
+    "jexl": "^2.3.0",
+    "yaml": "^2.3.3",
+    "@naily/core": "workspace:*"
   }
 }

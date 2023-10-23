@@ -11,5 +11,6 @@ export function Value(jexl: string, dynamic: boolean = false): PropertyDecorator
       target,
       propertyKey,
     );
+    target[propertyKey] = undefined;
   };
 }
