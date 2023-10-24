@@ -3,7 +3,6 @@ import { Type } from "../typings/common.typing";
 import { INailyFactory } from "../typings/factory.typing";
 import { NailyBaseFactory } from "./base.factory";
 import { Factory } from "../decorators/factory.decorator";
-import { NailyFactoryConstant } from "../constants";
 
 @Factory
 class NailyFactory extends NailyBaseFactory implements INailyFactory.INailyFactoryImpl {

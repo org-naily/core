@@ -9,6 +9,8 @@
   "author": "Zero <1203970284@qq.com>",
   "license": "ISC",
   "dependencies": {
-    "is-class": "^0.0.9"
+    "@types/md5": "^2.3.4",
+    "is-class": "^0.0.9",
+    "md5": "^2.3.0"
   }
 }
