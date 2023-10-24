@@ -1,0 +1,14 @@
+{
+  "name": "@naily/core",
+  "version": "12.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "Zero <1203970284@qq.com>",
+  "license": "ISC",
+  "dependencies": {
+    "is-class": "^0.0.9"
+  }
+}
