@@ -3,6 +3,7 @@ import * as md5 from "md5";
 import { isClass } from "is-class";
 import { INailyFactory } from "../typings/factory.typing";
 import { NailyFactoryConstant } from "../constants";
+import { NailyFactoryContext } from "../factories";
 
 /**
  * [EN]
@@ -23,19 +24,20 @@ import { NailyFactoryConstant } from "../constants";
  * @param {Type<INailyFactory.INailyFactoryImpl>} target
  */
 export function Factory(target: Type<INailyFactory.INailyFactoryImpl>) {
-  console.log(target.name);
+  console.log(target.name + " is initialized");
 }
 
 export function Injectable(key: string = md5(Math.random() + new Date().getTime().toString())) {
   return (target: Type) => {
     Reflect.defineMetadata(NailyFactoryConstant.INJECTABLE, key, target);
+    NailyFactoryContext.add(target);
   };
 }
 
 export function Inject(val: Type) {
   return (target: Object, key: string | symbol) => {
-    Reflect.defineMetadata(NailyFactoryConstant.INJECT, target, val, key);
     target[key] = undefined;
+    Reflect.defineMetadata(NailyFactoryConstant.INJECT, val, target, key);
   };
 }
 

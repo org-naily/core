@@ -5,7 +5,10 @@ export namespace INailyFactory {
     target: Type<T>;
     instance: T;
   }
-
+  export interface INailyFactoryFilterOptions {
+    filterKey?: string[];
+    filterClassName?: string[];
+  }
   export interface INailyFactoryImpl {
     /**
      * [EN]
@@ -67,6 +70,26 @@ export namespace INailyFactory {
      * @memberof INailyFactoryImpl
      */
     all(): Map<string, INailyFactory.INailyFactoryInstance>;
+    /**
+     * [EN]
+     * ## Filter injectables from the factory
+     * Will return a new Map. The new Map will not affect the original Map.
+     *
+     * ---
+     *
+     * [ZH]
+     * ## 从工厂中筛选可注入类
+     * 将返回一个新的Map。新的Map不会影响原Map。
+     *
+     * ---
+     *
+     * @author Zero <gczgroup@qq.com>
+     * @date 2023/10/25
+     * @param {INailyFactoryFilterOptions} options
+     * @return {*}  {Map<string, INailyFactory.INailyFactoryInstance>}
+     * @memberof INailyFactoryImpl
+     */
+    filter(options: INailyFactoryFilterOptions): Map<string, INailyFactory.INailyFactoryInstance>;
     /**
      * [EN]
      * ## Check if the factory has the injectable
