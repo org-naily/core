@@ -23,4 +23,8 @@ export class NailyFactoryRepositoryGetter {
   public getInjects(): Type[] {
     return Reflect.getMetadata(NailyFactoryConstant.INJECT, this.instance.target) || [];
   }
+
+  public getParameterTypes(): Type[] {
+    return Reflect.getMetadata("design:paramtypes", this.instance.target) || [];
+  }
 }

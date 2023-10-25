@@ -1,3 +1,4 @@
+import { NailyFactoryRepositoryGetter } from "../factories/get.factory";
 import { Type } from "./common.typing";
 
 export namespace INailyFactory {
@@ -143,5 +144,45 @@ export namespace INailyFactory {
      * @memberof INailyFactoryImpl
      */
     clear(): void;
+  }
+  export interface INailyFactoryRepository<Context> {
+    /**
+     * [EN]
+     * ## Get a injectable from the factory and take some effect
+     *
+     * ---
+     *
+     * [ZH]
+     * ## 从工厂中获取一个可注入类并对类进行一些操作
+     *
+     * ---
+     *
+     * @author Zero <gczgroup@qq.com>
+     * @date 2023/10/25
+     * @template T
+     * @param {T} key
+     * @return {*}  {NailyFactoryRepositoryGetter}
+     * @memberof INailyFactoryRepository
+     */
+    get<T extends string>(key: T): NailyFactoryRepositoryGetter;
+    /**
+     * [EN]
+     * ## Get the factory context
+     * The context is the factory itself.
+     *
+     * ---
+     *
+     * [ZH]
+     * ## 获取工厂上下文
+     * 上下文就是工厂本身。
+     *
+     * ---
+     *
+     * @author Zero <gczgroup@qq.com>
+     * @date 2023/10/25
+     * @return {*}  {Context}
+     * @memberof INailyFactoryRepository
+     */
+    getContext(): Context;
   }
 }

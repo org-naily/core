@@ -1,12 +1,16 @@
-import { Autowired, Injectable, NailyFactoryRepository } from "@naily/core";
+import { Autowired, Injectable } from "@naily/core";
+import { Controller, createNailyWebApplication } from "@naily/web";
+import { ExpressAdapter } from "@naily/web-express";
 
-@Injectable("TestService")
+@Injectable()
 export class TestService {}
 
-@Injectable("MainService")
-export class MainService {
+@Controller()
+export class MainController {
   @Autowired
   private readonly testService: TestService;
 }
 
-console.log(NailyFactoryRepository.getContext().all());
+createNailyWebApplication(new ExpressAdapter()).listen(3000, (port) => {
+  console.log(`Listening on port http://localhost:${port}`);
+});

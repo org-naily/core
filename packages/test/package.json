@@ -8,6 +8,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@naily/core": "workspace:*"
+    "@naily/core": "workspace:*",
+    "@naily/web": "workspace:*",
+    "@naily/web-express": "workspace:*"
   }
 }

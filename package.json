@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "pnpm -F test dev",
     "build:core": "pnpm -F @naily/core build",
-    "build:web": "pnpm -F @naily/web build"
+    "build:web": "pnpm -F @naily/web build",
+    "build:express": "pnpm -F @naily/web-express build"
   },
   "keywords": [],
   "author": "",

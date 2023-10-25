@@ -30,7 +30,7 @@ export function Factory(target: Type<INailyFactory.INailyFactoryImpl>) {
 export function Injectable(key: string = md5(Math.random() + new Date().getTime().toString())) {
   return (target: Type) => {
     Reflect.defineMetadata(NailyFactoryConstant.INJECTABLE, key, target);
-    NailyFactoryRepository.getContext().add(target);
+    new NailyFactoryRepository().getContext().add(target);
   };
 }
 
