@@ -3,11 +3,6 @@ import { Type } from "../typings/common.typing";
 import { isClass } from "is-class";
 import { INailyFactory } from "../typings/factory.typing";
 
-interface INailyFactoryFilterOptions {
-  filterKey?: string[];
-  filterClassName?: string[];
-}
-
 export abstract class NailyBaseFactory implements INailyFactory.INailyFactoryImpl {
   protected readonly container = new Map<string, INailyFactory.INailyFactoryInstance>();
 
@@ -25,7 +20,7 @@ export abstract class NailyBaseFactory implements INailyFactory.INailyFactoryImp
     return this.container;
   }
 
-  public filter(options: INailyFactoryFilterOptions): typeof this.container {
+  public filter(options: INailyFactory.INailyFactoryFilterOptions): typeof this.container {
     if (!options.filterKey) options.filterKey = [];
     if (!options.filterClassName) options.filterClassName = [];
 
@@ -148,7 +143,7 @@ export abstract class NailyBaseFactory implements INailyFactory.INailyFactoryImp
    * @return {T}
    * @memberof NailyBaseFactory
    */
-  private transformInjectableToInstance<T>(target: Type<T>): T {
+  private transformInjectableToInstance(target: Type<Object>): Object {
     if (!isClass(target)) throw new TypeError(`${target} is not a class.`);
     const childrenInjectableKey: string = Reflect.getMetadata(NailyFactoryConstant.INJECTABLE, target);
     if (!childrenInjectableKey) {

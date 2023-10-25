@@ -3,6 +3,8 @@ import { Type } from "../typings/common.typing";
 import { INailyFactory } from "../typings/factory.typing";
 import { NailyBaseFactory } from "./base.factory";
 import { Factory } from "../decorators/factory.decorator";
+import { NailyFactoryConstant } from "../constants";
+import { NailyFactoryRepositoryGetter } from "./get.factory";
 
 @Factory
 class NailyFactory extends NailyBaseFactory implements INailyFactory.INailyFactoryImpl {
@@ -16,27 +18,17 @@ class NailyFactory extends NailyBaseFactory implements INailyFactory.INailyFacto
   }
 }
 
-export class NailyFactoryRepositoryGetter {
-  constructor(private readonly instance: INailyFactory.INailyFactoryInstance) {}
-
-  public getClass() {
-    return this.instance.target;
-  }
-
-  public getInstance() {
-    return this.instance.instance;
-  }
-
-  public getClassName() {
-    return this.instance.target.name;
-  }
-}
-
 export class NailyFactoryRepository {
-  private static readonly NailyFactoryContext = new NailyFactory();
+  private static readonly ctx = new NailyFactory();
+
+  private constructor() {}
 
   public static get<T extends string>(key: T): NailyFactoryRepositoryGetter {
-    const injectable = this.NailyFactoryContext.get(key);
+    const injectable = this.ctx.get(key);
     return new NailyFactoryRepositoryGetter(injectable);
+  }
+
+  public static getContext(): NailyFactory {
+    return this.ctx;
   }
 }

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm -F test dev",
-    "build:core": "pnpm -F @naily/core build"
+    "build:core": "pnpm -F @naily/core build",
+    "build:web": "pnpm -F @naily/web build"
   },
   "keywords": [],
   "author": "",

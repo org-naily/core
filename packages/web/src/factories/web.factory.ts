@@ -1,0 +1,27 @@
+import { Factory, INailyFactory, NailyBaseFactory, NailyFactoryRepository, Type } from "@naily/core";
+import { NailyFactoryRepositoryGetter } from "@naily/core/dist/factories/get.factory";
+
+@Factory
+class NailyWebFactory extends NailyBaseFactory implements INailyFactory.INailyFactoryImpl {
+  add(target: Type, key?: string) {
+    key = super.addBase(target, key);
+    const instance = NailyFactoryRepository.get(key).getInstance();
+    this.container.set(key, { target, instance });
+    return { target, instance };
+  }
+}
+
+export class NailyWebFactoryRepository {
+  private static readonly ctx = new NailyWebFactory();
+
+  private constructor() {}
+
+  public static get<T extends string>(key: T): NailyFactoryRepositoryGetter {
+    const injectable = this.ctx.get(key);
+    return new NailyFactoryRepositoryGetter(injectable);
+  }
+
+  public static getContext(): NailyWebFactory {
+    return this.ctx;
+  }
+}

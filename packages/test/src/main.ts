@@ -1,4 +1,4 @@
-import { Autowired, Injectable, NailyFactoryConstant, NailyFactoryContext } from "@naily/core";
+import { Autowired, Injectable, NailyFactoryRepository } from "@naily/core";
 
 @Injectable("TestService")
 export class TestService {}
@@ -8,3 +8,5 @@ export class MainService {
   @Autowired
   private readonly testService: TestService;
 }
+
+console.log(NailyFactoryRepository.getContext().all());

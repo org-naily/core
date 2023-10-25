@@ -36,6 +36,12 @@ importers:
         specifier: workspace:*
         version: link:../core
 
+  packages/web:
+    dependencies:
+      '@naily/core':
+        specifier: workspace:*
+        version: link:../core
+
 packages:
 
   /@types/md5@2.3.4:

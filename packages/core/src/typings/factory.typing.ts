@@ -1,7 +1,7 @@
 import { Type } from "./common.typing";
 
 export namespace INailyFactory {
-  export interface INailyFactoryInstance<T = any> {
+  export interface INailyFactoryInstance<T extends Object = Object> {
     target: Type<T>;
     instance: T;
   }
