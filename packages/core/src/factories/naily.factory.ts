@@ -16,4 +16,27 @@ class NailyFactory extends NailyBaseFactory implements INailyFactory.INailyFacto
   }
 }
 
-export const NailyFactoryContext = new NailyFactory();
+export class NailyFactoryRepositoryGetter {
+  constructor(private readonly instance: INailyFactory.INailyFactoryInstance) {}
+
+  public getClass() {
+    return this.instance.target;
+  }
+
+  public getInstance() {
+    return this.instance.instance;
+  }
+
+  public getClassName() {
+    return this.instance.target.name;
+  }
+}
+
+export class NailyFactoryRepository {
+  private static readonly NailyFactoryContext = new NailyFactory();
+
+  public static get<T extends string>(key: T): NailyFactoryRepositoryGetter {
+    const injectable = this.NailyFactoryContext.get(key);
+    return new NailyFactoryRepositoryGetter(injectable);
+  }
+}

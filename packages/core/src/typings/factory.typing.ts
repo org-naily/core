@@ -52,7 +52,7 @@ export namespace INailyFactory {
      * @return {INailyFactoryInstance}
      * @memberof INailyFactoryImpl
      */
-    get(key: string): INailyFactoryInstance;
+    get<T extends string>(key: T): INailyFactoryInstance;
     /**
      * [EN]
      * ## Get all injectables from the factory

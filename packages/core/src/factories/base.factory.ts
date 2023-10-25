@@ -17,7 +17,7 @@ export abstract class NailyBaseFactory implements INailyFactory.INailyFactoryImp
 
   public add(target: Type, key?: string) {}
 
-  public get(key: string): INailyFactory.INailyFactoryInstance {
+  public get<T extends string>(key: T): INailyFactory.INailyFactoryInstance {
     return this.container.get(key);
   }
 
@@ -75,6 +75,8 @@ export abstract class NailyBaseFactory implements INailyFactory.INailyFactoryImp
     const constructorParameter: Type[] = Reflect.getMetadata("design:paramtypes", target) || [];
     const parsedParams: object[] = [];
     for (let i = 0; i < constructorParameter.length; i++) {
+      const classMetadata: Type[] = Reflect.getMetadata(NailyFactoryConstant.INJECT, constructorParameter[i]) || [];
+      Reflect.defineMetadata(NailyFactoryConstant.INJECT, [...classMetadata, target], constructorParameter[i]);
       parsedParams[i] = this.transformInjectableToInstance(constructorParameter[i]);
     }
     return parsedParams;
@@ -95,6 +97,8 @@ export abstract class NailyBaseFactory implements INailyFactory.INailyFactoryImp
     for (let i = 0; i < injectPropertyKey.length; i++) {
       const metadata: Type = Reflect.getMetadata(NailyFactoryConstant.INJECT, target.prototype, injectPropertyKey[i]);
       if (!metadata) continue;
+      const classMetadata: Type[] = Reflect.getMetadata(NailyFactoryConstant.INJECT, metadata) || [];
+      Reflect.defineMetadata(NailyFactoryConstant.INJECT, [...classMetadata, target], metadata);
       instance[injectPropertyKey[i]] = this.transformInjectableToInstance(metadata);
     }
   }

@@ -1,9 +1,9 @@
-import { Autowired, Injectable } from "@naily/core";
+import { Autowired, Injectable, NailyFactoryConstant, NailyFactoryContext } from "@naily/core";
 
-@Injectable()
+@Injectable("TestService")
 export class TestService {}
 
-@Injectable()
+@Injectable("MainService")
 export class MainService {
   @Autowired
   private readonly testService: TestService;
