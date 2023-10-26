@@ -1,4 +1,6 @@
+import { Type } from "@naily/core";
 import { NailyWebParamConstant } from "../constants";
+import { INailyWebImpl } from "../typings";
 
 export function Req(target: Object, key: string | symbol, _index: number) {
   Reflect.defineMetadata(NailyWebParamConstant.REQUEST, true, target, key);
@@ -16,16 +18,22 @@ export function Context(target: Object, key: string | symbol, _index: number) {
   Reflect.defineMetadata(NailyWebParamConstant.CONTEXT, true, target, key);
 }
 
-export function Params(target: Object, key: string | symbol, _index: number) {
-  Reflect.defineMetadata(NailyWebParamConstant.PARAMS, true, target, key);
+export function Params(...pipes: Type<INailyWebImpl.WebPipe>[]) {
+  return (target: Object, key: string | symbol, _index: number) => {
+    Reflect.defineMetadata(NailyWebParamConstant.PARAMS, pipes, target, key);
+  };
 }
 
-export function Query(target: Object, key: string | symbol, _index: number) {
-  Reflect.defineMetadata(NailyWebParamConstant.QUERY, true, target, key);
+export function Query(...pipes: Type<INailyWebImpl.WebPipe>[]) {
+  return (target: Object, key: string | symbol, _index: number) => {
+    Reflect.defineMetadata(NailyWebParamConstant.QUERY, pipes, target, key);
+  };
 }
 
-export function Body(target: Object, key: string | symbol, _index: number) {
-  Reflect.defineMetadata(NailyWebParamConstant.BODY, true, target, key);
+export function Body(...pipes: Type<INailyWebImpl.WebPipe>[]) {
+  return (target: Object, key: string | symbol, _index: number) => {
+    Reflect.defineMetadata(NailyWebParamConstant.BODY, pipes, target, key);
+  };
 }
 
 export function Headers(target: Object, key: string | symbol, _index: number) {

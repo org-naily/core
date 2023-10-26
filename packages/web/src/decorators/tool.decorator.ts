@@ -1,24 +1,28 @@
 import { Injectable, Type } from "@naily/core";
 import { NailyWebConstant } from "../constants";
-import { INailyWeb } from "../typings";
+import { INailyWebImpl } from "../typings";
+import { NailyWebFactoryRepository } from "../factories";
 
-export function Pipe<Before = any, After = any>(key?: string) {
-  return (target: Type<INailyWeb.WebPipe<Before, After>>) => {
+export function Pipe(key?: string) {
+  return (target: Type<INailyWebImpl.WebPipe>) => {
     Injectable(key)(target);
     Reflect.defineMetadata(NailyWebConstant.PIPE, true, target);
+    new NailyWebFactoryRepository().getContext().add(target);
   };
 }
 
 export function Guard(key?: string) {
-  return (target: Type<INailyWeb.WebGuard>) => {
+  return (target: Type<INailyWebImpl.WebGuard>) => {
     Injectable(key)(target);
     Reflect.defineMetadata(NailyWebConstant.GUARD, true, target);
+    new NailyWebFactoryRepository().getContext().add(target);
   };
 }
 
 export function ExceptionFilter(key?: string) {
-  return (target: Type<INailyWeb.WebExceptionFilter>) => {
+  return (target: Type<INailyWebImpl.WebExceptionFilter>) => {
     Injectable(key)(target);
     Reflect.defineMetadata(NailyWebConstant.EXCEPTION_FILTER, true, target);
+    new NailyWebFactoryRepository().getContext().add(target);
   };
 }

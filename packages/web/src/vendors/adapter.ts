@@ -1,5 +1,5 @@
 import { NailyFactoryConstant, Type } from "@naily/core";
-import { INailyWeb } from "../typings/common.typing";
+import { INailyWeb, INailyWebImpl } from "../typings";
 import { NailyWebFactoryRepository } from "../factories";
 
 class Adapter<Request, Response, NextFunction extends Function> {
@@ -10,12 +10,31 @@ class Adapter<Request, Response, NextFunction extends Function> {
     return this;
   }
 
-  useGlobalPipe(pipe: Type<INailyWeb.WebPipe>) {
+  useGlobalPipe(pipe: Type<INailyWebImpl.WebPipe>) {
     const key: string = Reflect.getMetadata(NailyFactoryConstant.INJECTABLE, pipe);
-    const transform = new NailyWebFactoryRepository().get(key).getInstance() as INailyWeb.WebPipe;
-
-    this.useGlobalMiddleware((req, res, next) => {});
-
+    const getter = new NailyWebFactoryRepository().get(key);
+    const transform = getter.getInstance() as INailyWebImpl.WebPipe;
+    this.webAdapter.initPipe(async (args) => {
+      const queryValue = await transform.transform(args.query, {
+        getRequest: () => args.req,
+        getResponse: () => args.res,
+        dataProvider: "query",
+      });
+      if (queryValue) args.query = queryValue;
+      const paramValue = await transform.transform(args.params, {
+        getRequest: () => args.req,
+        getResponse: () => args.res,
+        dataProvider: "params",
+      });
+      if (paramValue) args.params = paramValue;
+      const bodyValue = await transform.transform(args.body, {
+        getRequest: () => args.req,
+        getResponse: () => args.res,
+        dataProvider: "body",
+      });
+      if (bodyValue) args.body = bodyValue;
+      return args;
+    });
     return this;
   }
 

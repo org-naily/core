@@ -1,3 +1,5 @@
+import { INailyWebImpl } from "./impl.typing";
+
 export namespace INailyWeb {
   export const enum HttpMethod {
     GET = "get",
@@ -21,6 +23,13 @@ export namespace INailyWeb {
     cookies: any;
     ip: string;
   }
+  export interface AdapterPipeArgumentHost<Request, Response> {
+    req: Request;
+    res: Response;
+    params: any;
+    query: any;
+    body: any;
+  }
   export interface ExpAdapter<Request = object, Response = object, NextFunction extends Function = Function> {
     /**
      * [EN]
@@ -38,7 +47,11 @@ export namespace INailyWeb {
      * @memberof ExpAdapter
      */
     use(middleware: <T>(req: Request, res: Response, next: NextFunction) => T | void): void;
-    usePipe(pipe: WebPipe): void;
+    initPipe(
+      host: (
+        argument: AdapterPipeArgumentHost<Request, Response>
+      ) => Promise<AdapterPipeArgumentHost<Request, Response>> | AdapterPipeArgumentHost<Request, Response>
+    ): void;
     /**
      * [EN]
      * ## Start listening for connections on the specified port
@@ -72,22 +85,5 @@ export namespace INailyWeb {
      * @memberof ExpAdapter
      */
     handler(method: HttpMethod, path: string, callback: <T>(options: ExpAdapterHandler<Request, Response, NextFunction>) => T): void;
-  }
-  export interface ArgumentHost<Request = any, Response = any> {
-    getRequest(): Request;
-    getResponse(): Response;
-  }
-  export interface PipeArgumentHost<Request = any, Response = any> extends ArgumentHost<Request, Response> {
-    getType(): "params" | "query" | "body";
-    getValue<T extends any>(): T;
-  }
-  export interface WebPipe {
-    transform(metadata: PipeArgumentHost): any;
-  }
-  export interface WebGuard {
-    canActivate(context: any): boolean | Promise<boolean>;
-  }
-  export interface WebExceptionFilter {
-    catch(exception: any, host: any): void;
   }
 }

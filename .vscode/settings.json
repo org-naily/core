@@ -1,0 +1,9 @@
+{
+  "material-icon-theme.activeIconPack": "nest",
+  "material-icon-theme.folders.associations": {
+    "factory": "app",
+    "factories": "app"
+  },
+  "material-icon-theme.folders.theme": "specific",
+  "material-icon-theme.hidesExplorerArrows": false
+}

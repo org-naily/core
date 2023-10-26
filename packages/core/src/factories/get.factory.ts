@@ -2,7 +2,12 @@ import { NailyFactoryConstant } from "../constants";
 import { INailyFactory, Type } from "../typings";
 
 export class NailyFactoryRepositoryGetter {
-  constructor(private readonly instance: INailyFactory.INailyFactoryInstance) {}
+  constructor(private readonly instance: INailyFactory.INailyFactoryInstance) {
+    if (!this.instance) {
+      console.log(this.instance);
+      throw new TypeError("instance is not defined");
+    }
+  }
 
   public getClass() {
     return this.instance.target;

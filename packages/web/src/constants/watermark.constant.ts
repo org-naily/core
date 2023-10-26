@@ -11,9 +11,9 @@ export const enum NailyWebParamConstant {
   RESPONSE = "__naily:web:response__",
   NEXT = "__naily:web:next__",
   CONTEXT = "__naily:web:context__",
-  PARAMS = "__naily:web:params__",
-  QUERY = "__naily:web:query__",
-  BODY = "__naily:web:body__",
+  PARAMS = "__naily:web:params__", // ! Metadata is an array, contain all pipes
+  QUERY = "__naily:web:query__", // ! Metadata is an array, contain all pipes
+  BODY = "__naily:web:body__", // ! Metadata is an array, contain all pipes
   HEADERS = "__naily:web:headers__",
   COOKIES = "__naily:web:cookies__",
   IP = "__naily:web:ip__",
