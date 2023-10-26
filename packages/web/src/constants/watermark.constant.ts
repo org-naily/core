@@ -6,6 +6,11 @@ export const enum NailyWebConstant {
   EXCEPTION_FILTER = "__naily:exception_filter__",
 }
 
+export const enum NailyWebMethodConstant {
+  GET = "__naily:web:get__",
+  POST = "__naily:web:post__",
+}
+
 export const enum NailyWebParamConstant {
   REQUEST = "__naily:web:request__",
   RESPONSE = "__naily:web:response__",

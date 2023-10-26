@@ -2,31 +2,55 @@ import { Type } from "@naily/core";
 import { NailyWebParamConstant } from "../constants";
 import { INailyWebImpl } from "../typings";
 
-export function Req(target: Object, key: string | symbol, _index: number) {
-  Reflect.defineMetadata(NailyWebParamConstant.REQUEST, true, target, key);
+interface ParameterMeta {
+  index: number;
 }
 
-export function Res(target: Object, key: string | symbol, _index: number) {
-  Reflect.defineMetadata(NailyWebParamConstant.RESPONSE, true, target, key);
+interface ParameterMetaPipe extends ParameterMeta {
+  pipes: Type<INailyWebImpl.WebPipe>[];
 }
 
-export function Next(target: Object, key: string | symbol, _index: number) {
-  Reflect.defineMetadata(NailyWebParamConstant.NEXT, true, target, key);
+export function Req(target: Object, key: string | symbol, index: number) {
+  const oldReq: ParameterMeta[] = Reflect.getMetadata(NailyWebParamConstant.REQUEST, target, key) || [];
+  Reflect.defineMetadata(
+    NailyWebParamConstant.REQUEST,
+    [
+      ...oldReq,
+      {
+        index,
+      },
+    ],
+    target,
+    key
+  );
 }
 
-export function Context(target: Object, key: string | symbol, _index: number) {
-  Reflect.defineMetadata(NailyWebParamConstant.CONTEXT, true, target, key);
+export function Res(target: Object, key: string | symbol, index: number) {
+  const oldRes: ParameterMeta[] = Reflect.getMetadata(NailyWebParamConstant.RESPONSE, target, key) || [];
+  Reflect.defineMetadata(NailyWebParamConstant.RESPONSE, [...oldRes, { index }], target, key);
+}
+
+export function Next(target: Object, key: string | symbol, index: number) {
+  const oldNext: ParameterMeta[] = Reflect.getMetadata(NailyWebParamConstant.NEXT, target, key) || [];
+  Reflect.defineMetadata(NailyWebParamConstant.NEXT, [...oldNext, { index }], target, key);
+}
+
+export function Context(target: Object, key: string | symbol, index: number) {
+  const oldContext: ParameterMeta[] = Reflect.getMetadata(NailyWebParamConstant.CONTEXT, target, key) || [];
+  Reflect.defineMetadata(NailyWebParamConstant.CONTEXT, [...oldContext, { index }], target, key);
 }
 
 export function Params(...pipes: Type<INailyWebImpl.WebPipe>[]) {
-  return (target: Object, key: string | symbol, _index: number) => {
-    Reflect.defineMetadata(NailyWebParamConstant.PARAMS, pipes, target, key);
+  return (target: Object, key: string | symbol, index: number) => {
+    const oldParams: ParameterMetaPipe[] = Reflect.getMetadata(NailyWebParamConstant.PARAMS, target, key) || [];
+    Reflect.defineMetadata(NailyWebParamConstant.PARAMS, [...oldParams, { index, pipes }], target, key);
   };
 }
 
 export function Query(...pipes: Type<INailyWebImpl.WebPipe>[]) {
-  return (target: Object, key: string | symbol, _index: number) => {
-    Reflect.defineMetadata(NailyWebParamConstant.QUERY, pipes, target, key);
+  return (target: Object, key: string | symbol, index: number) => {
+    const oldQuery: ParameterMetaPipe[] = Reflect.getMetadata(NailyWebParamConstant.QUERY, target, key) || [];
+    Reflect.defineMetadata(NailyWebParamConstant.QUERY, [...oldQuery, { index, pipes }], target, key);
   };
 }
 

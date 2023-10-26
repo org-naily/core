@@ -1,6 +1,8 @@
 import { NailyFactoryConstant, Type } from "@naily/core";
 import { INailyWeb, INailyWebImpl } from "../typings";
 import { NailyWebFactoryRepository } from "../factories";
+import { NailyWebInitHook } from "../classes/init.class";
+import { NailyWebParamConstant } from "../constants";
 
 class Adapter<Request, Response, NextFunction extends Function> {
   constructor(private readonly webAdapter: INailyWeb.ExpAdapter<Request, Response, NextFunction>) {}
@@ -38,7 +40,22 @@ class Adapter<Request, Response, NextFunction extends Function> {
     return this;
   }
 
-  listen(port: number, callback?: (port: number) => void) {
+  public async listen(port: number, callback?: (port: number) => void) {
+    const repository = new NailyWebFactoryRepository();
+    const ctx = repository.getContext();
+    for (const item of ctx.all().values()) {
+      const token: string = Reflect.getMetadata(NailyFactoryConstant.INJECTABLE, item.target);
+      const ownKeys = repository.get(token).getTargetOwnKey();
+      for (let i = 0; i < ownKeys.length; i++) {
+        const functionalItem: Function = item.instance[ownKeys[i]];
+        if (typeof functionalItem !== "function") continue;
+        const value = await functionalItem.call(item.instance);
+        this.webAdapter.handler(INailyWeb.HttpMethod.ALL, "/", (options) => {
+          return value;
+        });
+      }
+    }
+
     return this.webAdapter.listen(port, () => {
       if (callback) callback(port);
     });
