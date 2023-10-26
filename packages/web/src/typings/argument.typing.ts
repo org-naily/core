@@ -1,7 +1,26 @@
+/**
+ * Exp Http Context
+ *
+ * @author Zero <gczgroup@qq.com>
+ * @date 2023/10/26
+ * @export
+ * @interface NWebExpHttpContext
+ */
 export interface NWebExpHttpContext {
   getRequest(): any;
   getResponse(): any;
 }
+
+/**
+ * Ctx Http Context
+ *
+ * @author Zero <gczgroup@qq.com>
+ * @date 2023/10/26
+ * @export
+ * @type {NWebCtxHttpContext<T>}
+ * @template T Adapter Context
+ */
+export type NWebCtxHttpContext<T> = T;
 
 /**
  * General argument host
@@ -10,9 +29,9 @@ export interface NWebExpHttpContext {
  * @date 2023/10/26
  * @export
  * @interface NWebExpArgumentHost
- * @template HttpContext
+ * @template HttpContext HttpContext
  */
-export interface NWebExpArgumentHost<HttpContext = NWebExpHttpContext> {
+export interface NWebExpArgumentHost<HttpContext = NWebExpHttpContext | NWebCtxHttpContext<any>> {
   getHttpContext(): HttpContext;
 }
 
