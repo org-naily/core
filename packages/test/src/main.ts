@@ -1,6 +1,7 @@
 import { Autowired, Injectable } from "@naily/core";
-import { Controller, Get, createNailyWebApplication } from "@naily/web";
+import { Controller, Get, Req, createNailyWebApplication } from "@naily/web";
 import { ExpressAdapter } from "@naily/web-express";
+import { Request } from "express";
 
 @Injectable()
 export class TestService {}
@@ -11,7 +12,7 @@ export class MainController {
   private readonly testService: TestService;
 
   @Get()
-  public getHello() {
+  public getHello(@Req() req: Request) {
     return "hello world";
   }
 }

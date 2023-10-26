@@ -41,6 +41,12 @@ importers:
       '@naily/web-express':
         specifier: workspace:*
         version: link:../web-express
+      '@types/express':
+        specifier: ^4.17.20
+        version: 4.17.20
+      express:
+        specifier: ^4.18.2
+        version: 4.18.2
 
   packages/web:
     dependencies:
