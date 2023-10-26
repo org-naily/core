@@ -1,0 +1,15 @@
+{
+  "name": "v13",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm -F test dev",
+    "build:ioc": "pnpm -F @naily/ioc build",
+    "build:aop": "pnpm -F @naily/aop build",
+    "build:web": "pnpm -F @naily/web build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@naily/web",
+  "version": "0.13.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

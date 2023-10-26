@@ -1,0 +1,27 @@
+lockfileVersion: '6.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .: {}
+
+  packages/aop: {}
+
+  packages/ioc: {}
+
+  packages/test:
+    dependencies:
+      '@naily/aop':
+        specifier: workspace:*
+        version: link:../aop
+      '@naily/ioc':
+        specifier: workspace:*
+        version: link:../ioc
+      '@naily/web':
+        specifier: workspace:*
+        version: link:../web
+
+  packages/web: {}
