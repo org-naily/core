@@ -13,10 +13,11 @@ declare global {
           get(token: string): FactoryItem;
           getAll(): FactoryItem[];
           getMap(): Map<string, FactoryItem>;
+          rawAdd(token: string, target: Type, instance: Object): void;
           remove(token: string): void;
         }
         export interface Factory extends BaseFactory {
-          add<T extends Object = Object>(target: Type<T>): FactoryItem<T> | void;
+          add<T extends Object = Object>(target: Type<T>, token?: string): FactoryItem<T> | void;
         }
       }
     }

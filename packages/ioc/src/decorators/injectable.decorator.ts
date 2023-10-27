@@ -1,8 +1,13 @@
 import "reflect-metadata";
-import { NailyBaseFactory } from "../core";
-import { Type } from "../typings/common.typing";
-import { NailyIOCWatermark } from "../constants/watermark.constant";
+import { NailyBaseFactory, createClassDecorator } from "../core";
+import { NailyFactoryContext } from "../factories";
 
 export function Injectable(token: string = NailyBaseFactory.generateToken()) {
-  return (target: Type) => {};
+  return createClassDecorator(
+    [NailyFactoryContext],
+    (target) => {
+      target;
+    },
+    token
+  );
 }

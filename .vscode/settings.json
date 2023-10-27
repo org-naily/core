@@ -3,6 +3,8 @@
   "material-icon-theme.files.associations": {},
   "material-icon-theme.folders.associations": {
     "ioc": "core",
-    "aop": "lib"
+    "aop": "lib",
+    "factory": "app",
+    "factories": "app"
   }
 }
