@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm -F test dev",
-    "docs:start": "pnpm -F @naily/docs start",
+    "dev:docs": "pnpm -F @naily/docs docs:dev",
+    "build:docs": "pnpm -F @naily/docs docs:build",
+    "preview:docs": "pnpm -F @naily/docs docs:preview",
     "build:ioc": "pnpm -F @naily/ioc build",
     "build:aop": "pnpm -F @naily/aop build",
     "build:web": "pnpm -F @naily/web build"
