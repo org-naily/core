@@ -1,0 +1,9 @@
+{
+  "name": "test",
+  "scripts": {
+    "dev": "tsc && node dist/main"
+  },
+  "dependencies": {
+    "@naily/core": "0.14.0"
+  }
+}
