@@ -45,7 +45,7 @@ export interface NContainer {
   /**
    * Transform class to a new transient Instance
    *
-   * !Performance: will create a new class to instance, pay attention to use.
+   * ! [TODO) Performance: will create a new class to instance, pay attention to use.
    * @author Zero <gczgroup@qq.com>
    * @date 2023/10/30
    * @template R
@@ -53,7 +53,7 @@ export interface NContainer {
    * @return {R}
    * @memberof NContainer
    */
-  getTransientInstance<R>(target: Type<R>): R;
+  getTransientInstance<R extends Object>(target: Type<R>): R;
   /**
    * Get single element by token
    *
@@ -64,7 +64,7 @@ export interface NContainer {
    * @return {(NContainer.Element<R> | undefined)}
    * @memberof NContainer
    */
-  getOneByToken<R = any>(token: string): NContainer.Element<R> | undefined;
+  getOneByToken<R extends any = any>(token: string): NContainer.Element<R> | undefined;
   /**
    * Get single element by token, if undefined, throw an error.
    *
@@ -75,7 +75,7 @@ export interface NContainer {
    * @return {NContainer.Element<R>}
    * @memberof NContainer
    */
-  getOneByTokenOrThrow<R = any>(token: string): NContainer.Element<R>;
+  getOneByTokenOrThrow<R extends any = any>(token: string): NContainer.Element<R>;
   /**
    * Get single class element by token, if undefined or no a class element will throw an error.
    *
@@ -86,7 +86,7 @@ export interface NContainer {
    * @return {NContainer.ClassElement<R>}
    * @memberof NContainer
    */
-  getClassOneByTokenOrThrow<R = any>(token: string): NContainer.ClassElement<R>;
+  getClassOneByTokenOrThrow<R extends Object = Object>(token: string): NContainer.ClassElement<R>;
   /**
    * Insert a new class by `Reflect.defineMetadata`
    *
@@ -96,7 +96,7 @@ export interface NContainer {
    * @return {NContainer.ClassElement<T>}
    * @memberof NContainer
    */
-  insertClass<R>(target: Type<R>): NContainer.ClassElement<R>;
+  insertClass<R extends Object>(target: Type<R>): NContainer.ClassElement<R>;
   /**
    * Insert a new class
    *
@@ -109,7 +109,7 @@ export interface NContainer {
    * @return {NContainer.ClassElement<R>}
    * @memberof NContainer
    */
-  insertRawClass<R>(target: Type<R>, token?: string, scope?: Scope): NContainer.ClassElement<R>;
+  insertRawClass<R extends Object>(target: Type<R>, token?: string, scope?: Scope): NContainer.ClassElement<R>;
   /**
    * Insert a new constant by `Reflect.defineMetadata`
    *
@@ -120,7 +120,7 @@ export interface NContainer {
    * @return {NContainer.ConstantElement<T>}
    * @memberof NContainer
    */
-  insertConstant<R>(token: string, value: R): NContainer.ConstantElement<R>;
+  insertConstant<R extends any>(token: string, value: R): NContainer.ConstantElement<R>;
   /**
    * Insert a new config by `Reflect.defineMetadata`
    *
@@ -128,8 +128,8 @@ export interface NContainer {
    * @date 2023/10/30
    * @param {string} token
    * @param {T} value
-   * @return {*}  {NContainer.ConfigElement<T>}
+   * @return {NContainer.ConfigElement<T>}
    * @memberof NContainer
    */
-  insertConfig<R>(token: string, value: R): NContainer.ConfigElement<R>;
+  insertConfig<R extends any>(token: string, value: R): NContainer.ConfigElement<R>;
 }

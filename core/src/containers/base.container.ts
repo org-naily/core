@@ -26,15 +26,15 @@ export abstract class NailyBaseFactory implements NContainer {
     return element as NContainer.Element;
   }
 
-  public getClassOneByTokenOrThrow<R = any>(token: string): NContainer.ClassElement<R> {
+  public getClassOneByTokenOrThrow<R extends Object = Object>(token: string): NContainer.ClassElement<R> {
     const element = this.container.get(token);
     if (!element || element.type !== "class") throw new Error(`Element with token ${token} not found or not a class`);
     return element as NContainer.ClassElement;
   }
 
-  public abstract insertClass<R>(target: Type<R>): NContainer.ClassElement<R>;
+  public abstract insertClass<R extends Object>(target: Type<R>): NContainer.ClassElement<R>;
 
-  public insertRawClass<R>(target: Type<R>, token?: string, scope?: Scope): NContainer.ClassElement<R> {
+  public insertRawClass<R extends Object>(target: Type<R>, token?: string, scope?: Scope): NContainer.ClassElement<R> {
     let classElement: NContainer.ClassElement = {
       type: "class",
       scope: scope,
@@ -45,7 +45,7 @@ export abstract class NailyBaseFactory implements NContainer {
     return classElement;
   }
 
-  public insertConstant<R>(token: string, value: R): NContainer.ConstantElement<R> {
+  public insertConstant<R extends any>(token: string, value: R): NContainer.ConstantElement<R> {
     this.container.set(token, {
       type: "constant",
       value: value,
@@ -53,7 +53,7 @@ export abstract class NailyBaseFactory implements NContainer {
     return this.container.get(token) as NContainer.ConstantElement<R>;
   }
 
-  public insertConfig<R>(token: string, value: R): NContainer.ConfigElement<R> {
+  public insertConfig<R extends any>(token: string, value: R): NContainer.ConfigElement<R> {
     this.container.set(token, {
       type: "config",
       value: value,

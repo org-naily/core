@@ -59,7 +59,7 @@ class NailyFactory extends NailyBaseFactory implements NContainer {
   private transformInstanceToProxy<R>(instance: Object, target: Type<R>): R {
     return new Proxy(instance, {
       get: (_proxyTarget, prop) => {
-        new Logger().warn(`${target.name}'s ${String(prop)} is be called`);
+        new Logger().debug(`${target.name}'s ${String(prop)} is be called`);
         return this.getTransientInstance(target)[prop];
       },
     }) as R;
@@ -86,7 +86,7 @@ class NailyFactory extends NailyBaseFactory implements NContainer {
     });
   }
 
-  public insertClass<R>(target: Type<R>): NContainer.ClassElement<R> {
+  public insertClass<R extends Object>(target: Type<R>): NContainer.ClassElement<R> {
     const token: string = Reflect.getMetadata(NailyIOCWatermark.INJECTABLE, target);
     if (!token) throw new Error(`Class "${target.name}" is not injectable`);
     const scope: Scope = Reflect.getMetadata(NailyIOCWatermark.SCOPE, target);

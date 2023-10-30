@@ -3,4 +3,5 @@ export const enum NailyIOCWatermark {
   CONSTANT = "__naily:ioc:constant__",
   SCOPE = "__naily:ioc:scope__",
   INJECT = "__naily:ioc:inject__",
+  CONFIGURATION = "__naily:ioc:configuration__",
 }

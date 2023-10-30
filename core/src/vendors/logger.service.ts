@@ -7,6 +7,7 @@ export interface LoggerServiceImpl<Message extends any> {
   info(message: Message, context?: string): void;
   fatal(message: Message, context?: string): void;
   trace(message: Message, context?: string): void;
+  debug(message: Message, context?: string): void;
 }
 
 export class Logger<Message extends any> implements LoggerServiceImpl<Message> {
@@ -46,19 +47,28 @@ export class Logger<Message extends any> implements LoggerServiceImpl<Message> {
   log(message: Message, category?: string): void {
     this.logger.log(this.level, message);
   }
+
   error(message: Message, category?: string): void {
     this.logger.error(message);
   }
+
   warn(message: Message, category?: string): void {
     this.logger.warn(message);
   }
+
   info(message: Message, category?: string): void {
     this.logger.info(message);
   }
+
   fatal(message: Message, category?: string): void {
     this.logger.fatal(message);
   }
+
   trace(message: Message, category?: string): void {
     this.logger.trace(message);
+  }
+
+  debug(message: Message, category?: string): void {
+    this.logger.debug(message);
   }
 }
