@@ -16,8 +16,8 @@ interface NCreateFactoryClassDecoratorConstant {
   beforeExecute?: (target: Type) => void;
 }
 
-export function createFactoryClassDecorator(options: NCreateFactoryClassDecoratorClass | NCreateFactoryClassDecoratorConstant) {
-  return (target: Type) => {
+export function createFactoryClassDecorator<T>(options: NCreateFactoryClassDecoratorClass | NCreateFactoryClassDecoratorConstant) {
+  return (target: Type<T>) => {
     if (options.beforeExecute) options.beforeExecute(target);
     if (options.type === "class") {
       const hasToken = Reflect.getMetadata(NailyIOCWatermark.INJECTABLE, target);

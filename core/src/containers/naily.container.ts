@@ -1,6 +1,7 @@
 import { NailyIOCWatermark } from "../constants/watermark.constant";
 import { Scope, Type } from "../typings/common.typing";
 import { NContainer } from "../typings/container.typing";
+import { Logger } from "../vendors";
 import { NailyBaseFactory } from "./base.container";
 import { isClass } from "is-class";
 
@@ -11,7 +12,7 @@ class NailyFactory<T extends any = any> extends NailyBaseFactory<T> implements N
     const injectInstance = this.getClassOneByTokenOrThrow(injectToken);
 
     if (injectInstance.scope === Scope.Singleton) {
-      instance[key] = injectInstance;
+      instance[key] = injectInstance.instance;
     } else if (injectInstance.scope === Scope.Transient) {
       instance[key] = this.transformInstanceToProxy(injectInstance as object, injectValue);
     } else {
@@ -56,8 +57,8 @@ class NailyFactory<T extends any = any> extends NailyBaseFactory<T> implements N
 
   private transformInstanceToProxy(instance: Object, target: Type): T {
     return new Proxy(instance, {
-      get: (proxyTarget, prop) => {
-        console.log(`${target.name} is executed in ${instance.constructor.name}'s ${String(prop)} property`);
+      get: (_proxyTarget, prop) => {
+        new Logger().warn(`${target.name}'s ${String(prop)} is be called`);
         return this.getInstance(target)[prop];
       },
     }) as T;

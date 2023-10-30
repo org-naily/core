@@ -8,6 +8,7 @@
   "dependencies": {
     "@types/md5": "^2.3.4",
     "is-class": "^0.0.9",
+    "log4js": "^6.9.1",
     "md5": "^2.3.0"
   }
 }

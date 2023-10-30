@@ -1,19 +1,26 @@
-import { Inject, Injectable, NContainer, NailyFactoryContext, Scope, Constant } from "@naily/core";
+import { Injectable, NContainer, NailyFactoryContext, Constant, Scope, Autowired } from "@naily/core";
 
 @Constant("T", "hello world")
 export default class {}
+
+@Injectable(Scope.Transient)
+export class TestService {
+  getHello() {
+    return "hello world";
+  }
+}
 
 @Injectable({
   token: "M",
 })
 export class AppService {
-  @Inject("T")
-  private readonly constant: string;
+  @Autowired
+  private readonly testService: TestService;
 
   getHello() {
-    return this.constant;
+    this.testService.getHello();
   }
 }
 
-const classElement = NailyFactoryContext.getOneByToken("M") as NContainer.ClassElement;
-console.log(classElement.instance.getHello());
+const classElement = NailyFactoryContext.getOneByToken("M") as NContainer.ClassElement<AppService>;
+classElement.instance.getHello();
