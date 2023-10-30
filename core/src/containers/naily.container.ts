@@ -1,12 +1,13 @@
 import { NailyIOCWatermark } from "../constants/watermark.constant";
 import { Scope, Type } from "../typings/common.typing";
 import { NContainer } from "../typings/container.typing";
+import { generateToken } from "../utils/generateToken";
 import { Logger } from "../vendors";
 import { NailyBaseFactory } from "./base.container";
 import { isClass } from "is-class";
 
-class NailyFactory<T extends any = any> extends NailyBaseFactory<T> implements NContainer<T> {
-  private transformInjectClass(injectValue: Type, target: Type, instance: T, key: string | symbol) {
+class NailyFactory extends NailyBaseFactory implements NContainer {
+  private transformInjectClass<R>(injectValue: Type<R>, target: Type<R>, instance: R, key: string | symbol) {
     const injectToken: string = Reflect.getMetadata(NailyIOCWatermark.INJECTABLE, injectValue);
     if (!injectToken) throw new TypeError(`${target.name}'s${injectValue.name} is no a injectable.`);
     const injectInstance = this.getClassOneByTokenOrThrow(injectToken);
@@ -20,7 +21,7 @@ class NailyFactory<T extends any = any> extends NailyBaseFactory<T> implements N
     }
   }
 
-  private getInstance(target: Type) {
+  public getTransientInstance<R>(target: Type<R>): R {
     const instance = new target(...this.transformParamtypeToParam(target));
     const injectOwnKeys = this.getOwnKeys(target);
 
@@ -55,16 +56,16 @@ class NailyFactory<T extends any = any> extends NailyBaseFactory<T> implements N
     return Reflect.ownKeys(target.prototype).filter((key) => (key === "constructor" ? undefined : key));
   }
 
-  private transformInstanceToProxy(instance: Object, target: Type): T {
+  private transformInstanceToProxy<R>(instance: Object, target: Type<R>): R {
     return new Proxy(instance, {
       get: (_proxyTarget, prop) => {
         new Logger().warn(`${target.name}'s ${String(prop)} is be called`);
-        return this.getInstance(target)[prop];
+        return this.getTransientInstance(target)[prop];
       },
-    }) as T;
+    }) as R;
   }
 
-  private transformParamtypeToParam(target: Type): T[] {
+  private transformParamtypeToParam<R>(target: Type): R[] {
     const paramtype: Type[] = Reflect.getMetadata("design:paramtypes", target) || [];
 
     return paramtype.map((typing, index) => {
@@ -85,18 +86,12 @@ class NailyFactory<T extends any = any> extends NailyBaseFactory<T> implements N
     });
   }
 
-  public insertClass(target: Type<T>): NContainer.ClassElement<T> {
+  public insertClass<R>(target: Type<R>): NContainer.ClassElement<R> {
     const token: string = Reflect.getMetadata(NailyIOCWatermark.INJECTABLE, target);
     if (!token) throw new Error(`Class "${target.name}" is not injectable`);
     const scope: Scope = Reflect.getMetadata(NailyIOCWatermark.SCOPE, target);
-    let classElement: NContainer.ClassElement<T> = {
-      type: "class",
-      scope: scope,
-      instance: this.getInstance(target),
-      target: target,
-    };
-    this.container.set(token, classElement);
-    return this.container.get(token) as NContainer.ClassElement;
+    if (!scope) throw new Error(`Class "${target.name}"'s scope is undefined`);
+    return this.insertRawClass(target, token, scope);
   }
 }
 

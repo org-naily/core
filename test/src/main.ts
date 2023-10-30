@@ -1,9 +1,9 @@
-import { Injectable, NContainer, NailyFactoryContext, Constant, Scope, Autowired } from "@naily/core";
+import { Injectable, NContainer, NailyFactoryContext, Constant, Scope, Autowired, Logger } from "@naily/core";
 
 @Constant("T", "hello world")
 export default class {}
 
-@Injectable(Scope.Transient)
+@Injectable(Scope.Singleton, "S")
 export class TestService {
   getHello() {
     return "hello world";
@@ -18,9 +18,8 @@ export class AppService {
   private readonly testService: TestService;
 
   getHello() {
-    this.testService.getHello();
+    return this.testService.getHello();
   }
 }
 
-const classElement = NailyFactoryContext.getOneByToken("M") as NContainer.ClassElement<AppService>;
-classElement.instance.getHello();
+console.log(NailyFactoryContext);

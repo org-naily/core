@@ -3,14 +3,14 @@ import { NContainer, Type } from "../typings";
 
 interface NCreateFactoryClassDecoratorClass {
   type: "class" | "constant";
-  factories: NContainer<Object>[];
+  factories: NContainer[];
   token: string;
   beforeExecute?: (target: Type) => void;
 }
 
 interface NCreateFactoryClassDecoratorConstant {
   type: "constant";
-  factories: NContainer<Object>[];
+  factories: NContainer[];
   token: string;
   value: any;
   beforeExecute?: (target: Type) => void;

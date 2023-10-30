@@ -1,50 +1,63 @@
-import { Type } from "../typings/common.typing";
+import { Scope, Type } from "../typings/common.typing";
 import { NContainer } from "../typings/container.typing";
 
-export abstract class NailyBaseFactory<T extends any = any> implements NContainer<T> {
-  protected readonly container = new Map<string, NContainer.Element<T>>();
+export abstract class NailyBaseFactory implements NContainer {
+  protected readonly container = new Map<string, NContainer.Element>();
 
-  public getMap(): Map<string, NContainer.Element<T>> {
+  public getMap<R>(): Map<string, NContainer.Element<R>> {
     return this.container;
   }
 
-  public getAll(filter: NContainer.Filter = {}): NContainer.Element<T>[] {
+  public getAll<R>(filter: NContainer.Filter = {}): NContainer.Element<R>[] {
     let elements = Array.from(this.container.values());
     if (filter.type && filter.type.length !== 0) elements = elements.filter((element) => filter.type.includes(element.type));
     return elements;
   }
 
-  public getOneByToken(token: string): NContainer.Element<T> | undefined {
-    return this.container.get(token);
+  public abstract getTransientInstance<R>(target: Type<R>): R;
+
+  public getOneByToken<R = any>(token: string): NContainer.Element<R> | undefined {
+    return this.container.get(token) as NContainer.Element;
   }
 
-  public getOneByTokenOrThrow(token: string): NContainer.Element<T> {
+  public getOneByTokenOrThrow<R = any>(token: string): NContainer.Element<R> {
     const element = this.container.get(token);
     if (!element) throw new Error(`Element with token "${token}" not found`);
-    return element;
+    return element as NContainer.Element;
   }
 
-  public getClassOneByTokenOrThrow(token: string): NContainer.ClassElement<T> {
+  public getClassOneByTokenOrThrow<R = any>(token: string): NContainer.ClassElement<R> {
     const element = this.container.get(token);
     if (!element || element.type !== "class") throw new Error(`Element with token ${token} not found or not a class`);
-    return element;
+    return element as NContainer.ClassElement;
   }
 
-  public abstract insertClass(target: Type<T>): NContainer.ClassElement<T>;
+  public abstract insertClass<R>(target: Type<R>): NContainer.ClassElement<R>;
 
-  public insertConstant(token: string, value: T): NContainer.ConstantElement<T> {
+  public insertRawClass<R>(target: Type<R>, token?: string, scope?: Scope): NContainer.ClassElement<R> {
+    let classElement: NContainer.ClassElement = {
+      type: "class",
+      scope: scope,
+      instance: this.getTransientInstance(target),
+      target: target,
+    };
+    this.container.set(token, classElement);
+    return classElement;
+  }
+
+  public insertConstant<R>(token: string, value: R): NContainer.ConstantElement<R> {
     this.container.set(token, {
       type: "constant",
       value: value,
     });
-    return this.container.get(token) as NContainer.ConstantElement<T>;
+    return this.container.get(token) as NContainer.ConstantElement<R>;
   }
 
-  public insertConfig(token: string, value: T): NContainer.ConfigElement<T> {
+  public insertConfig<R>(token: string, value: R): NContainer.ConfigElement<R> {
     this.container.set(token, {
       type: "config",
       value: value,
     });
-    return this.container.get(token) as NContainer.ConfigElement<T>;
+    return this.container.get(token) as NContainer.ConfigElement<R>;
   }
 }

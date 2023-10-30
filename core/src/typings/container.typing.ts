@@ -22,12 +22,114 @@ export namespace NContainer {
   }
 }
 
-export interface NContainer<T> {
-  getMap(): Map<string, NContainer.Element<T>>;
-  getAll(filter?: NContainer.Filter): NContainer.Element<T>[];
-  getOneByToken(token: string): NContainer.Element<T> | undefined;
-  getOneByTokenOrThrow(token: string): NContainer.Element<T>;
-  insertClass(target: Type<T>): NContainer.ClassElement<T>;
-  insertConstant(token: string, value: T): NContainer.ConstantElement<T>;
-  insertConfig(token: string, value: T): NContainer.ConfigElement<T>;
+export interface NContainer {
+  /**
+   * Get raw Map
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2023/10/30
+   * @return {Map<string, NContainer.Element<T>>}
+   * @memberof NContainer
+   */
+  getMap<R>(): Map<string, NContainer.Element<R>>;
+  /**
+   * Get array elements & filters
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2023/10/30
+   * @param {NContainer.Filter} [filter]
+   * @return {NContainer.Element<T>[]}
+   * @memberof NContainer
+   */
+  getAll<R>(filter?: NContainer.Filter): NContainer.Element<R>[];
+  /**
+   * Transform class to a new transient Instance
+   *
+   * !Performance: will create a new class to instance, pay attention to use.
+   * @author Zero <gczgroup@qq.com>
+   * @date 2023/10/30
+   * @template R
+   * @param {Type<R>} target
+   * @return {R}
+   * @memberof NContainer
+   */
+  getTransientInstance<R>(target: Type<R>): R;
+  /**
+   * Get single element by token
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2023/10/30
+   * @template R
+   * @param {string} token
+   * @return {(NContainer.Element<R> | undefined)}
+   * @memberof NContainer
+   */
+  getOneByToken<R = any>(token: string): NContainer.Element<R> | undefined;
+  /**
+   * Get single element by token, if undefined, throw an error.
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2023/10/30
+   * @template R
+   * @param {string} token
+   * @return {NContainer.Element<R>}
+   * @memberof NContainer
+   */
+  getOneByTokenOrThrow<R = any>(token: string): NContainer.Element<R>;
+  /**
+   * Get single class element by token, if undefined or no a class element will throw an error.
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2023/10/30
+   * @template R
+   * @param {string} token
+   * @return {NContainer.ClassElement<R>}
+   * @memberof NContainer
+   */
+  getClassOneByTokenOrThrow<R = any>(token: string): NContainer.ClassElement<R>;
+  /**
+   * Insert a new class by `Reflect.defineMetadata`
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2023/10/30
+   * @param {Type<T>} target
+   * @return {NContainer.ClassElement<T>}
+   * @memberof NContainer
+   */
+  insertClass<R>(target: Type<R>): NContainer.ClassElement<R>;
+  /**
+   * Insert a new class
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2023/10/30
+   * @template R
+   * @param {Type<R>} target
+   * @param {string} [token]
+   * @param {Scope} [scope]
+   * @return {NContainer.ClassElement<R>}
+   * @memberof NContainer
+   */
+  insertRawClass<R>(target: Type<R>, token?: string, scope?: Scope): NContainer.ClassElement<R>;
+  /**
+   * Insert a new constant by `Reflect.defineMetadata`
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2023/10/30
+   * @param {string} token
+   * @param {T} value
+   * @return {NContainer.ConstantElement<T>}
+   * @memberof NContainer
+   */
+  insertConstant<R>(token: string, value: R): NContainer.ConstantElement<R>;
+  /**
+   * Insert a new config by `Reflect.defineMetadata`
+   *
+   * @author Zero <gczgroup@qq.com>
+   * @date 2023/10/30
+   * @param {string} token
+   * @param {T} value
+   * @return {*}  {NContainer.ConfigElement<T>}
+   * @memberof NContainer
+   */
+  insertConfig<R>(token: string, value: R): NContainer.ConfigElement<R>;
 }
