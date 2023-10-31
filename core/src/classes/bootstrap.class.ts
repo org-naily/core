@@ -1,8 +1,9 @@
 import { NPlugin, RxType } from "../typings";
-import { NailyContainer } from "./base.class";
+import { NailyBaseContainer } from "./base.class";
 
 export class NailyFactory {
-  public static pluginMap: NPlugin[] = [];
+  private static pluginMap: NPlugin[] = [];
+  public static NailyContainer = new NailyBaseContainer();
 
   public static use(...plugins: RxType<NPlugin>[] | NPlugin[]) {
     for (const item of plugins) {
@@ -14,7 +15,7 @@ export class NailyFactory {
     }
 
     for (const item of this.pluginMap) {
-      item.install(NailyContainer);
+      item.install(this.NailyContainer);
     }
     return this;
   }

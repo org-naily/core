@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { isClass } from "is-class";
 import { NailyIocWatermark } from "../constants/watermark.constant";
 import { Type } from "../typings";

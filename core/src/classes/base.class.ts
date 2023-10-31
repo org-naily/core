@@ -61,5 +61,3 @@ export class NailyBaseContainer implements NContainer {
     this.container.clear();
   }
 }
-
-export const NailyContainer = new NailyBaseContainer();

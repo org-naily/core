@@ -26,7 +26,7 @@ export class TestPlugin {
         for (const [key, value] of allElement) {
           if (value.type !== "class") continue;
         }
-        that.app.listen(port, () => callback(port));
+        that.app.listen(port, () => (callback ? callback(port) : void 0));
       }
     };
   }
