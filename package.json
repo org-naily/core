@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:core": "pnpm -F @naily/core build",
+    "build:web": "pnpm -F @naily/web build",
+    "build:express": "pnpm -F @naily/web-express build",
+    "dev": "pnpm -F test dev"
   },
   "keywords": [],
   "author": "",

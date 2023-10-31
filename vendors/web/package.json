@@ -1,13 +1,11 @@
 {
-  "name": "@naily/core",
+  "name": "@naily/web",
   "version": "0.15.0",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc"
   },
   "dependencies": {
-    "@types/md5": "^2.3.4",
-    "is-class": "^0.0.9",
-    "md5": "^2.3.0"
+    "@naily/core": "workspace:*"
   }
 }

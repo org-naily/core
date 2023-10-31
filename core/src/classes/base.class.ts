@@ -1,38 +1,65 @@
-import { NailyIocWatermark } from "../constants/watermark.constant";
-import { NContainer, Type } from "../typings";
+import { NailyIocWatermark, Scope } from "../constants/watermark.constant";
+import { NContainer, NLifeCycle, NToken, Type } from "../typings";
+import { generateToken } from "../utils/generate";
+import { NailyClassFactory } from "./class.factory";
 
 export class NailyBaseContainer implements NContainer {
   protected readonly container = new Map<string | symbol, NContainer.Element>();
 
-  add<Instance extends Object, Value>(target: Type<Instance>, token?: string | symbol): NContainer.Element<Instance, Value> {
+  public addClass<Instance extends NLifeCycle>(
+    target: Type<Instance>,
+    token: string | symbol = generateToken(),
+    scope: Scope = Scope.SINGLETON
+  ): NContainer.ClassElement<Instance> {
     Reflect.defineMetadata(NailyIocWatermark.INJECTABLE, token, target);
-    const classElement: NContainer.Element<Instance, Value> = {
+    Reflect.defineMetadata(NailyIocWatermark.SCOPE, scope, target);
+
+    const classElement: NContainer.ClassElement<Instance> = {
       type: "class",
       target: target,
-      instance: new target(),
+      instance: new NailyClassFactory(this).getClassInstance(target) as Instance,
     };
     this.container.set(token, classElement);
+    return classElement;
   }
 
-  get<Instance extends Object, Value = any>(token: string | symbol): NContainer.Element<Instance, Value> {
-    throw new Error("Method not implemented.");
+  public getAll() {
+    return Array.from(this.container.values());
   }
 
-  getElementByTargetOrThrow<Instance>(target: Type<Instance>): NContainer.Element {
+  public getMap() {
+    return this.container;
+  }
+
+  public getClassOrThrow<Instance extends NLifeCycle>(token: string | symbol): NContainer.ClassElement<Instance> {
+    return this.container.get(token) as NContainer.ClassElement<Instance>;
+  }
+
+  public getElementByTargetOrThrow<Instance>(target: Type<Instance>): NContainer.Element {
     const token: string | symbol | undefined = Reflect.getMetadata(NailyIocWatermark.INJECTABLE, target);
     if (!token) throw new Error(`Cannot find token for ${target.name}`);
     return this.container.get(token);
   }
 
-  has(token: string | symbol): boolean {
-    throw new Error("Method not implemented.");
+  public has(token: string | symbol): boolean {
+    return this.container.has(token);
   }
 
-  remove(token: string | symbol): void {
-    throw new Error("Method not implemented.");
+  public changeClassInstance<Instance extends NLifeCycle>(token: NToken, instance: Instance): void {
+    const element = this.container.get(token);
+    if (!element) throw new Error(`Cannot find element for ${token.toString()}`);
+    if (element.type !== "class") throw new TypeError(`Cannot change instance for ${token.toString()}`);
+    element.instance = instance;
+    this.container.set(token, element);
   }
 
-  clear(): void {
-    throw new Error("Method not implemented.");
+  public remove(token: string | symbol): void {
+    this.container.delete(token);
+  }
+
+  public clear(): void {
+    this.container.clear();
   }
 }
+
+export const NailyContainer = new NailyBaseContainer();
