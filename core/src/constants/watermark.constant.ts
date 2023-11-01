@@ -5,6 +5,8 @@ export const enum NailyIocWatermark {
   SCOPE = "__naily_ioc_scope__",
   ACTION = "__naily_ioc_action__",
   INJECT = "__naily_ioc_inject__",
+  VALUE = "__naily_ioc_value__",
+  CONFIGURATION = "__naily_ioc_configuration__",
 }
 
 export const enum Scope {

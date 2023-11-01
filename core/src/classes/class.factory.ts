@@ -1,5 +1,6 @@
 import { NailyIocWatermark, Scope } from "../constants/watermark.constant";
-import { NAction, NContainer, NLifeCycle, RxType, Type } from "../typings";
+import { NAction, NConfiguration, NContainer, NLifeCycle, RxType, Type } from "../typings";
+import * as jexl from "jexl";
 
 export class NailyClassFactory {
   constructor(private readonly container: NContainer) {}
@@ -35,7 +36,9 @@ export class NailyClassFactory {
   }
 
   public static getClassToken(target: Type): string | symbol {
-    return Reflect.getMetadata(NailyIocWatermark.INJECTABLE, target) || target.name;
+    const token = Reflect.getMetadata(NailyIocWatermark.INJECTABLE, target);
+    if (!token) throw new Error(`Cannot find token for ${target.name}`);
+    return token;
   }
 
   public static getPrototypeOwnKeys(target: Type): (string | symbol)[] {
@@ -48,11 +51,22 @@ export class NailyClassFactory {
     return scope;
   }
 
+  private initConfiguration(instance: Object, prototypeKeys: (string | symbol)[]) {
+    for (const key of prototypeKeys) {
+      const valueMeta: { jexl: string; configure: RxType<NConfiguration> } = Reflect.getMetadata(NailyIocWatermark.VALUE, instance, key);
+      if (!valueMeta) continue;
+      const config = new valueMeta.configure();
+      const context = config.getConfigure();
+      const value = jexl.evalSync(valueMeta.jexl, context);
+      instance[key] = value;
+    }
+  }
+
   public getClassInstance(target: Type<NLifeCycle>): NLifeCycle {
     const paramTypes = NailyClassFactory.getClassDesignTypes(target);
     const actions = NailyClassFactory.getClassActions(target);
     const token = NailyClassFactory.getClassToken(target);
-    const params = this.transformParamTypes(paramTypes);
+    let params = this.transformParamTypes(paramTypes);
     const scope = NailyClassFactory.getClassScope(target);
 
     const actionContainer = new Map<Type<NAction>, NAction>();
@@ -70,12 +84,16 @@ export class NailyClassFactory {
           getStaticOwnKeys: () => Reflect.ownKeys(target),
           getAllActionInstances: () => Array.from(actionContainer.values()),
           setTarget: (newTarget) => (target = newTarget),
-          setParams: (newParams) => (newParams = params),
+          setParams: (newParams) => (params = newParams),
         });
       }
     }
 
     let instance = new target(...params);
+    this.initConfiguration(
+      instance,
+      Reflect.ownKeys(target.prototype).filter((key) => (key === "constructor" ? undefined : key))
+    );
 
     for (const action of actionContainer.values()) {
       if (action.afterAction) {

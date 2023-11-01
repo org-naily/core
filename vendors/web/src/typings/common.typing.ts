@@ -31,17 +31,10 @@ export interface WebExpPipeExtractor {
   params: any;
   query: any;
   body: any;
-  req: any;
-  res: any;
-}
-export interface WebExpPipeExtractorReturner {
-  params: any;
-  query: any;
-  body: any;
 }
 export interface NExpAdapter<Request, Response, NextFunction> {
   use(handler: (req: Request, res: Response, next: NextFunction) => any): any;
   handler(argumentHost: WebArgumentHost, extractor: (options: WebExpExtractor) => Promise<any> | any): void;
-  pipeChanged(extractor: (options: WebExpPipeExtractor) => WebExpPipeExtractorReturner | Promise<WebExpPipeExtractorReturner>): void;
+  pipeChanged(extractor: (options: WebExpPipeExtractor) => WebExpPipeExtractor | Promise<WebExpPipeExtractor>): void;
   listen(port: number, callback?: (port: number) => any): any;
 }

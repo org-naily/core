@@ -1,5 +1,5 @@
 import { NailyIocWatermark, Scope } from "../constants/watermark.constant";
-import { NContainer, NLifeCycle, NToken, Type } from "../typings";
+import { NConfiguration, NContainer, NLifeCycle, NToken, Type } from "../typings";
 import { generateToken } from "../utils/generate";
 import { NailyClassFactory } from "./class.factory";
 
@@ -21,6 +21,21 @@ export class NailyBaseContainer implements NContainer {
     };
     this.container.set(token, classElement);
     return classElement;
+  }
+
+  public async addConfiguration<Instance extends NConfiguration<Value>, Value>(
+    target: Type<Instance>,
+    token: string = generateToken()
+  ): Promise<NContainer.ConfigureElement<Instance, Value>> {
+    const instance = new target();
+    const configureElement: NContainer.ConfigureElement<Instance, Value> = {
+      type: "configure",
+      target: target,
+      instance: instance,
+      value: await instance.getConfigure(),
+    };
+    this.container.set(token, configureElement);
+    return configureElement;
   }
 
   public getAll() {

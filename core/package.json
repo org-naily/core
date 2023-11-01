@@ -6,8 +6,11 @@
     "build": "tsc"
   },
   "dependencies": {
+    "@types/jexl": "^2.3.3",
     "@types/md5": "^2.3.4",
     "is-class": "^0.0.9",
-    "md5": "^2.3.0"
+    "jexl": "^2.3.0",
+    "md5": "^2.3.0",
+    "yaml": "^2.3.3"
   }
 }

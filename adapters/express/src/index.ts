@@ -1,8 +1,10 @@
-import { NExpAdapter, WebArgumentHost, WebExpExtractor, WebExpPipeExtractor, WebExpPipeExtractorReturner } from "@naily/web";
+import { Class } from "@naily/core";
+import { NExpAdapter, WebArgumentHost, WebExpExtractor, WebExpPipeExtractor } from "@naily/web";
 import * as express from "express";
 import { Request, Response, NextFunction } from "express";
 import { Server } from "http";
 
+@Class()
 export class ExpressAdapter implements NExpAdapter<Request, Response, NextFunction> {
   private readonly app = express();
 
@@ -37,18 +39,16 @@ export class ExpressAdapter implements NExpAdapter<Request, Response, NextFuncti
     this.app.use(callback);
   }
 
-  pipeChanged(extractor: (options: WebExpPipeExtractor) => WebExpPipeExtractorReturner | Promise<WebExpPipeExtractorReturner>): void {
-    this.app.use(async (req, res, next) => {
-      const result = await extractor({
-        req: req,
-        res: res,
+  pipeChanged(extractor: (options: WebExpPipeExtractor) => WebExpPipeExtractor | Promise<WebExpPipeExtractor>): void {
+    this.app.use(async (req, _res, next) => {
+      const { params, query, body } = await extractor({
         params: req.params,
         query: req.query,
         body: req.body,
       });
-      req.params = result.params;
-      req.query = result.query;
-      req.body = result.body;
+      req.params = params;
+      req.query = query;
+      req.body = body;
       next();
     });
   }

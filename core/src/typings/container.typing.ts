@@ -1,4 +1,4 @@
-import { NLifeCycle, Type } from "./common.typing";
+import { NConfiguration, NLifeCycle, Type } from "./common.typing";
 
 export type NToken = string | symbol;
 export namespace NFactory {}
@@ -31,6 +31,7 @@ export namespace NContainer {
 }
 export interface NContainer {
   addClass<Instance extends NLifeCycle>(target: Type<Instance>, token?: NToken): NContainer.ClassElement<Instance>;
+  addConfiguration<Instance extends NConfiguration<Value>, Value>(target: Type<Instance>): Promise<NContainer.ConfigureElement<Instance, Value>>;
   getClassOrThrow<Instance extends NLifeCycle>(token: NToken): NContainer.ClassElement<Instance>;
   getAll(): NContainer.Element[];
   getMap(): Map<NToken, NContainer.Element>;

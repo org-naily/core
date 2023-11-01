@@ -43,3 +43,7 @@ export interface NPlugin {
   install(container: NContainer): void;
 }
 export interface NPlugin extends Object {}
+export interface NConfiguration<Value = any> {
+  getConfigure(): Value | Promise<Value>;
+}
+export interface NConfiguration extends Object {}
