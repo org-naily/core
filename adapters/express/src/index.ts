@@ -27,7 +27,7 @@ export class ExpressAdapter implements NExpAdapter<Request, Response, NextFuncti
   }
 
   listen(port: number, callback?: (port: number) => any): Server {
-    return this.app.listen(port, () => callback(port));
+    return this.app.listen(port, () => (callback ? callback(port) : void 0));
   }
 
   use(callback: (req: Request, res: Response, next: NextFunction) => any) {
