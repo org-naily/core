@@ -38,6 +38,10 @@ export class NailyClassFactory {
     return Reflect.getMetadata(NailyIocWatermark.INJECTABLE, target) || target.name;
   }
 
+  public static getPrototypeOwnKeys(target: Type): (string | symbol)[] {
+    return Reflect.ownKeys(target.prototype).filter((key) => (key === "constructor" ? undefined : key));
+  }
+
   public static getClassScope(target: Type): Scope {
     const scope = Reflect.getMetadata(NailyIocWatermark.SCOPE, target);
     if (!scope) throw new Error(`Cannot find scope for ${target.name}`);

@@ -1,4 +1,4 @@
-import { NExpAdapter, WebArgumentHost, WebExpExtractor } from "@naily/web";
+import { NExpAdapter, WebArgumentHost, WebExpExtractor, WebExpPipeExtractor, WebExpPipeExtractorReturner } from "@naily/web";
 import * as express from "express";
 import { Request, Response, NextFunction } from "express";
 import { Server } from "http";
@@ -9,9 +9,10 @@ export class ExpressAdapter implements NExpAdapter<Request, Response, NextFuncti
   handler(argumentHost: WebArgumentHost, extractor: (options: WebExpExtractor) => any): void {
     const method = argumentHost.getMethod();
     const path = argumentHost.getPath();
+    const haveResponse = argumentHost.getHaveResponse();
 
     this.app[method](path, async (req, res, next) => {
-      return await extractor({
+      const data = await extractor({
         req: req,
         res: res,
         next: next,
@@ -23,6 +24,8 @@ export class ExpressAdapter implements NExpAdapter<Request, Response, NextFuncti
         ip: req.ip,
         ips: req.ips,
       });
+
+      if (!haveResponse) return res.send(data);
     });
   }
 
@@ -32,5 +35,21 @@ export class ExpressAdapter implements NExpAdapter<Request, Response, NextFuncti
 
   use(callback: (req: Request, res: Response, next: NextFunction) => any) {
     this.app.use(callback);
+  }
+
+  pipeChanged(extractor: (options: WebExpPipeExtractor) => WebExpPipeExtractorReturner | Promise<WebExpPipeExtractorReturner>): void {
+    this.app.use(async (req, res, next) => {
+      const result = await extractor({
+        req: req,
+        res: res,
+        params: req.params,
+        query: req.query,
+        body: req.body,
+      });
+      req.params = result.params;
+      req.query = result.query;
+      req.body = result.body;
+      next();
+    });
   }
 }
