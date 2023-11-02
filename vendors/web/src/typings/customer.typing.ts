@@ -1,6 +1,23 @@
-import { NLifeCycle } from "@naily/core";
+import { NLifeCycle, Type } from "@naily/core";
 
 export namespace NPipe {
+  export namespace Meta {
+    export interface HaveParameterOptions {
+      type: "params" | "query" | "body" | "headers";
+      key?: string;
+      index: number;
+    }
+
+    export interface HavePipeParameterOptions extends HaveParameterOptions {
+      pipes: Type<NPipe>[];
+    }
+
+    export interface NoParameterOptions {
+      type: "cookies" | "ip" | "ips" | "req" | "res" | "next";
+      index: number;
+    }
+    export type ParameterOptions = HaveParameterOptions | NoParameterOptions;
+  }
   export interface PipeArgumentMeta {
     dataType: "body" | "query" | "params";
     type: any;
@@ -8,5 +25,5 @@ export namespace NPipe {
   }
 }
 export interface NPipe extends NLifeCycle {
-  transform<In = any, Out = any>(value: In, host: NPipe.PipeArgumentMeta): Out;
+  transform(value: any, host: NPipe.PipeArgumentMeta): any;
 }

@@ -1,15 +1,13 @@
 import { NContainer, NailyClassFactory, NailyFactory, Type } from "@naily/core";
 import { HttpMethodType, NExpAdapter, NPipe, WebArgumentHost, WebExpExtractor } from "../typings";
 import { NailyWebWatermark } from "../constants/warermark.constant";
-import { ParameterOptions } from "../decorators";
 import { translatePath } from "../utils/path";
 
 export class NailyExpWebCore<Request, Response, NextFunction> {
   constructor(private readonly adapter: NExpAdapter<Response, Request, NextFunction>) {}
 
   private analyzeHaveResponse(classElement: NContainer.ClassElement, key: string | symbol): boolean {
-    const method: Function = classElement.instance[key];
-    const paramOptions: ParameterOptions[] = Reflect.getMetadata(NailyWebWatermark.PARAMETERS, classElement.target.prototype, key) || [];
+    const paramOptions: NPipe.Meta.ParameterOptions[] = Reflect.getMetadata(NailyWebWatermark.PARAMETERS, classElement.target.prototype, key) || [];
     let haveResponse = false;
     paramOptions.forEach((param) => {
       param.type === "res" ? (haveResponse = true) : void 0;
@@ -20,7 +18,7 @@ export class NailyExpWebCore<Request, Response, NextFunction> {
   private initHandlerMethod(classElement: NContainer.ClassElement, key: string | symbol, options: WebExpExtractor) {
     const method: Function = classElement.instance[key];
     const params: any[] = [];
-    const paramOptions: ParameterOptions[] = Reflect.getMetadata(NailyWebWatermark.PARAMETERS, classElement.target.prototype, key) || [];
+    const paramOptions: NPipe.Meta.ParameterOptions[] = Reflect.getMetadata(NailyWebWatermark.PARAMETERS, classElement.target.prototype, key) || [];
 
     for (const i in paramOptions) {
       const item = paramOptions[i];
@@ -30,18 +28,33 @@ export class NailyExpWebCore<Request, Response, NextFunction> {
         } else {
           params[i] = options.params;
         }
+        this.initParameterPipe(classElement, key, params[i], {
+          dataType: "params",
+          key: item.key,
+          type: Object,
+        });
       } else if (item.type === "query") {
         if (item.key) {
           params[i] = options.query[item.key];
         } else {
           params[i] = options.query;
         }
+        this.initParameterPipe(classElement, key, params[i], {
+          dataType: "query",
+          key: item.key,
+          type: Object,
+        });
       } else if (item.type === "body") {
         if (item.key) {
           params[i] = options.body[item.key];
         } else {
           params[i] = options.body;
         }
+        this.initParameterPipe(classElement, key, params[i], {
+          dataType: "body",
+          key: item.key,
+          type: Object,
+        });
       } else if (item.type === "headers") {
         if (item.key) {
           params[i] = options.headers[item.key];
@@ -66,8 +79,23 @@ export class NailyExpWebCore<Request, Response, NextFunction> {
     return method.call(classElement.instance, ...params);
   }
 
+  private initParameterPipe(element: NContainer.ClassElement, propertyKey: string | symbol, value: any, argument: NPipe.PipeArgumentMeta) {
+    const metadata: NPipe.Meta.ParameterOptions[] = Reflect.getMetadata(NailyWebWatermark.PARAMETERS, element.target.prototype, propertyKey) || [];
+
+    for (const meta of metadata) {
+      if (meta.type === "params" || meta.type === "query" || meta.type === "body") {
+        const metaItem = meta as NPipe.Meta.HavePipeParameterOptions;
+        metaItem.pipes.forEach((singlePipe) => {
+          const classElement = new NailyClassFactory().getClassInstance(singlePipe);
+          classElement.transform(value, argument);
+        });
+      }
+    }
+  }
+
   public initHandler(controllerPath: string, classElement: NContainer.ClassElement) {
     const ownKeys = NailyClassFactory.getPrototypeOwnKeys(classElement.target);
+
     for (const key of ownKeys) {
       const method = classElement.instance[key];
       if (typeof method !== "function") continue;
@@ -101,7 +129,7 @@ export class NailyExpWebCore<Request, Response, NextFunction> {
     }
   }
 
-  public initPipe(pipe: Type<NPipe>) {
+  public initGlobalPipe(pipe: Type<NPipe>) {
     const token = NailyClassFactory.getClassToken(pipe);
     const pipeInstance = NailyFactory.NailyContainer.getClassOrThrow<NPipe>(token);
 

@@ -36,7 +36,7 @@ export class NailyExpWebPlugin<Request, Response, NextFunction> {
   }
 
   usePipe(pipe: Type<NPipe>): this {
-    this.webCore.initPipe(pipe);
+    this.webCore.initGlobalPipe(pipe);
     return this;
   }
 

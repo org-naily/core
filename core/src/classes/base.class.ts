@@ -17,7 +17,7 @@ export class NailyBaseContainer implements NContainer {
     const classElement: NContainer.ClassElement<Instance> = {
       type: "class",
       target: target,
-      instance: new NailyClassFactory(this).getClassInstance(target) as Instance,
+      instance: new NailyClassFactory(this).getClassInstance(target),
     };
     this.container.set(token, classElement);
     return classElement;

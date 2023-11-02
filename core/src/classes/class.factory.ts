@@ -1,9 +1,10 @@
 import { NailyIocWatermark, Scope } from "../constants/watermark.constant";
 import { NAction, NConfiguration, NContainer, NLifeCycle, RxType, Type } from "../typings";
 import * as jexl from "jexl";
+import { NailyFactory } from "./bootstrap.class";
 
 export class NailyClassFactory {
-  constructor(private readonly container: NContainer) {}
+  constructor(private readonly container: NContainer = NailyFactory.NailyContainer) {}
 
   public transformParamTypes(param: Type[]): Object[] {
     return param.map((typing) => {
@@ -23,7 +24,9 @@ export class NailyClassFactory {
 
   public transformInstanceToProxy<Instance extends NLifeCycle>(instance: Instance, target: Type): Instance {
     return new Proxy(instance, {
-      get: (_target, p) => this.getClassInstance(target)[p],
+      get: (_target, p) => {
+        return this.getClassInstance(target)[p];
+      },
     });
   }
 
@@ -62,7 +65,7 @@ export class NailyClassFactory {
     }
   }
 
-  public getClassInstance(target: Type<NLifeCycle>): NLifeCycle {
+  public getClassInstance<T extends NLifeCycle>(target: Type<T>): T {
     const paramTypes = NailyClassFactory.getClassDesignTypes(target);
     const actions = NailyClassFactory.getClassActions(target);
     const token = NailyClassFactory.getClassToken(target);
@@ -83,7 +86,7 @@ export class NailyClassFactory {
           getPrototypeOwnKeys: () => Reflect.ownKeys(target.prototype),
           getStaticOwnKeys: () => Reflect.ownKeys(target),
           getAllActionInstances: () => Array.from(actionContainer.values()),
-          setTarget: (newTarget) => (target = newTarget),
+          setTarget: (newTarget: Type<T>) => (target = newTarget),
           setParams: (newParams) => (params = newParams),
         });
       }
@@ -107,6 +110,7 @@ export class NailyClassFactory {
           getStaticOwnKeys: () => Reflect.ownKeys(target),
           getInstanceOwnKeys: () => Reflect.ownKeys(instance),
           getAllActionInstances: () => Array.from(actionContainer.values()),
+          // @ts-ignore
           setInstance: (newInstance) => (instance = newInstance),
         });
       }
