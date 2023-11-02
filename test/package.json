@@ -1,0 +1,11 @@
+{
+  "name": "test",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc && node dist/main"
+  },
+  "dependencies": {
+    "@naily/core": "workspace:*"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "v16",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build:core": "pnpm -F @naily/core build",
+    "doctor:core": "pnpm -F @naily/core father",
+    "dev": "pnpm -F test dev",
+    "lint": "eslint . --ext .ts"
+  },
+  "dependencies": {
+    "@types/node": "^20.8.10",
+    "reflect-metadata": "^0.1.13",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "@typescript-eslint/parser": "^6.9.1",
+    "eslint": "^8.52.0",
+    "prettier": "^3.0.3"
+  }
+}
