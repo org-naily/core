@@ -1,10 +1,10 @@
 import { NailyIocWatermark } from "../constants";
-import { Type } from "../typings";
+import { InjectableOptions, NToken, Type } from "../typings";
 import { generateToken } from "../utils/generate";
 
-export function Injectable(options: { token: string }): ClassDecorator;
-export function Injectable(token?: string): ClassDecorator;
-export function Injectable(tokenorOptions: string | { token: string } = generateToken()) {
+export function Injectable(options: InjectableOptions): ClassDecorator;
+export function Injectable(token?: NToken): ClassDecorator;
+export function Injectable(tokenorOptions: NToken | InjectableOptions = generateToken()) {
   return (target: Type) => {
     Reflect.defineMetadata(
       NailyIocWatermark.INJECTABLE,

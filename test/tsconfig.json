@@ -3,9 +3,9 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "sourceMap": true,
-    "declaration": true,
-    "outDir": "dist",
     "module": "NodeNext",
-    "target": "ESNext"
-  }
+    "target": "ESNext",
+    "outDir": "dist"
+  },
+  "include": ["./src/**/*"]
 }
