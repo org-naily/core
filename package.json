@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "build:core": "pnpm -F @naily/core build",
+    "dev:core": "pnpm -F @naily/core dev",
     "doctor:core": "pnpm -F @naily/core father",
     "dev": "pnpm -F test dev",
     "lint": "eslint . --ext .ts"

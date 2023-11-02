@@ -1,0 +1,10 @@
+{
+  "material-icon-theme.activeIconPack": "nest",
+  "material-icon-theme.folders.associations": {
+    "esm": "export",
+    "cjs": "export"
+  },
+  "material-icon-theme.files.associations": {
+    "*.class.ts": "nest-module"
+  }
+}

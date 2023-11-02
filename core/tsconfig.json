@@ -8,5 +8,6 @@
     "emitDecoratorMetadata": true,
     "preserveConstEnums": true,
     "esModuleInterop": true
-  }
+  },
+  "exclude": ["node_modules", "dist"]
 }
