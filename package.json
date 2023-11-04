@@ -1,0 +1,18 @@
+{
+  "name": "v17",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:core": "pnpm -F @naily/core build",
+    "dev": "pnpm -F test dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^20.8.10",
+    "reflect-metadata": "^0.1.13",
+    "typescript": "^5.2.2"
+  }
+}

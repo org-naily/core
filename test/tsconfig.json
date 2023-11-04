@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "ES2021",
+    "module": "NodeNext",
+    "outDir": "dist",
+    "sourceMap": true,
+    "declaration": true
+  }
+}
