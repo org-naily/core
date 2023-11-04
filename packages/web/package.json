@@ -1,7 +1,7 @@
 {
-  "name": "@naily/core",
+  "name": "@naily/web",
   "version": "0.17.0",
-  "description": "A Injectable Core",
+  "description": "Naily Backend Web",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "scripts": {
@@ -23,8 +23,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@types/md5": "^2.3.4",
-    "is-class": "^0.0.9",
-    "md5": "^2.3.0"
+    "@naily/core": "workspace:*"
   }
 }

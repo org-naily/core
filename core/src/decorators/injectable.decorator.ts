@@ -1,6 +1,6 @@
 import { NailyIocWatermark, ScopeOption } from "../constants";
 import { NAction, NInjectableOptions, Type } from "../typings";
-import { generateToken } from "../utils/generate";
+import { generateToken } from "../utils/generate.util";
 
 export function Injectable(options: NInjectableOptions = { token: generateToken(), scope: ScopeOption.SINGLETON }) {
   return (target: Type) => {

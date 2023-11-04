@@ -1,0 +1,14 @@
+{
+  "material-icon-theme.activeIconPack": "nest",
+  "material-icon-theme.files.associations": {
+    "*.class.ts": "nest-module",
+    "*.typing.ts": "typescript-def",
+    "*.util.ts": "nest-guard",
+    ".fatherrc.ts": "webpack"
+  },
+  "material-icon-theme.folders.associations": {
+    "adapters": "import",
+    "adapter": "import",
+    "express": "global"
+  }
+}
