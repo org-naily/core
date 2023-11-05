@@ -5,7 +5,7 @@
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "scripts": {
-    "dev": "father dev",
+    "dev": "pnpm build && node dist/cjs/tests/main.js",
     "build": "father build",
     "build:deps": "father prebundle",
     "prepublishOnly": "father doctor && npm run build"
@@ -23,6 +23,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@naily/core": "workspace:*"
+    "@naily/core": "workspace:*",
+    "chalk": "^4"
   }
 }

@@ -7,7 +7,9 @@
     "build:core": "pnpm -F @naily/core build",
     "build:web": "pnpm -F @naily/web build",
     "build:express": "pnpm -F @naily/web-express build",
-    "dev": "pnpm -F test dev"
+    "build:log": "pnpm -F @naily/log build",
+    "dev": "pnpm -F test dev",
+    "dev:log": "pnpm -F @naily/log dev"
   },
   "keywords": [],
   "author": "",
