@@ -1,5 +1,6 @@
 import { defineConfig } from "father";
 
 export default defineConfig({
-  extends: "../.fatherrc.ts",
+  extends: "../../.fatherrc.ts",
+  umd: undefined,
 });

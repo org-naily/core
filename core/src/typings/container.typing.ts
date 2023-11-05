@@ -1,4 +1,4 @@
-import { Type } from "./common.typing";
+import { NToken, Type } from "./common.typing";
 
 export namespace NContainer {
   export interface ClassElement<Instance> {
@@ -8,4 +8,10 @@ export namespace NContainer {
   }
   export type Element = ClassElement<any>;
 }
-export interface NContainer {}
+export interface NContainer {
+  getMap(): Map<NToken, NContainer.Element>;
+  getElementByToken(token: NToken): NContainer.Element | undefined;
+  getElementByTokenOrThrow(token: NToken): NContainer.Element;
+  hasElement(token: NToken): boolean;
+  clear(): void;
+}

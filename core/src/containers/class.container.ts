@@ -1,22 +1,8 @@
 import { NToken } from "../typings";
 import { NContainer } from "../typings/container.typing";
+import { NailyBaseContainer } from "./base.container";
 
-export class NailyContainer {
-  protected readonly container = new Map<NToken, NContainer.Element>();
-
-  public getMap() {
-    return this.container;
-  }
-
-  public getElementByToken(token: NToken) {
-    return this.container.get(token);
-  }
-
-  public getElementByTokenOrThrow(token: NToken) {
-    const element = this.getElementByToken(token);
-    if (!element) throw new Error(`Element with token ${String(token)} not found`);
-  }
-
+export class NailyClassContainer extends NailyBaseContainer implements NContainer {
   public getClassElementByToken<Instance>(token: NToken) {
     return this.getElementByToken(token) as NContainer.ClassElement<Instance>;
   }
@@ -36,15 +22,7 @@ export class NailyContainer {
     this.setClassElement(token, element);
   }
 
-  public hasElement(token: NToken) {
-    return this.container.has(token);
-  }
-
   public hasClassElement(token: NToken) {
     return this.hasElement(token) && this.getElementByToken(token).type === "class";
-  }
-
-  public clear() {
-    this.container.clear();
   }
 }

@@ -50,6 +50,7 @@ export class NailyInjectableFactory<Instance> {
     const metadata = this.getMetadataOrThrow();
     const singletonInstance = this.getSingletonInstance();
     if (singleton && singletonInstance) return singletonInstance;
+
     const paramtypes = this.getParamtypesOrThrow();
     const prototypeKeys = this.getPrototypeOwnkeys();
     const staticKeys = this.getStaticOwnkeys();
@@ -90,6 +91,15 @@ export class NailyInjectableFactory<Instance> {
       target: this.target,
       instance: instance,
     });
-    return instance;
+
+    if (metadata.scope === "__singleton__") {
+      return instance;
+    } else if (metadata.scope === "__transient__") {
+      return new Proxy(instance as Object, {
+        get: (_target, key) => {
+          return this.createInstance()[key];
+        },
+      }) as Instance;
+    }
   }
 }

@@ -43,15 +43,36 @@ importers:
 
   core:
     dependencies:
+      '@types/jexl':
+        specifier: ^2.3.3
+        version: 2.3.3
       '@types/md5':
         specifier: ^2.3.4
         version: 2.3.4
       is-class:
         specifier: ^0.0.9
         version: 0.0.9
+      jexl:
+        specifier: ^2.3.0
+        version: 2.3.0
       md5:
         specifier: ^2.3.0
         version: 2.3.0
+      yaml:
+        specifier: ^2.3.4
+        version: 2.3.4
+
+  loggers/winston:
+    dependencies:
+      '@naily/core':
+        specifier: workspace:*
+        version: link:../../core
+
+  packages/log:
+    dependencies:
+      '@naily/core':
+        specifier: workspace:*
+        version: link:../../core
 
   packages/web:
     dependencies:
@@ -242,7 +263,6 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.0
-    dev: true
 
   /@babel/template@7.22.15:
     resolution: {integrity: sha512-QPErUVm4uyJa60rkI73qneDacvdvzxshT3kksGqlGWYdOTIUOwJ7RDUL8sGqslY1uXWSL6xMFKEXDS3ox2uF0w==}
@@ -984,6 +1004,10 @@ packages:
     dependencies:
       '@types/istanbul-lib-report': 3.0.2
     dev: true
+
+  /@types/jexl@2.3.3:
+    resolution: {integrity: sha512-Esfy1KiwBDgiZvXlUbMQ34qtnrlSLhjPQDCU/+LFzETkYfeVkvTqT2KAWS00RDTMV01toVssWIvXfnosprLwIw==}
+    dev: false
 
   /@types/json-schema@7.0.14:
     resolution: {integrity: sha512-U3PUjAudAdJBeC2pgN8uTIKgxrb4nlDF3SF0++EldXQvQBGkpFZMSnwQiIoDU77tv45VgNkl/L4ouD+rEomujw==}
@@ -3095,6 +3119,12 @@ packages:
       supports-color: 8.1.1
     dev: true
 
+  /jexl@2.3.0:
+    resolution: {integrity: sha512-ecqln4kTWNkMwbFvTukOMDq1jy1GcPzvshhMp/s4pxU86xdLDq7HbDRa87DfMfbSAOS8V6EwvCdfs0S+w/iycA==}
+    dependencies:
+      '@babel/runtime': 7.23.2
+    dev: false
+
   /jju@1.4.0:
     resolution: {integrity: sha512-8wb9Yw966OSxApiCt0K3yNJL8pnNeIv+OEq2YMidz4FKP6nonSRoOXc80iXY4JaN2FC11B9qsNmDsm+ZOfMROA==}
     dev: true
@@ -4288,7 +4318,6 @@ packages:
 
   /regenerator-runtime@0.14.0:
     resolution: {integrity: sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==}
-    dev: true
 
   /regexp.prototype.flags@1.5.1:
     resolution: {integrity: sha512-sy6TXMN+hnP/wMy+ISxg3krXx7BAtWVO4UouuCN/ziM9UEne0euamVNafDfvC83bRNr95y0V5iijeDQFUNpvrg==}
@@ -5094,6 +5123,11 @@ packages:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
     engines: {node: '>= 6'}
     dev: true
+
+  /yaml@2.3.4:
+    resolution: {integrity: sha512-8aAvwVUSHpfEqTQ4w/KMlf3HcRdt50E5ODIQJBw1fQ5RL34xabzxtUlzTXVqc4rkZsPbvrXKWnABCD7kWSmocA==}
+    engines: {node: '>= 14'}
+    dev: false
 
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}

@@ -1,4 +1,4 @@
-import { IScopeOption, ScopeOption } from "../constants";
+import { IScopeOption } from "../constants";
 
 export interface Type<T = any> extends Function {
   new (...args: any[]): T;
@@ -33,13 +33,20 @@ export namespace NAdvice {
   export interface Ctx {
     getArgs(): any[];
     getPropertyKey(): string | symbol;
+    getParamtypes(): any[];
+    getReturntype(): any;
   }
   export interface BeforeCtx extends Ctx {}
   export interface AfterCtx extends Ctx {
     getReturnValue(): any;
+    setReturnValue(newReturnValue: any): void;
   }
 }
 export interface NAdvice {
   whenBefore(ctx: NAdvice.BeforeCtx): void;
   whenAfter(ctx: NAdvice.AfterCtx): void;
+}
+export interface NConfigure {
+  isPromise: boolean;
+  getConfigure(): any | Promise<any>;
 }
