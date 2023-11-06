@@ -4,6 +4,7 @@ import { NAction, NInjectableOptions, Type } from "../typings";
 import { NailyInjectableParser } from "./parser.class";
 import { NailyIocWatermark } from "../constants";
 import { NailyFactory } from "./factory.class";
+import { Logger } from "./logger.class";
 
 export class NailyInjectableFactory<Instance> {
   constructor(private target: Type<Instance>) {}
@@ -93,13 +94,20 @@ export class NailyInjectableFactory<Instance> {
     });
 
     if (metadata.scope === "__singleton__") {
+      new Logger().log(`Create singleton instance for ${this.target.name}`);
       return instance;
     } else if (metadata.scope === "__transient__") {
-      return new Proxy(instance as Object, {
-        get: (_target, key) => {
-          return this.createInstance()[key];
-        },
-      }) as Instance;
+      new Logger().log(`Create transient instance for ${this.target.name}`);
+
+      if (singleton) {
+        return new Proxy(instance as Object, {
+          get: (_target, key) => {
+            return new NailyInjectableFactory(this.target).createInstance(false)[key];
+          },
+        }) as Instance;
+      } else {
+        return instance;
+      }
     }
   }
 }

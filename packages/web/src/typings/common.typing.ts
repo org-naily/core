@@ -16,6 +16,7 @@ export namespace NExpAdapter {
     body: any;
     params: any;
     headers: any;
+    cookies: any;
     ip: string;
     ips: string[];
     req: any;

@@ -1,33 +1,25 @@
-import { Autowired, Aspect, Injectable, NAdvice, Value, NailyFactory } from "@naily/core";
-
-@Injectable()
-export class TestService implements NAdvice {
-  whenBefore(ctx: NAdvice.BeforeCtx): void {
-    console.log(ctx.getArgs());
-  }
-
-  whenAfter(ctx: NAdvice.AfterCtx): void {
-    console.log(ctx.getReturnValue());
-  }
-}
+import { Injectable, Logger, Value } from "@naily/core";
+import { Controller, Get, NailyExpWebFactory, NailyWebWatermark } from "@naily/web";
+import { ExpressAdapter } from "@naily/web-express";
 
 @Injectable()
 export class MainService {
-  @Autowired
-  readonly testService: TestService;
   @Value("1 + 1")
   readonly test: number;
 
-  constructor() {
-    setInterval(() => {
-      console.log(this.test);
-    }, 1000);
-  }
-
-  @Aspect(TestService)
   public getHello() {
     return "Hello World!";
   }
 }
 
-NailyFactory.pipe(MainService).createInstance();
+@Controller()
+export class MainController {
+  @Get()
+  public getHello() {
+    return "hello naily";
+  }
+}
+
+NailyExpWebFactory.create(new ExpressAdapter()).listen(3999, (port) => {
+  new Logger().verbose(`Server is running on http://localhost:${port}`);
+});

@@ -17,11 +17,12 @@ export class ExpressAdapter implements NExpAdapter {
         headers: req.headers,
         ip: req.ip,
         ips: req.ips,
+        cookies: req.cookies,
         req,
         res,
         next,
       });
-      return value;
+      return res.send(value);
     });
   }
 }

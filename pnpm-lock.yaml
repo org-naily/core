@@ -49,6 +49,9 @@ importers:
       '@types/md5':
         specifier: ^2.3.4
         version: 2.3.4
+      chalk:
+        specifier: ^4
+        version: 4.1.2
       is-class:
         specifier: ^0.0.9
         version: 0.0.9
@@ -68,15 +71,6 @@ importers:
         specifier: workspace:*
         version: link:../../core
 
-  packages/log:
-    dependencies:
-      '@naily/core':
-        specifier: workspace:*
-        version: link:../../core
-      chalk:
-        specifier: ^4
-        version: 4.1.2
-
   packages/web:
     dependencies:
       '@naily/core':
@@ -88,6 +82,12 @@ importers:
       '@naily/core':
         specifier: workspace:*
         version: link:../core
+      '@naily/web':
+        specifier: workspace:*
+        version: link:../packages/web
+      '@naily/web-express':
+        specifier: workspace:*
+        version: link:../adapters/express
 
 packages:
 

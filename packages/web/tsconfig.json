@@ -4,7 +4,9 @@
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "target": "ES6",
+    "module": "CommonJS"
   },
   "include": ["src/**/*"]
 }

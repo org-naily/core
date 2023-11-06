@@ -7,3 +7,7 @@ export const enum ScopeOption {
 }
 
 export type IScopeOption = "__singleton__" | "__transient__";
+
+export const enum NailyLogWatermark {
+  USE = "naily:logger:use",
+}
