@@ -1,4 +1,4 @@
-import { Injectable, Logger, Value } from "@naily/core";
+import { Autowired, Injectable, Logger, Value } from "@naily/core";
 import { Controller, Get, NailyExpWebFactory, NailyWebWatermark } from "@naily/web";
 import { ExpressAdapter } from "@naily/web-express";
 
@@ -14,9 +14,12 @@ export class MainService {
 
 @Controller()
 export class MainController {
+  @Autowired
+  private readonly mainService: MainService;
+
   @Get()
   public getHello() {
-    return "hello naily";
+    return this.mainService.getHello();
   }
 }
 
