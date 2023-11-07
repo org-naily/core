@@ -3,15 +3,22 @@ import { Catch, Controller, Get, NFilter, NPipe, NailyExpWebFactory, Param, UseF
 import { ExpressAdapter } from "@naily/web-express";
 import { Response } from "express";
 
+export class TestError extends Error {
+  constructor(msg: string, readonly twd: string) {
+    super(msg);
+    console.log(twd);
+  }
+}
+
 @Injectable()
 export class MainService implements NPipe {
-  @Value("1 + 1")
-  readonly test: number;
+  @Value("port")
+  readonly test: string;
 
   transform(value: any, metadata: NPipe.Metadata) {
     console.log(value);
     console.log(metadata);
-    throw new Error(`aaa`);
+    throw new TestError(this.test, "AAA");
   }
 
   public getHello() {
@@ -19,10 +26,10 @@ export class MainService implements NPipe {
   }
 }
 
-@Catch(Error)
+@Catch(TestError)
 export class MainFilter implements NFilter {
-  catch(error: Error, host: NFilter.ArgumentHost): void | Promise<void> {
-    host.getResponse<Response>().send(error.message);
+  catch(error: TestError, host: NFilter.ArgumentHost): void | Promise<void> {
+    host.getResponse<Response>().send(error.twd);
   }
 }
 
