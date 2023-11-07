@@ -8,21 +8,25 @@ export class ExpressAdapter implements NExpAdapter {
     this.app.listen(port, () => callBack(port));
   }
 
-  handler(path: string, method: IHttpMethod, handler: (options: NExpAdapter.HandlerOptions) => any): void {
+  handler(path: string, method: IHttpMethod, handler: (options: NExpAdapter.HandlerOptions) => Promise<NExpAdapter.HandlerReturn>): void {
     this.app[method](path, async (req, res, next) => {
-      const value = await handler({
-        query: req.query,
-        body: req.body,
-        params: req.params,
-        headers: req.headers,
-        ip: req.ip,
-        ips: req.ips,
-        cookies: req.cookies,
-        req,
-        res,
-        next,
-      });
-      return res.send(value);
+      try {
+        const { body, haveError } = await handler({
+          query: req.query,
+          body: req.body,
+          params: req.params,
+          headers: req.headers,
+          ip: req.ip,
+          ips: req.ips,
+          cookies: req.cookies,
+          req,
+          res,
+          next,
+        });
+        if (!haveError) return res.send(body);
+      } catch (error) {
+        return;
+      }
     });
   }
 }

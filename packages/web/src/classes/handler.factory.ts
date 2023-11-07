@@ -1,5 +1,5 @@
 import { NailyFactory, Type } from "@naily/core";
-import { IHttpMethod, NExpAdapter, NPipe } from "../typings";
+import { IHttpMethod, NExpAdapter, NFilter, NPipe } from "../typings";
 import { NailyWebWatermark } from "../constants";
 import { NContainer } from "@naily/core/dist/cjs/typings/container.typing";
 
@@ -25,17 +25,49 @@ export class NailyExpWebHandler {
     return param;
   }
 
+  private async initFilter(filters: Type<NFilter>[], options: NExpAdapter.HandlerOptions, error: Error) {
+    filters.forEach((filter) => {
+      const errorInstance = Reflect.getMetadata(NailyWebWatermark.FILTER, filter);
+      if (errorInstance instanceof error.constructor || errorInstance === error.constructor) {
+        const filterInstance = NailyFactory.container.getClassElementByTokenOrThrow<NFilter>(
+          NailyFactory.pipe(filter).getMetadataOrThrow().token
+        ).instance;
+        return filterInstance.catch(error, {
+          getResponse: () => options.res,
+          getRequest: () => options.req,
+        });
+      }
+
+      if (!errorInstance) {
+        const filterInstance = NailyFactory.container.getClassElementByTokenOrThrow<NFilter>(
+          NailyFactory.pipe(filter).getMetadataOrThrow().token
+        ).instance;
+        return filterInstance.catch(error, {
+          getResponse: () => options.res,
+          getRequest: () => options.req,
+        });
+      }
+    });
+  }
+
   public init(path: string, method: IHttpMethod, element: NContainer.ClassElement<Object>, methodPropertykey: string | symbol) {
-    const parameter: NPipe.PipeMetadata[] = Reflect.getMetadata(NailyWebWatermark.PIPE, element.target.prototype, methodPropertykey) || [];
     const pipe = NailyFactory.pipe(element.target);
     const methodParamtypes = pipe.getParamtypesByPropertykey(methodPropertykey);
+    const parameter: NPipe.PipeMetadata[] = Reflect.getMetadata(NailyWebWatermark.PARAMETER, element.target.prototype, methodPropertykey) || [];
+    const filters: Type<NFilter>[] = Reflect.getMetadata(NailyWebWatermark.USEFILTER, element.target.prototype, methodPropertykey) || [];
 
-    this.adapter.handler(path, method, async (options) => {
+    this.adapter.handler(path, method, async (options): Promise<NExpAdapter.HandlerReturn> => {
       try {
-        const pipe = await this.initPipe(parameter, options, methodParamtypes);
-        return element.instance[methodPropertykey](...pipe);
+        const param = await this.initPipe(parameter, options, methodParamtypes);
+        return {
+          body: element.instance[methodPropertykey](...param),
+          haveError: false,
+        };
       } catch (error) {
-        console.error(error);
+        return {
+          body: this.initFilter(filters, options, error),
+          haveError: true,
+        };
       }
     });
   }

@@ -1,6 +1,7 @@
 import { Autowired, Injectable, Logger, Value } from "@naily/core";
-import { Controller, Get, NPipe, NailyExpWebFactory, Param, Query } from "@naily/web";
+import { Catch, Controller, Get, NFilter, NPipe, NailyExpWebFactory, Param, UseFilters } from "@naily/web";
 import { ExpressAdapter } from "@naily/web-express";
+import { Response } from "express";
 
 @Injectable()
 export class MainService implements NPipe {
@@ -11,11 +12,17 @@ export class MainService implements NPipe {
     console.log(value);
     console.log(metadata);
     throw new Error(`aaa`);
-    return value;
   }
 
   public getHello() {
     return "Hello World!";
+  }
+}
+
+@Catch(Error)
+export class MainFilter implements NFilter {
+  catch(error: Error, host: NFilter.ArgumentHost): void | Promise<void> {
+    host.getResponse<Response>().send(error.message);
   }
 }
 
@@ -25,6 +32,7 @@ export class MainController {
   private readonly mainService: MainService;
 
   @Get(":id")
+  @UseFilters(MainFilter)
   public getHello(@Param("id", MainService) param: number) {
     return this.mainService.getHello();
   }

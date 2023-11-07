@@ -42,7 +42,7 @@ export class NailyExpWebFactory {
         methods.forEach((method) => {
           const path = join("/" + controllerPath, method.path).replace(/\\/g, "/");
           const methodParamtypes = pipe.getParamtypesByPropertykey(key);
-          const parameter: NPipe.PipeMetadata[] = Reflect.getMetadata(NailyWebWatermark.PIPE, item.target.prototype, key) || [];
+          const parameter: NPipe.PipeMetadata[] = Reflect.getMetadata(NailyWebWatermark.PARAMETER, item.target.prototype, key) || [];
 
           new NailyExpWebHandler(this.adapter).init(path, method.method, item, key);
         });

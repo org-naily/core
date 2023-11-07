@@ -1,5 +1,7 @@
 export const enum NailyWebWatermark {
   CONTROLLER = "naily:web:controller",
   METHOD = "naily:web:method",
-  PIPE = "naily:web:pipe",
+  PARAMETER = "naily:web:parameter",
+  FILTER = "naily:web:filter",
+  USEFILTER = "naily:web:usefilter",
 }
