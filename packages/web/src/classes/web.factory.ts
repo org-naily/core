@@ -1,10 +1,20 @@
-import { NailyFactory } from "@naily/core";
+import { Injectable, NailyFactory, Type } from "@naily/core";
 import { NailyWebWatermark } from "../constants";
-import { NExpAdapter } from "../typings";
+import { NExpAdapter, NPipe } from "../typings";
 import { IMethod } from "../typings/method.typing";
+import { NailyExpWebHandler } from "./handler.factory";
+import { join } from "path";
 
+function Factory() {
+  return (target: Type) => {
+    Injectable()(target);
+    target.prototype = NailyFactory.pipe(target).createInstance();
+  };
+}
+
+@Factory()
 export class NailyExpWebFactory {
-  private constructor(private readonly adapter: NExpAdapter) {}
+  constructor(private readonly adapter: NExpAdapter) {}
 
   public static create(adapter: NExpAdapter): NailyExpWebFactory {
     const map = NailyFactory.container.getMap().values();
@@ -30,10 +40,11 @@ export class NailyExpWebFactory {
         if (typeof item.instance[key] !== "function") continue In;
         const methods: IMethod[] = Reflect.getMetadata(NailyWebWatermark.METHOD, item.target.prototype, key) || [];
         methods.forEach((method) => {
-          const path = `${controllerPath}${method.path}`;
-          this.adapter.handler(path, method.method, () => {
-            return item.instance[key]();
-          });
+          const path = join("/" + controllerPath, method.path).replace(/\\/g, "/");
+          const methodParamtypes = pipe.getParamtypesByPropertykey(key);
+          const parameter: NPipe.PipeMetadata[] = Reflect.getMetadata(NailyWebWatermark.PIPE, item.target.prototype, key) || [];
+
+          new NailyExpWebHandler(this.adapter).init(path, method.method, item, key);
         });
       }
     }

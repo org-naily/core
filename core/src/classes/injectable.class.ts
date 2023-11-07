@@ -29,6 +29,10 @@ export class NailyInjectableFactory<Instance> {
     return Reflect.ownKeys(this.target);
   }
 
+  public getParamtypesByPropertykey(key: string | symbol): any[] {
+    return Reflect.getMetadata("design:paramtypes", this.target.prototype, key) || [];
+  }
+
   public getMetadata(): NInjectableOptions | undefined {
     return Reflect.getMetadata(NailyIocWatermark.INJECTABLE, this.target);
   }

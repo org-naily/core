@@ -1,4 +1,5 @@
-import { NToken } from "../typings";
+import { NailyInjectableFactory } from "../classes/injectable.class";
+import { NToken, Type } from "../typings";
 import { NContainer } from "../typings/container.typing";
 import { NailyBaseContainer } from "./base.container";
 
@@ -8,9 +9,14 @@ export class NailyClassContainer extends NailyBaseContainer implements NContaine
   }
 
   public getClassElementByTokenOrThrow<Instance>(token: NToken) {
-    const element = this.getClassElementByTokenOrThrow(token) as NContainer.ClassElement<Instance>;
-    if (element.type !== "class") throw new TypeError(`Element with token ${String(token)} is not a class element`);
+    const element = this.getClassElementByToken(token) as NContainer.ClassElement<Instance>;
+    if (!element || element.type !== "class") throw new TypeError(`Element with token ${String(token)} is not a class element`);
     return element;
+  }
+
+  public getClassElementByTarget<Instance>(target: Type) {
+    const pipe = new NailyInjectableFactory(target);
+    pipe.getMetadata();
   }
 
   public setClassElement<Instance>(token: NToken, element: NContainer.ClassElement<Instance>) {

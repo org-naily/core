@@ -1,3 +1,5 @@
+import { Type } from "@naily/core";
+
 export const HttpMethod = {
   GET: "get",
   POST: "post",
@@ -27,4 +29,19 @@ export namespace NExpAdapter {
 export interface NExpAdapter {
   listen(port: number, callBack: (port: number) => void): void;
   handler(path: string, method: IHttpMethod, handler: (options: NExpAdapter.HandlerOptions) => any | Promise<any>): void;
+}
+export namespace NPipe {
+  export interface Metadata {
+    user: "param" | "query" | "body" | undefined;
+    key: string | undefined;
+    type: any | undefined;
+  }
+  export interface PipeMetadata {
+    user: "param" | "query" | "body";
+    key: string | undefined;
+    pipes: Type<NPipe>[];
+  }
+}
+export interface NPipe {
+  transform(value: any, metadata: NPipe.Metadata): any;
 }
