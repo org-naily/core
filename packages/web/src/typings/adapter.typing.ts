@@ -18,7 +18,8 @@ export namespace NExpAdapter {
     haveError: boolean;
   }
 }
-export interface NExpAdapter {
-  listen(port: number, callBack: (port: number) => void): void;
+export interface NExpAdapter<Request = any, Response = any, NextFunction = Function> {
+  useMiddleware(handler: (req: Request, res: Response, next: NextFunction) => void): void;
+  listen<T>(port: number, callBack: (port: number) => void): T;
   handler(path: string, method: IHttpMethod, handler: (options: NExpAdapter.HandlerOptions) => Promise<NExpAdapter.HandlerReturn>): void;
 }

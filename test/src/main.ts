@@ -1,7 +1,8 @@
 import { Autowired, Injectable, Logger, Value } from "@naily/core";
 import { Catch, Controller, Get, NFilter, NPipe, NailyExpWebFactory, Param, UseFilters } from "@naily/web";
 import { ExpressAdapter } from "@naily/web-express";
-import { Response } from "express";
+import { Response, json, urlencoded } from "express";
+import { Server } from "http";
 
 export class TestError extends Error {
   constructor(msg: string, readonly twd: string) {
@@ -45,6 +46,9 @@ export class MainController {
   }
 }
 
-NailyExpWebFactory.create(new ExpressAdapter()).listen(3999, (port) => {
-  new Logger().verbose(`Server is running on http://localhost:${port}`);
-});
+NailyExpWebFactory.create(new ExpressAdapter())
+  .useMiddleware(json())
+  .useMiddleware(urlencoded({ extended: true }))
+  .listen<Server>(3999, (port) => {
+    new Logger().verbose(`Server is running on http://localhost:${port}`);
+  });

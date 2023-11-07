@@ -13,8 +13,8 @@ function Factory() {
 }
 
 @Factory()
-export class NailyExpWebFactory {
-  constructor(private readonly adapter: NExpAdapter) {}
+export class NailyExpWebFactory<Request = any, Response = any, NextFunction extends Function = Function> {
+  constructor(private readonly adapter: NExpAdapter<Request, Response, NextFunction>) {}
 
   public static create(adapter: NExpAdapter): NailyExpWebFactory {
     const map = NailyFactory.container.getMap().values();
@@ -27,7 +27,12 @@ export class NailyExpWebFactory {
     return new NailyExpWebFactory(adapter);
   }
 
-  public listen(port: number, callBack: (port: number) => void) {
+  public useMiddleware(handler: (req: Request, res: Response, next: NextFunction) => void): this {
+    this.adapter.useMiddleware(handler);
+    return this;
+  }
+
+  public listen<T>(port: number, callBack: (port: number) => void): T {
     const elements = NailyFactory.container.getMap().values();
     Out: for (const item of elements) {
       if (item.type !== "class") continue;
@@ -41,13 +46,10 @@ export class NailyExpWebFactory {
         const methods: IMethod[] = Reflect.getMetadata(NailyWebWatermark.METHOD, item.target.prototype, key) || [];
         methods.forEach((method) => {
           const path = join("/" + controllerPath, method.path).replace(/\\/g, "/");
-          const methodParamtypes = pipe.getParamtypesByPropertykey(key);
-          const parameter: NPipe.PipeMetadata[] = Reflect.getMetadata(NailyWebWatermark.PARAMETER, item.target.prototype, key) || [];
-
           new NailyExpWebHandler(this.adapter).init(path, method.method, item, key);
         });
       }
     }
-    return this.adapter.listen(port, callBack);
+    return this.adapter.listen<T>(port, callBack);
   }
 }

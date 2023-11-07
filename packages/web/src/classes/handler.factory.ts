@@ -3,7 +3,7 @@ import { IHttpMethod, NExpAdapter, NFilter, NPipe } from "../typings";
 import { NailyWebWatermark } from "../constants";
 import { NContainer } from "@naily/core/dist/cjs/typings/container.typing";
 
-export class NailyExpWebHandler {
+export class NailyExpWebHandler<Request = any, Response = any, NextFunction = Function> {
   constructor(private readonly adapter: NExpAdapter) {}
 
   private async initPipe(parameter: NPipe.PipeMetadata[], options: NExpAdapter.HandlerOptions, methodParamtypes: Type[]) {
