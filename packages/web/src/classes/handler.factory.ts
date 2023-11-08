@@ -2,14 +2,25 @@ import { NailyFactory, Type } from "@naily/core";
 import { IHttpMethod, NExpAdapter, NFilter, NPipe } from "../typings";
 import { NailyWebWatermark } from "../constants";
 import { NContainer } from "@naily/core/dist/cjs/typings/container.typing";
+import { type } from "os";
 
 export class NailyExpWebHandler<Request = any, Response = any, NextFunction = Function> {
-  constructor(private readonly adapter: NExpAdapter) {}
+  constructor(private readonly adapter: NExpAdapter<Request, Response, NextFunction>) {}
 
   private async initPipe(parameter: NPipe.PipeMetadata[], options: NExpAdapter.HandlerOptions, methodParamtypes: Type[]) {
     const param = [];
     for (const i in parameter) {
-      let parsedParamValue = parameter[i].key ? options.params[parameter[i].key] : options.params;
+      let parsedParamValue = (() => {
+        if (parameter[i].key && typeof parameter[i].key === "string") {
+          if (parameter[i].user === "param") return options.params[parameter[i].key];
+          if (parameter[i].user === "body") return options.body[parameter[i].key];
+          if (parameter[i].user === "query") return options.query[parameter[i].key];
+        } else {
+          if (parameter[i].user === "param") return options.params;
+          if (parameter[i].user === "body") return options.body;
+          if (parameter[i].user === "query") return options.query;
+        }
+      })();
       for (const pipeItem of parameter[i].pipes) {
         const { token } = NailyFactory.pipe(pipeItem).getMetadataOrThrow();
         const pipeInstance = NailyFactory.container.getClassElementByTokenOrThrow<NPipe>(token).instance;

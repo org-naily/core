@@ -9,6 +9,7 @@ export class MainService implements NPipe {
   transform(value: any, metadata: NPipe.Metadata) {
     console.log(value);
     console.log(metadata);
+    return value;
   }
 
   public getHello() {

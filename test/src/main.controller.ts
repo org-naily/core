@@ -10,8 +10,7 @@ export class MainController {
 
   @Get()
   @UseFilters(MainFilter)
-  public getHello(@Query(MainService) id: number) {
-    console.log(id);
+  public getHello(@Query("id", MainService) id: number) {
     return this.mainService.getHello();
   }
 }
