@@ -1,4 +1,4 @@
-import { Aspect, Autowired } from "@naily/core";
+import { Autowired } from "@naily/core";
 import { MainService } from "./main.service.js";
 import { MainFilter } from "./main.filter.js";
 import { Controller, Get, Query, UseFilters } from "@naily/web";
