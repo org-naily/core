@@ -5,6 +5,9 @@
     "ioc": "core",
     "aop": "lib",
     "factory": "app",
-    "factories": "app"
+    "factories": "app",
+    "zh": "i18n",
+    "en": "i18n",
+    ".vitepress": "vuepress"
   }
 }

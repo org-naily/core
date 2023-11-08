@@ -1,15 +1,12 @@
-import { After, Aspect, NAopAfterMeta } from "@naily/aop";
+import { Injectable, NailyFactoryContext } from "@naily/ioc";
 
-@Aspect()
-export class TestService implements $.Impl.Aop.After {
-  afterExecute(metadata: NAopAfterMeta) {
-    console.log(metadata.getReturnValue());
-  }
+function Before() {
+  return <T extends Function>(target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<T>) => {};
 }
 
-@Aspect()
+@Injectable("m")
 export class MainService {
-  @After(TestService)
+  @Before()
   public getTestService() {
     console.log("getTestService called");
     return new Promise<true>((res) => {
@@ -23,3 +20,16 @@ export class MainService {
     return await this.getTestService();
   }
 }
+
+const instance = NailyFactoryContext.get("m").instance;
+const method = instance["getTestService"];
+Object.defineProperty(instance, "getTestService", {
+  get() {
+    console.log("get");
+    return method;
+  },
+  set(v) {
+    console.log("set");
+  },
+});
+console.log(instance["getTestService"]());

@@ -1,3 +1,4 @@
+import { NailyFactoryContext } from "../factories";
 import { Type } from "./common.typing";
 
 export interface FactoryItem<T extends Object = Object> {
@@ -18,6 +19,9 @@ declare global {
         }
         export interface Factory extends BaseFactory {
           add<T extends Object = Object>(target: Type<T>, token?: string): FactoryItem<T> | void;
+        }
+        export interface Plugin {
+          install(ctx: typeof NailyFactoryContext): void;
         }
       }
     }
