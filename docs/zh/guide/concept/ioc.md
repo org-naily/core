@@ -4,14 +4,23 @@
 
 管理类之间的依赖关系，以及类的生命周期，是 Naily 的核心功能。和`nest.js`等框架一样，您在写业务的时候，基本上用不到`new`关键字，所有的类都是通过`注入`的方式来使用的。这里涉及到三个装饰器：
 
-- `@Injectable()`，类装饰器，用于标记一个类为可注入的类；被标记的类会被自动加入到`Naily容器工厂`中。
-- `@Autowired()`，属性装饰器，用于标记一个属性为可注入的属性。被标记的属性会被自动注入。
+- `@Injectable()`，类装饰器，仅仅用于用于标记一个类为可注入的类；被标记的类不会被`工厂`自动加入到`Naily容器`中。
 - `@Inject()`，属性装饰器，用于标记一个参数为可注入的参数。被标记的参数会被自动注入。
+- `@Autowired`，属性装饰器，是`@Inject()`的快捷方式，会自动获取类的类型并注入进`Naily容器`。仅在 TypeScript 的 tsconfig.json 中开启了 `emitDecoratorMetadata` 才能使用。
+
+```json {4}
+{
+  "compilerOptions": {
+    "experimentalDecorators": true, // 开启装饰器
+    "emitDecoratorMetadata": true // 开启装饰器元数据
+  }
+}
+```
 
 逻辑其实很简单，直接上示例代码：
 
 ```typescript
-import { Injectable, Autowired, Inject } from "@naily/ioc";
+import { Injectable, Autowired, Inject } from "@naily/core";
 
 @Injectable()
 class AService {
@@ -23,12 +32,12 @@ class AService {
 @Injectable()
 class BService {
   @Autowired
-  a: AService; // 这里标注的是参数的类型 而不是参数的new之后的值哦
+  private readonly a: AService; // 这里标注的是参数的类型 而不是参数的new之后的值哦
 
-  @Inject(A)
-  app: AService; // 这里也一样
+  @Inject(AService)
+  private readonly app: AService; // 这里也一样
 
-  getHello() {
+  public getHello() {
     const hello = this.a.getHello(); // hello world
     const hello2 = this.app.getHello(); // 同样是 hello world
   }

@@ -17,20 +17,42 @@ export function Aspect(...advices: Type<NAdvice>[]) {
       const advicesInstance = advices.map((advice) => new NailyInjectableFactory(advice).createInstance());
 
       advicesInstance.forEach((advice) => {
-        advice.whenBefore({
-          ...common,
-        });
-      });
-      let result = old.call(target, ...args);
-      advicesInstance.forEach((advice) => {
-        advice.whenAfter({
-          ...common,
-          getReturnValue: () => result,
-          setReturnValue: (newReturnValue) => (result = newReturnValue),
-        });
+        if (advice.whenBefore) advice.whenBefore({ ...common });
       });
 
-      return result;
+      let haveErrorCatcher = false;
+      advicesInstance.forEach((adv) => (adv.whenThrow ? (haveErrorCatcher = true) : null));
+      if (haveErrorCatcher) {
+        try {
+          let result = old.call(target, ...args);
+          advicesInstance.forEach((advice) => {
+            if (advice.whenAfter) {
+              advice.whenAfter({
+                ...common,
+                getReturnValue: () => result,
+                setReturnValue: (newReturnValue) => (result = newReturnValue),
+              });
+            }
+          });
+          return result;
+        } catch (error) {
+          advicesInstance.forEach((advice) => {
+            if (advice.whenThrow) advice.whenThrow({ ...common, getError: () => error });
+          });
+        }
+      } else {
+        let result = old.call(target, ...args);
+        advicesInstance.forEach((advice) => {
+          if (advice.whenAfter) {
+            advice.whenAfter({
+              ...common,
+              getReturnValue: () => result,
+              setReturnValue: (newReturnValue) => (result = newReturnValue),
+            });
+          }
+        });
+        return result;
+      }
     };
     return descriptor;
   };

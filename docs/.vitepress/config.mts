@@ -29,6 +29,25 @@ export default defineConfig({
           { text: "快速上手", link: "/zh/guide/" },
           { text: "API", link: "/zh/api/" },
         ],
+        sidebar: {
+          "/zh/guide/": [
+            {
+              text: "快速上手",
+              link: "/zh/guide/",
+              items: [
+                {
+                  text: "核心概念",
+                  items: [
+                    {
+                      text: "IOC 依赖注入",
+                      link: "/zh/guide/concept/ioc",
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
       },
     },
     en: {

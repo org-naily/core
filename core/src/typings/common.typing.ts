@@ -41,10 +41,14 @@ export namespace NAdvice {
     getReturnValue(): any;
     setReturnValue(newReturnValue: any): void;
   }
+  export interface ThrowCtx extends Ctx {
+    getError<T = any>(): T;
+  }
 }
 export interface NAdvice {
-  whenBefore(ctx: NAdvice.BeforeCtx): void;
-  whenAfter(ctx: NAdvice.AfterCtx): void;
+  whenBefore?(ctx: NAdvice.BeforeCtx): void;
+  whenAfter?(ctx: NAdvice.AfterCtx): void;
+  whenThrow?(ctx: NAdvice.ThrowCtx): void;
 }
 export interface NConfigure {
   isPromise: boolean;
