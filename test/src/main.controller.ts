@@ -1,16 +1,17 @@
-import { Autowired } from "@naily/core";
+import { Aspect, Autowired } from "@naily/core";
 import { MainService } from "./main.service.js";
 import { MainFilter } from "./main.filter.js";
-import { Controller, Get, Param, UseFilters } from "@naily/web";
+import { Controller, Get, Query, UseFilters } from "@naily/web";
 
 @Controller()
 export class MainController {
   @Autowired
   private readonly mainService: MainService;
 
-  @Get(":id")
+  @Get()
   @UseFilters(MainFilter)
-  public getHello(@Param("id", MainService) param: number) {
+  public getHello(@Query(MainService) id: number) {
+    console.log(id);
     return this.mainService.getHello();
   }
 }
