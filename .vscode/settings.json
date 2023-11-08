@@ -13,7 +13,9 @@
     "express": "global",
     "loggers": "log",
     "logger": "log",
-    "winston": "log"
+    "winston": "log",
+    "zh": "i18n",
+    "en": "i18n"
   },
   "typescript.tsdk": "node_modules/typescript/lib"
 }

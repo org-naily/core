@@ -1,6 +1,7 @@
 packages:
   - core
   - test
+  - docs
   - packages/*
   - adapters/*
   - loggers/*

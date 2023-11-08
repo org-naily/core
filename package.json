@@ -8,6 +8,7 @@
     "build:web": "pnpm -F @naily/web build",
     "build:express": "pnpm -F @naily/web-express build",
     "build:log": "pnpm -F @naily/log build",
+    "dev:docs": "pnpm -F docs docs:dev",
     "dev": "pnpm -F test dev",
     "dev:log": "pnpm -F @naily/log dev"
   },
