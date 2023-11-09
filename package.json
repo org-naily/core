@@ -1,0 +1,12 @@
+{
+  "name": "v18",
+  "scripts": {
+    "dev": "pnpm -F test dev",
+    "build:core": "pnpm -F @naily/core build"
+  },
+  "dependencies": {
+    "@types/node": "^20.9.0",
+    "reflect-metadata": "^0.1.13",
+    "typescript": "^5.2.2"
+  }
+}
