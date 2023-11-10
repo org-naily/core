@@ -1,12 +1,12 @@
 import { readFileSync } from "fs";
 import { parse } from "yaml";
-import { Injectable, NConfigure } from "..";
+import { Injectable, NConfigure, ScopeEnum } from "..";
 import * as JEXL from "jexl";
 import { join } from "path";
 
-@Injectable()
+@Injectable({ scope: ScopeEnum.TRANSIENT })
 export class NailyConfiguration implements NConfigure {
-  getConfigure(jexl: string) {
+  public getConfigure(jexl: string) {
     return JEXL.evalSync(jexl, parse(readFileSync(join(process.cwd(), "naily.yaml")).toString()));
   }
 }

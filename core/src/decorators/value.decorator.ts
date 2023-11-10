@@ -1,7 +1,7 @@
 import "reflect-metadata";
-import * as JEXL from "jexl";
+import isClass from "is-class";
 import { NailyWatermark, ScopeEnum } from "@/constants";
-import { Type, NailyConfiguration, NConfigure, NIoc } from "..";
+import { Type, NailyConfiguration, NConfigure, NailyInjectableFactory } from "..";
 
 interface ValueConfigureType extends Object {}
 interface ValueConfigureType extends NConfigure {}
@@ -9,10 +9,8 @@ interface ValueConfigureType extends NConfigure {}
 export function Value(jexl: string, configure: Type<ValueConfigureType> | ValueConfigureType = NailyConfiguration) {
   return (target: Object, propertyKey: string | symbol) => {
     Reflect.defineMetadata(NailyWatermark.VALUE, jexl, target, propertyKey);
-    if (typeof configure === "function") {
-      configure = new configure();
-    }
-    const injectableOptions: NIoc.InjectableOptions = Reflect.getMetadata(NailyWatermark.INJECTABLE, configure.constructor);
+    if (isClass(configure)) configure = new NailyInjectableFactory(configure).create();
+    const injectableOptions = new NailyInjectableFactory(configure.constructor as Type).getInjectableOptionsOrThrow();
     const data = (() => {
       if (injectableOptions.scope === ScopeEnum.SINGLETON) return configure.getConfigure(jexl);
     })();

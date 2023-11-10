@@ -1,7 +1,7 @@
-import { Injectable, NailyInjectableFactory, Value } from "@naily/core";
+import { Injectable, NLifeCycle, NailyInjectableFactory, Value } from "@naily/core";
 
 @Injectable()
-export class AppService {
+export class AppService implements NLifeCycle {
   @Value("port")
   private readonly test: number;
 
@@ -16,9 +16,6 @@ export class AppService {
 
 @Injectable()
 export class TestService {
-  @Value("port")
-  private readonly test: number;
-
   constructor(private readonly appService: AppService) {
     console.log(this.appService.getHello());
   }
