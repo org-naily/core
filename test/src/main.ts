@@ -9,8 +9,8 @@ export class AppService implements NLifeCycle {
     console.log(this.test);
   }
 
-  public getHello(): string {
-    return "Hello World!";
+  public getHello(): number {
+    return this.test;
   }
 }
 
@@ -20,7 +20,7 @@ export class TestService {
   private readonly appService: AppService;
 
   constructor() {
-    console.log();
+    console.log(this.appService.getHello());
   }
 }
 
