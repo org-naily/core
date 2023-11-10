@@ -1,5 +1,6 @@
 import { isClass } from "is-class";
 import { Injectable, NIoc, NLifeCycle, NailyWatermark, Type } from "..";
+import { ScopeEnum } from "..";
 
 @Injectable()
 export class NailyInjectableFactory<Instance extends NLifeCycle = NLifeCycle> {
@@ -23,6 +24,8 @@ export class NailyInjectableFactory<Instance extends NLifeCycle = NLifeCycle> {
     const types = this.getParameterTypes();
     types.forEach((item) => {
       if (!isClass(item)) throw new TypeError(msg ? msg(item, this.target) : `${this.target}'s constructor param ${item} is not a class.`);
+      const options = new NailyInjectableFactory(item).getInjectableOptions();
+      if (!options) throw new TypeError(`${this.target}'s constructor param ${item} is not a injectable class.`);
     });
     return types;
   }
@@ -39,7 +42,16 @@ export class NailyInjectableFactory<Instance extends NLifeCycle = NLifeCycle> {
     return this.getParameterTypesOrThrow().map((item) => new NailyInjectableFactory(item).create());
   }
 
-  public create(): Instance {
+  public transformInstanceToProxy(instance: Instance): Instance {
+    return new Proxy(instance, {
+      get: (_inTarget, propertyKey) => {
+        console.log(new NailyInjectableFactory(this.target).create());
+        return new NailyInjectableFactory(this.target).create(false)[propertyKey];
+      },
+    });
+  }
+
+  public create(proxy = true): Instance {
     const argTypes = this.getParameterTypes();
     const metadata = this.getInjectableOptionsOrThrow();
     const args = this.parseParameterTypeToConstructorOrThrow();
@@ -65,6 +77,8 @@ export class NailyInjectableFactory<Instance extends NLifeCycle = NLifeCycle> {
         setInstance: (newInstance) => (instance = newInstance as Instance),
       });
     }
+
+    if (proxy && metadata.scope === ScopeEnum.TRANSIENT) instance = this.transformInstanceToProxy(instance);
     return instance;
   }
 }

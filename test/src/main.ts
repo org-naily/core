@@ -1,4 +1,4 @@
-import { Injectable, NLifeCycle, NailyInjectableFactory, Value } from "@naily/core";
+import { Autowired, Injectable, NLifeCycle, NailyInjectableFactory, Value } from "@naily/core";
 
 @Injectable()
 export class AppService implements NLifeCycle {
@@ -16,7 +16,10 @@ export class AppService implements NLifeCycle {
 
 @Injectable()
 export class TestService {
-  constructor(private readonly appService: AppService) {
+  @Autowired
+  private readonly appService: AppService;
+
+  constructor() {
     console.log(this.appService.getHello());
   }
 }

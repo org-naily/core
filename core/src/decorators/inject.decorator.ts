@@ -19,8 +19,6 @@ export function Autowired(target: Object, propertyKey: string | symbol) {
       `Cannot get type of ${propertyKey.toString()}, please check if you have enabled the 'emitDecoratorMetadata' option in tsconfig.json`
     );
   }
-  if (!isClass(typing)) {
-    throw new TypeError(`Cannot inject a non-class type ${typing} to ${propertyKey.toString()}`);
-  }
+  if (!isClass(typing)) throw new TypeError(`Cannot inject a non-class type ${typing} to ${propertyKey.toString()}`);
   Inject(typing)(target, propertyKey);
 }

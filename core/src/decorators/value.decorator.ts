@@ -1,7 +1,7 @@
 import "reflect-metadata";
-import isClass from "is-class";
 import { NailyWatermark, ScopeEnum } from "@/constants";
 import { Type, NailyConfiguration, NConfigure, NailyInjectableFactory } from "..";
+import { isClass } from "is-class";
 
 interface ValueConfigureType extends Object {}
 interface ValueConfigureType extends NConfigure {}
