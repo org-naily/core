@@ -7,3 +7,6 @@ export namespace NIoc {
     token?: NToken;
   }
 }
+export interface NConfigure {
+  getConfigure(jexl: string): any;
+}

@@ -1,0 +1,9 @@
+{
+  "material-icon-theme.activeIconPack": "nest",
+  "material-icon-theme.files.associations": {
+    "*.class.ts": "nest-module",
+    "*.typing.ts": "typescript-def",
+    "*.constant.ts": "nest-pipe"
+  },
+  "material-icon-theme.folders.associations": {}
+}

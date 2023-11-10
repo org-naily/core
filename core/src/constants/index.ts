@@ -3,4 +3,7 @@ export const enum NailyWatermark {
   INJECTABLE = "__naily:ioc:injectable__",
 }
 
-export const enum ScopeEnum {}
+export const enum ScopeEnum {
+  SINGLETON = "singleton",
+  TRANSIENT = "transient",
+}

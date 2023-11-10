@@ -24,5 +24,13 @@
   },
   "devDependencies": {
     "father": "^4.3.7"
+  },
+  "dependencies": {
+    "@types/jexl": "^2.3.4",
+    "@types/md5": "^2.3.5",
+    "is-class": "^0.0.9",
+    "jexl": "^2.3.0",
+    "md5": "^2.3.0",
+    "yaml": "^2.3.4"
   }
 }
