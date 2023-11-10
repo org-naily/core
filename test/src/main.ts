@@ -20,7 +20,7 @@ export class TestService {
   private readonly appService: AppService;
 
   constructor() {
-    console.log(this.appService.getHello());
+    console.log();
   }
 }
 
