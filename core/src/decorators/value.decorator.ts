@@ -14,7 +14,7 @@ export function Value(jexl: string, configure: Type<ValueConfigureType> | ValueC
       if (injectableOptions.scope === ScopeEnum.SINGLETON) return configure.getConfigure(jexl);
     })();
 
-    Object.defineProperty(target, propertyKey, {
+    const isSuccess = Reflect.defineProperty(target, propertyKey, {
       get: () => {
         if (injectableOptions.scope === ScopeEnum.PROTOTYPE) {
           return (configure as ValueConfigureType).getConfigure(jexl);
@@ -23,5 +23,6 @@ export function Value(jexl: string, configure: Type<ValueConfigureType> | ValueC
         }
       },
     });
+    if (!isSuccess) throw new Error(`Cannot inject ${jexl} value to ${propertyKey.toString()}`);
   };
 }

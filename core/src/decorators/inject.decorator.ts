@@ -4,11 +4,12 @@ import { NailyInjectableFactory, NailyWatermark, Type } from "..";
 export function Inject(val: Type) {
   return (target: Object, propertyKey: string | symbol) => {
     Reflect.defineMetadata(NailyWatermark.INJECT, val, target, propertyKey);
-    Object.defineProperty(target, propertyKey, {
+    const isSuccess = Reflect.defineProperty(target, propertyKey, {
       get: () => {
         return new NailyInjectableFactory(val).create();
       },
     });
+    if (!isSuccess) throw new Error(`Cannot inject ${val} to ${propertyKey.toString()}`);
   };
 }
 
