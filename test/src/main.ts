@@ -19,7 +19,7 @@ export class AppController {
 
   @Get()
   public async getHello() {
-    return this.port;
+    return `Hello World! App is listening on ${this.port}`;
   }
 }
 
