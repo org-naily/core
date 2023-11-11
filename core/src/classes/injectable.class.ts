@@ -45,15 +45,32 @@ export class NailyInjectableFactory<Instance extends NLifeCycle = NLifeCycle> {
   public transformInstanceToProxy(instance: Instance): Instance {
     return new Proxy(instance, {
       get: (_inTarget, propertyKey) => {
-        return new NailyInjectableFactory(this.target).create(false)[propertyKey];
+        // 转换为代理后get的时候返回的应该是单例池中的实例
+        const newSingleton = new NailyInjectableFactory(this.target).create(false);
+        // 创建之后 改变单例池中的元素ClassElement
+        NailyInjectableManager.addClassElementOrChange(
+          this.getInjectableOptionsOrThrow().token,
+          this.target,
+          newSingleton,
+          this.getInjectableOptionsOrThrow()
+        );
+        // 返回
+        return newSingleton[propertyKey];
       },
     });
   }
 
   public create(proxy = true): Instance {
-    const argTypes = this.getParameterTypes();
     const metadata = this.getInjectableOptionsOrThrow();
+    // !如果为代理 且为单例模式 则检查单例池
+    if (!proxy && metadata.scope === ScopeEnum.SINGLETON && NailyInjectableManager.getClassElement(metadata.token)) {
+      // !如果单例池中有 则直接返回
+      return NailyInjectableManager.getClassElementOrThrow(metadata.token).instance as Instance;
+    }
+
+    const argTypes = this.getParameterTypes();
     const args = this.parseParameterTypeToConstructorOrThrow();
+
     if (this.target.nailyBeforeInit) {
       this.target.nailyBeforeInit({
         getArgs: () => args,
@@ -78,7 +95,7 @@ export class NailyInjectableFactory<Instance extends NLifeCycle = NLifeCycle> {
     }
 
     if (proxy && metadata.scope === ScopeEnum.PROTOTYPE) instance = this.transformInstanceToProxy(instance);
-    NailyInjectableManager.addClassElementOrChange(metadata.token, this.target, instance);
+    NailyInjectableManager.addClassElementOrChange(metadata.token, this.target, instance, metadata);
     return instance;
   }
 }

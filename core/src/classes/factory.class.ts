@@ -1,15 +1,16 @@
-import { Injectable, NToken, Type, NContainer } from "..";
+import { Injectable, NToken, Type, NContainer, NIoc } from "..";
 
 @Injectable()
 export class NailyInjectableManager {
   // Bean单例池
   protected static readonly map = new Map<NToken, NContainer.Element>();
 
-  public static addClassElementOrChange(token: NToken, target: Type, instance: Object) {
+  public static addClassElementOrChange(token: NToken, target: Type, instance: Object, options: NIoc.InjectableOptions) {
     this.map.set(token, {
       type: "class",
       target: target,
       instance: instance,
+      options: options,
     });
   }
 
@@ -21,17 +22,17 @@ export class NailyInjectableManager {
     return this.map.get(token);
   }
 
-  public static getClassElement(token: NToken): NContainer.ClassElement | undefined {
+  public static getClassElement<Instance>(token: NToken): NContainer.ClassElement<Instance> | undefined {
     const element = this.getElement(token);
     if (!element) return undefined;
     if (element.type !== "class") return undefined;
-    return element;
+    return element as NContainer.ClassElement<Instance>;
   }
 
-  public static getClassElementOrThrow(token: NToken, msg?: string): NContainer.ClassElement {
+  public static getClassElementOrThrow<Instance>(token: NToken, msg?: string): NContainer.ClassElement<Instance> {
     const element = this.getElement(token);
     if (!element) throw new TypeError(msg ? msg : `${String(token)} is not a class element.`);
     if (element.type !== "class") throw new TypeError(msg ? msg : `${String(token)} is not a class element.`);
-    return element;
+    return element as NContainer.ClassElement<Instance>;
   }
 }

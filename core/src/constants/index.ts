@@ -6,6 +6,6 @@ export const enum NailyWatermark {
 }
 
 export const enum ScopeEnum {
-  SINGLETON = "__singleton__",
+  SINGLETON = "__SINGLETON__",
   PROTOTYPE = "__PROTOTYPE__",
 }

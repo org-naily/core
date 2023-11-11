@@ -1,9 +1,11 @@
-import { generateToken } from "@/utils/generate";
-import { NailyInjectableFactory, NailyInjectableManager, NailyWatermark, Type } from "..";
+import { Injectable, NIoc, NailyInjectableFactory, NailyWatermark, Type } from "..";
 
-export function Configuration() {
+export function Configuration(options?: NIoc.InjectableOptions) {
   return (target: Type) => {
+    Injectable(options)(target);
     Reflect.defineMetadata(NailyWatermark.CONFIGURATION, true, target);
-    NailyInjectableManager.addClassElementOrChange(generateToken(), target, new NailyInjectableFactory(target).create());
+
+    const prototype = new NailyInjectableFactory(target).create();
+    target.prototype = prototype;
   };
 }
