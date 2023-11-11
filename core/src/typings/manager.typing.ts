@@ -8,6 +8,7 @@ export namespace NContainer {
     target: Type;
     instance: Instance;
     options: NIoc.InjectableOptions;
+    isConfiguration: boolean;
   }
   export type Element = ClassElement;
 }

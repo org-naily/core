@@ -5,11 +5,8 @@ export class AppConfiguration {}
 
 @Injectable()
 export class AppService implements NLifeCycle {
-  @Value("port")
-  private readonly test: number;
-
   public getHello(): number {
-    return this.test;
+    return 100;
   }
 }
 

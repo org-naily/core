@@ -1,16 +1,18 @@
-import { Injectable, NToken, Type, NContainer, NIoc } from "..";
+import { NToken, Type, NContainer, NIoc } from "@/typings";
+import { Injectable } from "@/decorators";
 
 @Injectable()
 export class NailyInjectableManager {
   // Bean单例池
   protected static readonly map = new Map<NToken, NContainer.Element>();
 
-  public static addClassElementOrChange(token: NToken, target: Type, instance: Object, options: NIoc.InjectableOptions) {
+  public static addClassElementOrChange(token: NToken, target: Type, instance: Object, options: NIoc.InjectableOptions, isConfiguration: boolean) {
     this.map.set(token, {
       type: "class",
       target: target,
       instance: instance,
       options: options,
+      isConfiguration: isConfiguration,
     });
   }
 

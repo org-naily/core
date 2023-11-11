@@ -1,11 +1,13 @@
-import { Injectable, NIoc, NailyInjectableFactory, NailyWatermark, Type } from "..";
+import { NIoc, Type } from "@/typings";
+import { NailyWatermark } from "@/constants";
+import { NailyInjectableFactory } from "@/classes";
+import { Injectable } from "@/decorators";
 
 export function Configuration(options?: NIoc.InjectableOptions) {
   return (target: Type) => {
     Injectable(options)(target);
     Reflect.defineMetadata(NailyWatermark.CONFIGURATION, true, target);
 
-    const prototype = new NailyInjectableFactory(target).create();
-    target.prototype = prototype;
+    target.prototype = new NailyInjectableFactory(target).create();
   };
 }

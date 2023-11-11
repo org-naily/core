@@ -1,6 +1,8 @@
 import { isClass } from "is-class";
-import { Injectable, NIoc, NLifeCycle, NailyWatermark, Type, ScopeEnum } from "..";
+import { NailyWatermark, ScopeEnum } from "@/constants";
 import { NailyInjectableManager } from "./factory.class";
+import { NIoc, NLifeCycle, Type } from "@/typings";
+import { Injectable } from "@/decorators";
 
 @Injectable()
 export class NailyInjectableFactory<Instance extends NLifeCycle = NLifeCycle> {
@@ -52,7 +54,8 @@ export class NailyInjectableFactory<Instance extends NLifeCycle = NLifeCycle> {
           this.getInjectableOptionsOrThrow().token,
           this.target,
           newSingleton,
-          this.getInjectableOptionsOrThrow()
+          this.getInjectableOptionsOrThrow(),
+          Reflect.getMetadata(NailyWatermark.CONFIGURATION, this.target) ? true : false
         );
         // 返回
         return newSingleton[propertyKey];
@@ -95,7 +98,13 @@ export class NailyInjectableFactory<Instance extends NLifeCycle = NLifeCycle> {
     }
 
     if (proxy && metadata.scope === ScopeEnum.PROTOTYPE) instance = this.transformInstanceToProxy(instance);
-    NailyInjectableManager.addClassElementOrChange(metadata.token, this.target, instance, metadata);
+    NailyInjectableManager.addClassElementOrChange(
+      metadata.token,
+      this.target,
+      instance,
+      metadata,
+      Reflect.getMetadata(NailyWatermark.CONFIGURATION, this.target) ? true : false
+    );
     return instance;
   }
 }
