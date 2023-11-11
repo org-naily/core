@@ -2,3 +2,4 @@ packages:
   - core
   - test
   - packages/*
+  - web-adapters/*

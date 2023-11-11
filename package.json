@@ -2,7 +2,9 @@
   "name": "v18",
   "scripts": {
     "dev": "pnpm -F test dev",
-    "build:core": "pnpm -F @naily/core build"
+    "build:core": "pnpm -F @naily/core build",
+    "build:web": "pnpm -F @naily/web build",
+    "build:express": "pnpm -F @naily/web-express build"
   },
   "dependencies": {
     "@types/node": "^20.9.0",
