@@ -1,6 +1,6 @@
 import { isClass } from "is-class";
-import { Injectable, NIoc, NLifeCycle, NailyWatermark, Type } from "..";
-import { ScopeEnum } from "..";
+import { Injectable, NIoc, NLifeCycle, NailyWatermark, Type, ScopeEnum } from "..";
+import { NailyInjectableManager } from "./factory.class";
 
 @Injectable()
 export class NailyInjectableFactory<Instance extends NLifeCycle = NLifeCycle> {
@@ -45,7 +45,6 @@ export class NailyInjectableFactory<Instance extends NLifeCycle = NLifeCycle> {
   public transformInstanceToProxy(instance: Instance): Instance {
     return new Proxy(instance, {
       get: (_inTarget, propertyKey) => {
-        console.log(new NailyInjectableFactory(this.target).create());
         return new NailyInjectableFactory(this.target).create(false)[propertyKey];
       },
     });
@@ -78,7 +77,8 @@ export class NailyInjectableFactory<Instance extends NLifeCycle = NLifeCycle> {
       });
     }
 
-    if (proxy && metadata.scope === ScopeEnum.TRANSIENT) instance = this.transformInstanceToProxy(instance);
+    if (proxy && metadata.scope === ScopeEnum.PROTOTYPE) instance = this.transformInstanceToProxy(instance);
+    NailyInjectableManager.addClassElementOrChange(metadata.token, this.target, instance);
     return instance;
   }
 }

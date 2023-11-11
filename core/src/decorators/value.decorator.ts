@@ -1,10 +1,9 @@
 import "reflect-metadata";
-import { NailyWatermark, ScopeEnum } from "@/constants";
-import { Type, NailyConfiguration, NConfigure, NailyInjectableFactory } from "..";
 import { isClass } from "is-class";
+import { Type, NailyConfiguration, NConfigure, NailyInjectableFactory, NailyWatermark, ScopeEnum } from "..";
 
-interface ValueConfigureType extends Object {}
-interface ValueConfigureType extends NConfigure {}
+export interface ValueConfigureType extends Object {}
+export interface ValueConfigureType extends NConfigure {}
 
 export function Value(jexl: string, configure: Type<ValueConfigureType> | ValueConfigureType = NailyConfiguration) {
   return (target: Object, propertyKey: string | symbol) => {
@@ -17,7 +16,7 @@ export function Value(jexl: string, configure: Type<ValueConfigureType> | ValueC
 
     Object.defineProperty(target, propertyKey, {
       get: () => {
-        if (injectableOptions.scope === ScopeEnum.TRANSIENT) {
+        if (injectableOptions.scope === ScopeEnum.PROTOTYPE) {
           return (configure as ValueConfigureType).getConfigure(jexl);
         } else {
           return data;
