@@ -1,5 +1,6 @@
 packages:
   - core
   - test
+  - test-vue
   - packages/*
   - web-adapters/*

@@ -2,9 +2,11 @@
   "name": "v18",
   "scripts": {
     "dev": "pnpm -F test dev",
+    "dev:vue": "pnpm -F test-vue dev",
     "build:core": "pnpm -F @naily/core build",
     "build:web": "pnpm -F @naily/web build",
-    "build:express": "pnpm -F @naily/web-express build"
+    "build:express": "pnpm -F @naily/web-express build",
+    "build:vue": "pnpm -F @naily/vue-facing-decorator build"
   },
   "dependencies": {
     "@types/node": "^20.9.0",
