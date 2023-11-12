@@ -23,6 +23,4 @@ export class AppController {
   }
 }
 
-NailyWebFactory.createExpApplication(new ExpressAdapter(), (port) => {
-  console.log(`Server is running on ${port}`);
-});
+NailyWebFactory.createExpApplication(new ExpressAdapter());

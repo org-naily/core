@@ -1,3 +1,4 @@
 naily:
   web:
     port: 3000
+    adapter: "express"
