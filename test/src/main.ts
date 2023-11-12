@@ -1,9 +1,7 @@
-import { Configuration, Injectable, NLifeCycle, Value } from "@naily/core";
+import { Injectable, NLifeCycle } from "@naily/core";
 import { ExpressAdapter } from "@naily/web-express";
-import { NailyWebFactory, Controller, Get } from "@naily/web";
-
-@Configuration()
-export class AppConfiguration {}
+import { NextFunction, Request, Response } from "express";
+import { NailyWebFactory, Controller, Get, Post } from "@naily/web";
 
 @Injectable()
 export class AppService implements NLifeCycle {
@@ -14,13 +12,19 @@ export class AppService implements NLifeCycle {
 
 @Controller()
 export class AppController {
-  @Value("naily.web.port")
-  private readonly port: number;
-
   @Get()
+  @Post()
   public async getHello() {
-    return `Hello World! App is listening on ${this.port}`;
+    return `Hello World!`;
   }
 }
 
-NailyWebFactory.createExpApplication(new ExpressAdapter());
+new NailyWebFactory()
+  .createExpApplication<Request, Response, NextFunction>(ExpressAdapter)
+  .useMiddleware((req, res, next) => {
+    console.log("middleware");
+    next();
+  })
+  .run((port) => {
+    console.log(`Server is running on http://localhost:${port}`);
+  });

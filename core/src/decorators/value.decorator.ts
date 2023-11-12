@@ -5,7 +5,7 @@ import { Type, NailyConfiguration, NConfigure, NailyInjectableFactory, NailyWate
 export interface ValueConfigureType extends Object {}
 export interface ValueConfigureType extends NConfigure {}
 
-export function Value(jexl: string, configure: Type<ValueConfigureType> | ValueConfigureType = NailyConfiguration) {
+export function Value(jexl?: string, configure: Type<ValueConfigureType> | ValueConfigureType = NailyConfiguration) {
   return (target: Object, propertyKey: string | symbol) => {
     Reflect.defineMetadata(NailyWatermark.VALUE, jexl, target, propertyKey);
     if (isClass(configure)) configure = new NailyInjectableFactory(configure).create();

@@ -1,6 +1,6 @@
 import { NailyWebWatermark } from "@/constants";
 import { NWeb } from "@/typings/common.typing";
-import { Injectable, NContainer, NToken, NailyInjectableManager } from "@naily/core";
+import { Injectable, NContainer, NToken, NailyInjectableManager, Type } from "@naily/core";
 
 @Injectable()
 export class NailyWebManager {
@@ -16,5 +16,11 @@ export class NailyWebManager {
     });
 
     return Array.from(newMap.values());
+  }
+
+  public static getControllerMetadataOrThrow(target: Type): NWeb.NControllerMetadata {
+    const metadata = Reflect.getMetadata(NailyWebWatermark.CONTROLLER, target);
+    if (!metadata) throw new Error(`[Naily] [Web] Controller metadata is not defined.`);
+    return metadata;
   }
 }

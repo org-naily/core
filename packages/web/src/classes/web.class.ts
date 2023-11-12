@@ -1,14 +1,16 @@
-import { Injectable, Value } from "@naily/core";
+import { Injectable, NailyInjectableFactory, Type, Value } from "@naily/core";
 import { NailyExpWebFactory } from "./exp.class";
-import { NExpAdapter } from "..";
+import { NExpAdapter } from "@/typings";
 
 @Injectable()
 export class NailyWebFactory {
   @Value("naily.web.adapter")
-  private static readonly adapter: "express" | "context";
+  private readonly adapter: "express" | "context";
 
-  public static createExpApplication(adapter: NExpAdapter, callBack?: (port: number) => void) {
+  public createExpApplication<Request, Response, NextFunction extends Function>(
+    adapter: Type<NExpAdapter<Request, Response, NextFunction>>
+  ): NailyExpWebFactory<Request, Response, NextFunction> {
     if (this.adapter !== "express") throw new Error("naily.yaml Adapter is not express, cannot create express application");
-    return new NailyExpWebFactory(adapter, callBack ? callBack : () => {});
+    return new NailyExpWebFactory<Request, Response, NextFunction>(new NailyInjectableFactory(adapter).create());
   }
 }

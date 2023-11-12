@@ -1,7 +1,7 @@
 import { NExpAdapter } from "@naily/web";
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 
-export class ExpressAdapter implements NExpAdapter {
+export class ExpressAdapter<Req = Request, Res = Response, Next = NextFunction> implements NExpAdapter<Req, Res, Next> {
   private readonly app = express();
 
   handler(argument: NExpAdapter.NExpAdapterHandlerArgumentHost) {
@@ -21,6 +21,12 @@ export class ExpressAdapter implements NExpAdapter {
         next: next,
       });
       if (!haveError) res.send(value);
+    });
+  }
+
+  middleware(handler: (req: Req, res: Res, next: Next) => void): void {
+    this.app.use((req, res, next) => {
+      handler(req as Req, res as Res, next as Next);
     });
   }
 

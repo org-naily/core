@@ -1,7 +1,8 @@
 import { NHttpMethod } from "./common.typing";
 
-export interface NExpAdapter {
+export interface NExpAdapter<Request = any, Response = any, NextFunction = Function> {
   handler(argument: NExpAdapter.NExpAdapterHandlerArgumentHost): any;
+  middleware(handler: (req: Request, res: Response, next: NextFunction) => void): void;
   listen(port: number, callBack: () => void): any;
 }
 export namespace NExpAdapter {
