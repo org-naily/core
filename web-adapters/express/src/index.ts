@@ -1,6 +1,8 @@
+import { Injectable } from "@naily/core";
 import { NExpAdapter } from "@naily/web";
 import express, { NextFunction, Request, Response } from "express";
 
+@Injectable()
 export class ExpressAdapter<Req = Request, Res = Response, Next = NextFunction> implements NExpAdapter<Req, Res, Next> {
   private readonly app = express();
 

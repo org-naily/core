@@ -44,14 +44,18 @@ export class NailyExpWebFactory<Request, Response, NextFunction extends Function
 
   constructor(private readonly adapter: NExpAdapter<Request, Response, NextFunction>) {}
 
-  useMiddleware(handler: (req: Request, res: Response, next: NextFunction) => void): this {
+  public useMiddleware(handler: (req: Request, res: Response, next: NextFunction) => void): this {
     this.adapter.middleware(handler);
     return this;
   }
 
-  run(callBack?: (port: number) => void) {
+  public run() {
     if (!this.port) throw new Error(`[Naily] [Web] Port is not defined.`);
     new ExpHandler(this.adapter);
-    this.adapter.listen(this.port, () => (callBack ? callBack(this.port) : null));
+    return new Promise<number>((res) => {
+      this.adapter.listen(this.port, () => {
+        res(this.port);
+      });
+    });
   }
 }
