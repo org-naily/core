@@ -20,19 +20,36 @@ export const enum HttpMethod {
 }
 export type NHttpMethod = "get" | "post" | "put" | "delete" | "patch" | "options" | "head" | "all" | "trace";
 export namespace NExpWebAdvice {
-  interface NWebAdviceContext {
+  interface Context {
     getRequest<T = any>(): T;
     getResponse<T = any>(): T;
+    getParamTypes(): any[];
   }
-  export interface NWebAdviceBeforeContext extends NWebAdviceContext {}
-  export interface NWebAdviceAfterContext extends NWebAdviceContext {
+  export interface BeforeContext extends Context {}
+  export interface AfterContext extends Context {
     getResponseValue<T = any>(): T;
     setResponseValue<T = any>(newValue: T): void;
   }
-  export interface NWebAdviceErrorContext extends NWebAdviceContext {}
+  export interface ErrorContext extends Context {}
+
+  export interface ParameterMetadataHasKey {
+    type: "params" | "query" | "body" | "headers";
+    key: string | undefined;
+  }
+  export interface ParameterMetadataNoKey {
+    type: "cookies" | "ip" | "ips";
+  }
+  export interface ParameterMetadataHost {
+    type: "request" | "response" | "next";
+  }
+  export interface ParameterMetadataFile {
+    type: "file" | "files";
+    key: string;
+  }
+  export type ParameterMetadata = ParameterMetadataHasKey | ParameterMetadataNoKey | ParameterMetadataHost | ParameterMetadataFile;
 }
 export interface NExpWebAdvice {
-  beforeExecution?(ctx: NExpWebAdvice.NWebAdviceBeforeContext): Promise<boolean> | boolean;
-  afterExecution?(ctx: NExpWebAdvice.NWebAdviceAfterContext): Promise<boolean> | boolean;
-  onError?(exception: any, ctx: NExpWebAdvice.NWebAdviceErrorContext): Promise<boolean> | boolean;
+  beforeExecution?(ctx: NExpWebAdvice.BeforeContext): Promise<boolean> | boolean;
+  afterExecution?(ctx: NExpWebAdvice.AfterContext): Promise<boolean> | boolean;
+  onError?(exception: any, ctx: NExpWebAdvice.ErrorContext): Promise<boolean> | boolean;
 }

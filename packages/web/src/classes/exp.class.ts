@@ -1,16 +1,79 @@
-import { Injectable, NailyInjectableFactory, Type, Value } from "@naily/core";
+import { Injectable, NContainer, NailyInjectableFactory, Value } from "@naily/core";
 import { NExpAdapter } from "@/typings";
 import { NailyWebManager } from "./manager.class";
 import { NailyWebWatermark } from "@/constants";
 import { NExpWebAdvice, NWeb } from "@/typings/common.typing";
 import { join } from "path";
-import { NailyWebException } from "..";
+import { NailyWebException } from "@/errors";
+
+interface NExpHandlerOptions {
+  advices: NExpWebAdvice[];
+  paramtypes: any[];
+}
 
 class ExpHandler {
   private allControllers = NailyWebManager.getAllControllers();
 
   constructor(private readonly adapter: NExpAdapter) {
     this.analyzeHandler();
+  }
+
+  private async handler(
+    controller: NContainer.ClassElement<Object>,
+    key: string | symbol,
+    options: NExpAdapter.NExpAdapterHandlerArgument,
+    some: NExpHandlerOptions,
+  ): Promise<NExpAdapter.NExpAdapterHandlerReturn> {
+    let isSended = false;
+    for (const advice of some.advices) {
+      if (isSended) return { value: undefined, haveError: false, isSended: true };
+      if (advice.beforeExecution) {
+        isSended = await advice.beforeExecution({
+          getRequest: () => options.request,
+          getResponse: () => options.response,
+          getParamTypes: () => some.paramtypes,
+        });
+      }
+    }
+    try {
+      const func: Function = controller.instance[key];
+      let funcValue = await func.call(controller.instance);
+
+      for (const advice of some.advices) {
+        if (isSended) return { value: undefined, haveError: false, isSended: true };
+        if (advice.afterExecution) {
+          isSended = await advice.afterExecution({
+            getRequest: () => options.request,
+            getResponse: () => options.response,
+            getParamTypes: () => some.paramtypes,
+            getResponseValue: () => funcValue,
+            setResponseValue: (newValue) => (funcValue = newValue),
+          });
+        }
+      }
+
+      return {
+        value: funcValue,
+        haveError: false,
+        isSended: isSended ? true : false,
+      };
+    } catch (error) {
+      for (const advice of some.advices) {
+        if (isSended) return;
+        if (advice.onError) {
+          isSended = await advice.onError(error, {
+            getRequest: () => options.request,
+            getResponse: () => options.response,
+            getParamTypes: () => some.paramtypes,
+          });
+        }
+      }
+      return {
+        value: undefined,
+        haveError: true,
+        isSended: isSended ? true : false,
+      };
+    }
   }
 
   private analyzeHandler() {
@@ -22,57 +85,15 @@ class ExpHandler {
       for (const key of propertykeys) {
         const allMethods: NWeb.NMethodMetadata[] = Reflect.getMetadata(NailyWebWatermark.CONTROLLER_METHOD, controller.target.prototype, key) || [];
         const allAdvices: NExpWebAdvice[] = Reflect.getMetadata(NailyWebWatermark.USEADVICE, controller.target.prototype, key) || [];
+        const paramtypes: any[] = Reflect.getMetadata("design:paramtypes", controller.target.prototype, key) || [];
 
         for (const { method, path } of allMethods) {
           this.adapter.handler({
-            getHandler: async (options) => {
-              let isSended = false;
-              for (const advice of allAdvices) {
-                if (isSended) return { value: undefined, haveError: false, isSended: true };
-                if (advice.beforeExecution) {
-                  isSended = await advice.beforeExecution({
-                    getRequest: () => options.request,
-                    getResponse: () => options.response,
-                  });
-                }
-              }
-              try {
-                const func: Function = controller.instance[key];
-                let funcValue = await func.call(controller.instance);
-
-                for (const advice of allAdvices) {
-                  if (isSended) return { value: undefined, haveError: false, isSended: true };
-                  if (advice.afterExecution) {
-                    isSended = await advice.afterExecution({
-                      getRequest: () => options.request,
-                      getResponse: () => options.response,
-                      getResponseValue: () => funcValue,
-                      setResponseValue: (newValue) => (funcValue = newValue),
-                    });
-                  }
-                }
-
-                return {
-                  value: funcValue,
-                  haveError: false,
-                  isSended: isSended ? true : false,
-                };
-              } catch (error) {
-                for (const advice of allAdvices) {
-                  if (isSended) return;
-                  if (advice.onError) {
-                    isSended = await advice.onError(error, {
-                      getRequest: () => options.request,
-                      getResponse: () => options.response,
-                    });
-                  }
-                }
-                return {
-                  value: undefined,
-                  haveError: true,
-                  isSended: isSended ? true : false,
-                };
-              }
+            getHandler: (options) => {
+              return this.handler(controller, key, options, {
+                advices: allAdvices,
+                paramtypes: paramtypes,
+              });
             },
             getPath: () => join("/" + controllerPath, path).replace(/\\/g, "/"),
             getHttpMethod: () => method,

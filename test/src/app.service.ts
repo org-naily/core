@@ -1,6 +1,5 @@
-import { Injectable, NLifeCycle } from "@naily/core";
+import { Injectable } from "@naily/core";
 import { NExpWebAdvice } from "@naily/web";
-import { Response } from "express";
 
 @Injectable()
 export class AppService implements NExpWebAdvice {
