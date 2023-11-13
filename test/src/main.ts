@@ -1,5 +1,5 @@
-import { NailyWebException, NailyWebFactory } from "@naily/web";
-import { ExpressAdapter } from "@naily/web-express";
+import { NailyWebFactory } from "@naily/web";
+import { ExpressAdapter, logger } from "@naily/web-express";
 import * as CookieParser from "cookie-parser"
 import { NextFunction, Request, Response, json, urlencoded } from "express";
 
@@ -10,6 +10,7 @@ new NailyWebFactory()
   .useMiddleware(json())
   .useMiddleware(urlencoded({ extended: true }))
   .useMiddleware(CookieParser())
+  .useMiddleware(logger())
   .run()
   .then((port) => {
     console.log(`Server is running on http://localhost:${port}`);

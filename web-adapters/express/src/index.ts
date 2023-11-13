@@ -6,11 +6,11 @@ import express, { NextFunction, Request, Response } from "express";
 export class ExpressAdapter<Req = Request, Res = Response, Next = NextFunction> implements NExpAdapter<Req, Res, Next> {
   private readonly app = express();
 
-  handler(argument: NExpAdapter.NExpAdapterHandlerArgumentHost) {
+  handler(argument: NExpAdapter.NExpAdapterHandlerArgumentHost<Req, Res>) {
     const { getHandler, getPath, getHttpMethod } = argument;
 
     this.app[getHttpMethod()](getPath(), async (req, res, next) => {
-      const { value, haveError } = await getHandler({
+      const handler = await getHandler({
         params: req.params,
         query: req.query,
         body: req.body,
@@ -22,7 +22,7 @@ export class ExpressAdapter<Req = Request, Res = Response, Next = NextFunction> 
         response: res,
         next: next,
       });
-      if (!haveError) res.send(value);
+      if (!handler.haveError && !handler.isSended) return res.send(handler.value);
     });
   }
 
@@ -36,3 +36,5 @@ export class ExpressAdapter<Req = Request, Res = Response, Next = NextFunction> 
     this.app.listen(port, callBack);
   }
 }
+
+export { logger } from "./vendors/logger.service";

@@ -21,15 +21,18 @@ export const enum HttpMethod {
 export type NHttpMethod = "get" | "post" | "put" | "delete" | "patch" | "options" | "head" | "all" | "trace";
 export namespace NExpWebAdvice {
   interface NWebAdviceContext {
-    getRequest<T>(): T;
-    getResponse<T>(): T;
+    getRequest<T = any>(): T;
+    getResponse<T = any>(): T;
   }
   export interface NWebAdviceBeforeContext extends NWebAdviceContext {}
-  export interface NWebAdviceAfterContext extends NWebAdviceContext {}
+  export interface NWebAdviceAfterContext extends NWebAdviceContext {
+    getResponseValue<T = any>(): T;
+    setResponseValue<T = any>(newValue: T): void;
+  }
   export interface NWebAdviceErrorContext extends NWebAdviceContext {}
 }
 export interface NExpWebAdvice {
-  beforeExecution?(ctx: NExpWebAdvice.NWebAdviceBeforeContext): Promise<void> | void;
-  afterExecution?(ctx: NExpWebAdvice.NWebAdviceAfterContext): Promise<void> | void;
-  onError?(exception: any, ctx: NExpWebAdvice.NWebAdviceErrorContext): Promise<void> | void;
+  beforeExecution?(ctx: NExpWebAdvice.NWebAdviceBeforeContext): Promise<boolean> | boolean;
+  afterExecution?(ctx: NExpWebAdvice.NWebAdviceAfterContext): Promise<boolean> | boolean;
+  onError?(exception: any, ctx: NExpWebAdvice.NWebAdviceErrorContext): Promise<boolean> | boolean;
 }

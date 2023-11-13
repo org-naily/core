@@ -1,12 +1,14 @@
-import { Injectable, NailyInjectableFactory, Value } from "@naily/core";
+import { Injectable, NailyInjectableFactory, Type, Value } from "@naily/core";
 import { NExpAdapter } from "@/typings";
 import { NailyWebManager } from "./manager.class";
 import { NailyWebWatermark } from "@/constants";
-import { NWeb } from "@/typings/common.typing";
+import { NExpWebAdvice, NWeb } from "@/typings/common.typing";
 import { join } from "path";
+import { NailyWebException } from "..";
 
 class ExpHandler {
   private allControllers = NailyWebManager.getAllControllers();
+
   constructor(private readonly adapter: NExpAdapter) {
     this.analyzeHandler();
   }
@@ -19,19 +21,63 @@ class ExpHandler {
 
       for (const key of propertykeys) {
         const allMethods: NWeb.NMethodMetadata[] = Reflect.getMetadata(NailyWebWatermark.CONTROLLER_METHOD, controller.target.prototype, key) || [];
-        allMethods.forEach(({ method, path }) => {
+        const allAdvices: NExpWebAdvice[] = Reflect.getMetadata(NailyWebWatermark.USEADVICE, controller.target.prototype, key) || [];
+
+        for (const { method, path } of allMethods) {
           this.adapter.handler({
-            getHandler: async () => {
-              const func: Function = controller.instance[key];
-              return {
-                value: await func.call(controller.instance),
-                haveError: false,
-              };
+            getHandler: async (options) => {
+              let isSended = false;
+              for (const advice of allAdvices) {
+                if (isSended) return { value: undefined, haveError: false, isSended: true };
+                if (advice.beforeExecution) {
+                  isSended = await advice.beforeExecution({
+                    getRequest: () => options.request,
+                    getResponse: () => options.response,
+                  });
+                }
+              }
+              try {
+                const func: Function = controller.instance[key];
+                let funcValue = await func.call(controller.instance);
+
+                for (const advice of allAdvices) {
+                  if (isSended) return { value: undefined, haveError: false, isSended: true };
+                  if (advice.afterExecution) {
+                    isSended = await advice.afterExecution({
+                      getRequest: () => options.request,
+                      getResponse: () => options.response,
+                      getResponseValue: () => funcValue,
+                      setResponseValue: (newValue) => (funcValue = newValue),
+                    });
+                  }
+                }
+
+                return {
+                  value: funcValue,
+                  haveError: false,
+                  isSended: isSended ? true : false,
+                };
+              } catch (error) {
+                for (const advice of allAdvices) {
+                  if (isSended) return;
+                  if (advice.onError) {
+                    isSended = await advice.onError(error, {
+                      getRequest: () => options.request,
+                      getResponse: () => options.response,
+                    });
+                  }
+                }
+                return {
+                  value: undefined,
+                  haveError: true,
+                  isSended: isSended ? true : false,
+                };
+              }
             },
             getPath: () => join("/" + controllerPath, path).replace(/\\/g, "/"),
             getHttpMethod: () => method,
           });
-        });
+        }
       }
     }
   }
@@ -50,7 +96,7 @@ export class NailyExpWebFactory<Request, Response, NextFunction extends Function
   }
 
   public run() {
-    if (!this.port) throw new Error(`[Naily] [Web] Port is not defined.`);
+    if (!this.port) throw new NailyWebException(`[Web] naily.yaml: Port is not defined.`);
     new ExpHandler(this.adapter);
     return new Promise<number>((res) => {
       this.adapter.listen(this.port, () => {
