@@ -8,6 +8,8 @@
     "@naily/web": "workspace:*",
     "@naily/web-express": "workspace:*",
     "express": "^4.18.2",
-    "@types/express": "^4.17.21"
+    "@types/express": "^4.17.21",
+    "cookie-parser": "^1.4.6",
+    "@types/cookie-parser": "^1.4.6"
   }
 }

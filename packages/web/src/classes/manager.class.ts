@@ -1,6 +1,7 @@
 import { NailyWebWatermark } from "@/constants";
+import { NailyWebException } from "@/errors";
 import { NWeb } from "@/typings/common.typing";
-import { Injectable, NContainer, NToken, NailyInjectableManager, Type } from "@naily/core";
+import { Injectable, NContainer, NToken, NailyInjectableManager, NailyLogger, Type } from "@naily/core";
 
 @Injectable()
 export class NailyWebManager {
@@ -12,6 +13,7 @@ export class NailyWebManager {
       const controllerMetadata: NWeb.NControllerMetadata = Reflect.getMetadata(NailyWebWatermark.CONTROLLER, value.target);
       if (!controllerMetadata) return;
       if (value.isConfiguration === false) return;
+      new NailyLogger().log(`[Web] Found controller: ${value.target.name}`);
       newMap.set(key, value);
     });
 
@@ -20,7 +22,7 @@ export class NailyWebManager {
 
   public static getControllerMetadataOrThrow(target: Type): NWeb.NControllerMetadata {
     const metadata = Reflect.getMetadata(NailyWebWatermark.CONTROLLER, target);
-    if (!metadata) throw new Error(`[Naily] [Web] Controller metadata is not defined.`);
+    if (!metadata) throw new NailyWebException(`[Web] Controller metadata is not defined.`);
     return metadata;
   }
 }
