@@ -1,0 +1,19 @@
+{
+  "name": "v19",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "eslint": "^8.53.0",
+    "father": "^4.3.7",
+    "prettier": "^3.1.0"
+  },
+  "dependencies": {
+    "@types/node": "^20.9.0",
+    "reflect-metadata": "^0.1.13",
+    "typescript": "^5.2.2"
+  }
+}
