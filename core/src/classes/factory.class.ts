@@ -123,24 +123,22 @@ export class NailyFactory<Instance extends Object> {
     return this;
   }
 
-  private createInstance(noProxy = true, instance?: Object) {
+  private createInstance(proxy = true, instance?: Object) {
     const injectableOptions = new NailyFactory(this.target).getInjectableOptionsOrThrow();
     const parameters = new NailyFactory(this.target).transformParamtypes();
 
-    if (injectableOptions.scope === ScopeEnum.SINGLETON) {
-      return new this.target(...parameters);
-    } else if (injectableOptions.scope === ScopeEnum.PROTOTYPE && noProxy === false) {
+    if (injectableOptions.scope === ScopeEnum.PROTOTYPE && proxy === true) {
       return new Proxy(instance ? instance : new this.target(...parameters), {
         get: (_target, p) => {
           return new NailyFactory(this.target).create(false)[p];
         },
       });
     } else {
-      throw new Error(`Failed to create instance of ${this.target.name}.`);
+      return new this.target(...parameters);
     }
   }
 
-  public create(noProxy = true): Instance {
+  public create(proxy = true): Instance {
     const injectableOptions = this.getInjectableOptionsOrThrow();
     let parameters = this.transformParamtypes();
     const actions = this.getInjectableActions();
@@ -153,14 +151,14 @@ export class NailyFactory<Instance extends Object> {
       }
     }
 
-    let instance = this.createInstance(noProxy);
+    let instance = this.createInstance(proxy);
 
     for (const action of actions) {
       if (action.afterExecute) {
         action.afterExecute(this, {
           getInstance: <T>() => instance as unknown as T,
           setInstance: <T extends Object>(newInstance: T) => {
-            instance = this.createInstance(noProxy, newInstance);
+            instance = this.createInstance(proxy, newInstance);
           },
         });
       }

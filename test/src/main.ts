@@ -1,4 +1,4 @@
-import { Configuration } from "@naily/core";
+import { NailyRepository } from "@naily/core";
+import "./main.configuration";
 
-@Configuration
-export class MainConfiguration {}
+console.log(NailyRepository.repository);
