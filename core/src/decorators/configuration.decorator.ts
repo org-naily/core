@@ -1,15 +1,31 @@
-import { Injectable, NIOC, NailyFactory, Type } from "..";
+import isClass from "is-class";
+import { Injectable } from "@/decorators";
+import { Type, NIOC, NConfigure } from "@/typings";
+import { NailyFactory, NailyRepository } from "@/classes";
+
+async function Init(target: Type, options?: Partial<NIOC.InjectableOptions>) {
+  Injectable(options)(target);
+
+  const Factory = new NailyFactory<NConfigure>(target);
+  const instance = Factory.create(true, false);
+  target.prototype = instance;
+
+  NailyRepository.set({
+    type: "class",
+    target: target,
+    instance: instance,
+    options: Factory.getInjectableOptionsOrThrow(),
+  });
+}
 
 export function Configuration(injectableOptions?: Partial<NIOC.InjectableOptions>): ClassDecorator;
 export function Configuration(target: Type): void;
 export function Configuration(injectableOptionsOrTarget: Partial<NIOC.InjectableOptions> | Type = {}) {
-  if (typeof injectableOptionsOrTarget === "function") {
-    Injectable()(injectableOptionsOrTarget);
-    injectableOptionsOrTarget.prototype = new NailyFactory(injectableOptionsOrTarget).create();
+  if (isClass(injectableOptionsOrTarget)) {
+    Init(injectableOptionsOrTarget);
   } else {
     return (target: Type) => {
-      Injectable(injectableOptionsOrTarget)(target);
-      target.prototype = new NailyFactory(target).create();
+      Init(target, injectableOptionsOrTarget);
     };
   }
 }

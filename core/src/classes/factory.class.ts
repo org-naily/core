@@ -1,6 +1,9 @@
 import "reflect-metadata";
 import { isClass } from "is-class";
-import { Injectable, NAction, NIOC, NToken, NailyRepository, NailyWatermark, ScopeEnum, Type } from "..";
+import { Injectable } from "@/decorators";
+import { Type, NAction, NIOC, NToken } from "@/typings";
+import { NailyRepository } from "@/classes";
+import { ScopeEnum, NailyWatermark } from "@/constants";
 
 @Injectable()
 export class NailyFactory<Instance extends Object> {
@@ -138,7 +141,7 @@ export class NailyFactory<Instance extends Object> {
     }
   }
 
-  public create(proxy = true): Instance {
+  public create(proxy = true, addFactory = true): Instance {
     const injectableOptions = this.getInjectableOptionsOrThrow();
     let parameters = this.transformParamtypes();
     const actions = this.getInjectableActions();
@@ -164,12 +167,14 @@ export class NailyFactory<Instance extends Object> {
       }
     }
 
-    NailyRepository.set({
-      type: "class",
-      target: this.target,
-      instance: instance,
-      options: injectableOptions,
-    });
+    if (addFactory) {
+      NailyRepository.set({
+        type: "class",
+        target: this.target,
+        instance: instance,
+        options: injectableOptions,
+      });
+    }
     return instance as Instance;
   }
 }

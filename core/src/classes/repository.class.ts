@@ -1,12 +1,12 @@
-import { NRepository } from "@/typings/repository.typing";
-import { Injectable, NToken } from "..";
+import { NToken, NRepository } from "@/typings";
+import { Injectable } from "@/decorators";
 
 @Injectable()
 export class NailyRepository {
-  private static readonly _repository = new Map<NToken, NRepository.Element<any>>();
+  private static readonly repository = new Map<NToken, NRepository.Element<any>>();
 
-  public static get repository() {
-    return this._repository;
+  public static getRepository() {
+    return this.repository;
   }
 
   public static get<T>(token: NToken): NRepository.Element<T> | undefined {

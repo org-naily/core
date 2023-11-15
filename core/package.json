@@ -28,6 +28,7 @@
     "is-class": "^0.0.9",
     "jexl": "^2.3.0",
     "md5": "^2.3.0",
+    "synchronized-promise": "^0.3.1",
     "yaml": "^2.3.4"
   }
 }

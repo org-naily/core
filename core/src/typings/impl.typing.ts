@@ -1,3 +1,5 @@
+import JEXL from "jexl";
+
 export interface NConfigure {
-  getConfigure(): Object | Promise<Object>;
+  getConfigure(jexl: string, builder: typeof JEXL): Promise<any> | any;
 }

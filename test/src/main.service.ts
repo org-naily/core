@@ -1,12 +1,8 @@
-import { Injectable, ScopeEnum } from "@naily/core";
+import { Injectable } from "@naily/core";
 
-@Injectable({ scope: ScopeEnum.PROTOTYPE })
+@Injectable()
 export class MainService {
-  constructor() {
-    console.log("MainService created");
-  }
-
-  getHello() {
+  public getHello() {
     return "Hello World!";
   }
 }

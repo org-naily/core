@@ -1,6 +1,7 @@
 import { NailyFactory } from "@/classes/factory.class";
 import { Type } from "./common.typing";
 import { NIOC } from "./ioc.typing";
+import { NConfigure } from "./impl.typing";
 
 export namespace NRepository {
   export interface ClassElement<T> {

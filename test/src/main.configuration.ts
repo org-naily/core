@@ -1,10 +1,9 @@
-import { Autowired, Configuration } from "@naily/core";
-import { MainService } from "./main.service";
+import { Configuration, Value } from "@naily/core";
 
 @Configuration
 export class MainConfiguration {
-  @Autowired
-  private readonly mainService: MainService;
+  @Value("test")
+  private readonly test: string;
 
   constructor() {}
 }
