@@ -1,6 +1,6 @@
 import YAML from "yaml";
 import JEXL from "jexl";
-import { Injectable } from "@/decorators";
+import { Configuration, Injectable } from "@/decorators";
 import { NConfigure } from "@/typings";
 import { existsSync, readFileSync } from "fs";
 

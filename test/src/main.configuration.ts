@@ -1,9 +1,20 @@
-import { Configuration, Value } from "@naily/core";
+import { Configuration, Value, NConfigure, NailyFactory } from "@naily/core";
+
+@Configuration
+export class TestConfiguration implements NConfigure {
+  async getConfigure(jexl: string, builder: any) {
+    return "AAP";
+  }
+}
 
 @Configuration
 export class MainConfiguration {
   @Value("test")
-  private readonly test: string;
+  readonly test: string;
 
-  constructor() {}
+  constructor() {
+    setInterval(() => {
+      console.log(this.test);
+    }, 1000);
+  }
 }

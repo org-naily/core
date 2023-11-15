@@ -7,8 +7,7 @@ async function Init(target: Type, options?: Partial<NIOC.InjectableOptions>) {
   Injectable(options)(target);
 
   const Factory = new NailyFactory<NConfigure>(target);
-  const instance = Factory.create(true, false);
-  target.prototype = instance;
+  const instance = Factory.create();
 
   NailyRepository.set({
     type: "class",
@@ -21,7 +20,7 @@ async function Init(target: Type, options?: Partial<NIOC.InjectableOptions>) {
 export function Configuration(injectableOptions?: Partial<NIOC.InjectableOptions>): ClassDecorator;
 export function Configuration(target: Type): void;
 export function Configuration(injectableOptionsOrTarget: Partial<NIOC.InjectableOptions> | Type = {}) {
-  if (isClass(injectableOptionsOrTarget)) {
+  if (isClass<Type>(injectableOptionsOrTarget)) {
     Init(injectableOptionsOrTarget);
   } else {
     return (target: Type) => {

@@ -1,10 +1,10 @@
 import { NailyConfiguration } from "@/vendors";
 import { NConfigure, Type } from "@/typings";
-import { NailyFactory } from "@/classes";
+import { NailyFactory, NailyRepository } from "@/classes";
 import sp from "synchronized-promise";
 import JEXL from "jexl";
 
-export function Value(jexl?: string, configure: Type<NConfigure> = NailyConfiguration) {
+export function Value(jexl?: string, configure: Type<NConfigure> = NailyRepository.defaultConfigure) {
   return (target: Object, propertyKey: string | symbol) => {
     Object.defineProperty(target, propertyKey, {
       get() {

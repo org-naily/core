@@ -1,9 +1,11 @@
 import { NToken, NRepository } from "@/typings";
 import { Injectable } from "@/decorators";
+import { NailyConfiguration } from "@/vendors";
 
 @Injectable()
 export class NailyRepository {
   private static readonly repository = new Map<NToken, NRepository.Element<any>>();
+  public static defaultConfigure = NailyConfiguration;
 
   public static getRepository() {
     return this.repository;

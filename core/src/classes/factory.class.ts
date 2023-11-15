@@ -126,9 +126,8 @@ export class NailyFactory<Instance extends Object> {
     return this;
   }
 
-  private createInstance(proxy = true, instance?: Object) {
+  private createInstance(proxy = true, instance?: Object, parameters: Type[] = new NailyFactory(this.target).transformParamtypes()) {
     const injectableOptions = new NailyFactory(this.target).getInjectableOptionsOrThrow();
-    const parameters = new NailyFactory(this.target).transformParamtypes();
 
     if (injectableOptions.scope === ScopeEnum.PROTOTYPE && proxy === true) {
       return new Proxy(instance ? instance : new this.target(...parameters), {
@@ -161,7 +160,7 @@ export class NailyFactory<Instance extends Object> {
         action.afterExecute(this, {
           getInstance: <T>() => instance as unknown as T,
           setInstance: <T extends Object>(newInstance: T) => {
-            instance = this.createInstance(proxy, newInstance);
+            instance = this.createInstance(proxy, newInstance, parameters);
           },
         });
       }
