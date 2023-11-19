@@ -1,6 +1,6 @@
 import { NailyWebWatermark } from "@/constants";
-import { NailyMapper, NailyWebConfiguration, ReflectedType } from "@/typings/web.typing";
-import { NailyFactory, NailyRepository } from "@naily/core";
+import { NFilter, NailyMapper, NailyWebConfiguration, ReflectedType } from "@/typings";
+import { NailyFactory, NailyRepository, Type } from "@naily/core";
 
 export class NailyWebFactory {
   public static mapper: NailyMapper[] = [];
@@ -26,6 +26,7 @@ export class NailyWebFactory {
             if (!methodMetadata) return undefined;
 
             const returnType: ReflectedType = Reflect.getMetadata("design:returntype", element.target.prototype, propertyKey);
+            const filters: Type<NFilter>[] = Reflect.getMetadata(NailyWebWatermark.USEFILTER, element.target.prototype, propertyKey) || [];
             const paramMetadata: NailyMapper.ParamMapper[] =
               Reflect.getMetadata(NailyWebWatermark.PARAM, element.target.prototype, propertyKey) || [];
 
@@ -33,6 +34,12 @@ export class NailyWebFactory {
               propertyKey: propertyKey,
               returnType: returnType,
               methods: methodMetadata,
+              filters: filters.map<NailyMapper.FilterMapper>((filter) => {
+                return {
+                  filter: filter,
+                  catcher: Reflect.getMetadata(NailyWebWatermark.CATCH, filter) || [],
+                };
+              }),
               paramMapper: paramMetadata,
             };
           })

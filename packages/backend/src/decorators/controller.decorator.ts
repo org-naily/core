@@ -9,3 +9,9 @@ export function Controller(path: string = "/") {
     Configuration()(target);
   };
 }
+
+export function Catch(...errorInstance: Type[]) {
+  return (target: Type) => {
+    Reflect.defineMetadata(NailyWebWatermark.CATCH, errorInstance, target);
+  };
+}

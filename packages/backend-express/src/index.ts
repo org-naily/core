@@ -1,6 +1,7 @@
 import { NailyWebFactory } from "@naily/backend";
 import { Injectable, Value } from "@naily/core";
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
+import { NailyExpressAnalyser } from "./analyser.class";
 
 @Injectable()
 export class ExpressFactory extends NailyWebFactory {
@@ -13,11 +14,13 @@ export class ExpressFactory extends NailyWebFactory {
     super();
   }
 
-  public getApp() {
-    return this.app;
+  use(handler: (req: Request, res: Response, next: NextFunction) => any): this {
+    this.app.use(handler);
+    return this;
   }
 
   public listen(callBack?: (port: number) => void) {
-    this.app.listen(this.port, () => (callBack ? callBack(this.port) : void 0));
+    new NailyExpressAnalyser(ExpressFactory.mapper, this.app);
+    return this.app.listen(this.port, () => (callBack ? callBack(this.port) : void 0));
   }
 }

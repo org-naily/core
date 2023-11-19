@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { NailyMapper, NailyWebWatermark } from "..";
+import { NPipe, NailyMapper, NailyWebWatermark } from "..";
 import { Type } from "@naily/core";
 
 export function Req(): ParameterDecorator;
@@ -38,9 +38,9 @@ export function Next() {
   };
 }
 
-export function Body(name?: string, ...pipes: Type[]): ParameterDecorator;
-export function Body(...pipes: Type[]): ParameterDecorator;
-export function Body(name?: string | Type, ...pipes: Type[]) {
+export function Body(name?: string, ...pipes: Type<NPipe>[]): ParameterDecorator;
+export function Body(...pipes: Type<NPipe>[]): ParameterDecorator;
+export function Body(name?: string | Type<NPipe>, ...pipes: Type<NPipe>[]) {
   return function (target: Object, propertyKey: string | symbol, parameterIndex: number) {
     const oldMetadata: NailyMapper.ParamMapper[] = Reflect.getMetadata(NailyWebWatermark.PARAM, target, propertyKey) || [];
     oldMetadata[parameterIndex] = {
@@ -53,9 +53,9 @@ export function Body(name?: string | Type, ...pipes: Type[]) {
   };
 }
 
-export function Query(name?: string, ...pipes: Type[]): ParameterDecorator;
-export function Query(...pipes: Type[]): ParameterDecorator;
-export function Query(name?: string | Type, ...pipes: Type[]) {
+export function Query(name?: string, ...pipes: Type<NPipe>[]): ParameterDecorator;
+export function Query(...pipes: Type<NPipe>[]): ParameterDecorator;
+export function Query(name?: string | Type<NPipe>, ...pipes: Type<NPipe>[]) {
   return function (target: Object, propertyKey: string | symbol, parameterIndex: number) {
     const oldMetadata: NailyMapper.ParamMapper[] = Reflect.getMetadata(NailyWebWatermark.PARAM, target, propertyKey) || [];
     oldMetadata[parameterIndex] = {
@@ -68,9 +68,9 @@ export function Query(name?: string | Type, ...pipes: Type[]) {
   };
 }
 
-export function Params(name?: string, ...pipes: Type[]): ParameterDecorator;
-export function Params(...pipes: Type[]): ParameterDecorator;
-export function Params(name?: string | Type, ...pipes: Type[]) {
+export function Params(name?: string, ...pipes: Type<NPipe>[]): ParameterDecorator;
+export function Params(...pipes: Type<NPipe>[]): ParameterDecorator;
+export function Params(name?: string | Type<NPipe>, ...pipes: Type<NPipe>[]) {
   return function (target: Object, propertyKey: string | symbol, parameterIndex: number) {
     const oldMetadata: NailyMapper.ParamMapper[] = Reflect.getMetadata(NailyWebWatermark.PARAM, target, propertyKey) || [];
     oldMetadata[parameterIndex] = {
