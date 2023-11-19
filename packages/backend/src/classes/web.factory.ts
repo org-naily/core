@@ -1,6 +1,6 @@
 import { NailyWebWatermark } from "@/constants";
 import { NFilter, NPipe, NailyMapper, NailyWebConfiguration, ReflectedType } from "@/typings";
-import { NailyBaseFactory, NailyFactory, NailyRepository, Type, Value } from "@naily/core";
+import { NailyBaseFactory, NailyFactory, NailyRepository, Type, Value } from "@org-naily/core";
 
 export abstract class NailyWebFactory extends NailyBaseFactory {
   public static mapper: NailyMapper[] = [];

@@ -1,7 +1,6 @@
-import { Autowired, Component, Injectable } from "@naily/core";
-import { Controller, Get, NFilter, NPipe, Query, UseFilter } from "@naily/backend";
-import { ExpressFactory } from "@naily/backend-express";
-import { KoaFactory } from "@naily/backend-koa";
+import { Autowired, Component, Injectable } from "@org-naily/core";
+import { Controller, Get, NFilter, NPipe, Query, UseFilter } from "@org-naily/backend";
+import { KoaFactory } from "@org-naily/backend-koa";
 
 @Injectable()
 export class TestService implements NPipe, NFilter {

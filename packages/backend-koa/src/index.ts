@@ -1,5 +1,5 @@
-import { NPipe, NUpperCaseHttpMethod, NailyWebConfiguration, NailyWebFactory, convertUppercase } from "@naily/backend";
-import { Injectable, NailyFactory, Type, Value } from "@naily/core";
+import { NPipe, NUpperCaseHttpMethod, NailyWebConfiguration, NailyWebFactory, convertUppercase } from "@org-naily/backend";
+import { Injectable, NailyFactory, Type, Value } from "@org-naily/core";
 import Koa, { Context, Next } from "koa";
 import Router from "koa-router";
 import { koaBody } from "koa-body";

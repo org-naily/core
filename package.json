@@ -1,22 +1,19 @@
 {
   "name": "v21",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.21.0",
   "scripts": {
-    "build:core": "pnpm -F @naily/core build",
-    "build:backend": "pnpm -F @naily/backend build",
-    "build:express": "pnpm -F @naily/backend-express build",
-    "build:koa": "pnpm -F @naily/backend-koa build",
+    "build": "sh ./bin/build.sh",
+    "build:core": "pnpm -F @org-naily/core build",
+    "build:backend": "pnpm -F @org-naily/backend build",
+    "build:express": "pnpm -F @org-naily/backend-express build",
+    "build:koa": "pnpm -F @org-naily/backend-koa build",
     "dev": "pnpm -F test dev"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@types/node": "^20.9.1",
     "reflect-metadata": "^0.1.13",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "@babel/runtime": "^7.23.2"
   },
   "devDependencies": {
     "eslint": "^8.53.0",

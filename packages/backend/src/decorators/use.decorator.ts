@@ -1,4 +1,4 @@
-import { Type } from "@naily/core";
+import { Type } from "@org-naily/core";
 import { NFilter, NailyWebWatermark } from "..";
 
 export function UseFilter(...filters: Type<NFilter>[]): MethodDecorator;

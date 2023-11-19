@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { NPipe, NailyMapper, NailyWebWatermark } from "..";
-import { Type } from "@naily/core";
+import { Type } from "@org-naily/core";
 
 export function Req(): ParameterDecorator;
 export function Req() {

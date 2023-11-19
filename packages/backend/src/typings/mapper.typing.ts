@@ -1,5 +1,5 @@
 import { NFilter, NHttpMethod, NPipe, ReflectedType } from "./web.typing";
-import { NToken, Type } from "@naily/core";
+import { NToken, Type } from "@org-naily/core";
 
 export namespace NailyMapper {
   export interface MethodMapper {

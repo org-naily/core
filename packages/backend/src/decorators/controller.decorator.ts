@@ -1,5 +1,5 @@
 import { NailyWebWatermark } from "@/constants";
-import { Configuration, Injectable, Type } from "@naily/core";
+import { Configuration, Injectable, Type } from "@org-naily/core";
 
 export function Controller(path: string = "/") {
   return (target: Type) => {

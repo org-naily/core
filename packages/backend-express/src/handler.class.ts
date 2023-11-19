@@ -1,5 +1,5 @@
-import { NFilter, NPipe, NailyMapper } from "@naily/backend";
-import { NailyFactory } from "@naily/core";
+import { NFilter, NPipe, NailyMapper } from "@org-naily/backend";
+import { NailyFactory } from "@org-naily/core";
 import { NextFunction, Request, Response } from "express";
 
 export class NailyExpressHandler {

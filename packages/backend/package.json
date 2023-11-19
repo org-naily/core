@@ -1,16 +1,21 @@
 {
-  "name": "@naily/backend",
-  "version": "0.0.1",
+  "name": "@org-naily/backend",
+  "version": "0.21.0",
   "description": "Naily Backend App Support",
   "main": "dist/cjs/index.js",
-  "types": "dist/cjs/index.d.ts",
+  "module": "dist/esm/index.js",
   "scripts": {
     "dev": "father dev",
     "build": "father build",
     "build:deps": "father prebundle",
     "prepublishOnly": "father doctor && npm run build"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/org-naily/core.git"
+  },
+  "homepage": "https://github.com/org-naily/core.git",
+  "keywords": ["naily", "nestjs", "midway", "malagu", "backend", "frontend", "koa", "express", "web"],
   "authors": [
     "Zero <gczgroup@qq.com>"
   ],
@@ -23,6 +28,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@naily/core": "workspace:*"
+    "@org-naily/core": "workspace:*"
   }
 }

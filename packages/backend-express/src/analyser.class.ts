@@ -1,5 +1,5 @@
-import { NailyMapper } from "@naily/backend";
-import { NailyRepository } from "@naily/core";
+import { NailyMapper } from "@org-naily/backend";
+import { NailyRepository } from "@org-naily/core";
 import { Express, NextFunction, Request, Response } from "express";
 import { join } from "path";
 import { NailyExpressHandler } from "./handler.class";

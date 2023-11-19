@@ -1,16 +1,21 @@
 {
-  "name": "@naily/backend-express",
-  "version": "0.0.1",
+  "name": "@org-naily/backend-express",
+  "version": "0.21.0",
   "description": "Naily Backend Express Adapter",
   "main": "dist/cjs/index.js",
-  "types": "dist/cjs/index.d.ts",
+  "module": "dist/esm/index.js",
   "scripts": {
     "dev": "father dev",
     "build": "father build",
     "build:deps": "father prebundle",
     "prepublishOnly": "father doctor && npm run build"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/org-naily/core.git"
+  },
+  "homepage": "https://github.com/org-naily/core.git",
+  "keywords": ["naily", "nestjs", "midway", "malagu", "backend", "frontend", "koa", "express", "web"],
   "authors": [
     "Zero <gczgroup@qq.com>"
   ],
@@ -23,8 +28,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@naily/core": "workspace:*",
-    "@naily/backend": "workspace:*",
+    "@org-naily/core": "workspace:*",
+    "@org-naily/backend": "workspace:*",
     "express": "^4.18.2",
     "@types/express": "^4.17.21",
     "cookie-parser": "^1.4.6",

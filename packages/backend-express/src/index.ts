@@ -1,5 +1,5 @@
-import { NPipe, NUpperCaseHttpMethod, NailyWebFactory, convertUppercase } from "@naily/backend";
-import { Injectable, NailyFactory, Type } from "@naily/core";
+import { NPipe, NUpperCaseHttpMethod, NailyWebFactory, convertUppercase } from "@org-naily/backend";
+import { Injectable, NailyFactory, Type } from "@org-naily/core";
 import express, { NextFunction, Request, Response } from "express";
 import { NailyExpressAnalyser } from "./analyser.class";
 

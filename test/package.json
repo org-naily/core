@@ -1,12 +1,13 @@
 {
   "name": "test",
+  "private": true,
   "scripts": {
     "dev": "tsc && node dist/main"
   },
   "dependencies": {
-    "@naily/core": "workspace:*",
-    "@naily/backend": "workspace:*",
-    "@naily/backend-express": "workspace:*",
-    "@naily/backend-koa": "workspace:*"
+    "@org-naily/core": "workspace:*",
+    "@org-naily/backend": "workspace:*",
+    "@org-naily/backend-express": "workspace:*",
+    "@org-naily/backend-koa": "workspace:*"
   }
 }

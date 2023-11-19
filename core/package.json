@@ -1,6 +1,6 @@
 {
-  "name": "@naily/core",
-  "version": "0.0.1",
+  "name": "@org-naily/core",
+  "version": "0.21.0",
   "description": "Naily Core",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -10,7 +10,12 @@
     "build:deps": "father prebundle",
     "prepublishOnly": "father doctor && npm run build"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/org-naily/core.git"
+  },
+  "homepage": "https://github.com/org-naily/core.git",
+  "keywords": ["naily", "nestjs", "midway", "malagu", "backend", "frontend", "koa", "express", "web"],
   "authors": [
     "Zero <gczgroup@qq.com>"
   ],

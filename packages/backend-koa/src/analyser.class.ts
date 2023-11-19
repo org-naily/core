@@ -1,5 +1,5 @@
-import { NailyMapper } from "@naily/backend";
-import { NailyRepository } from "@naily/core";
+import { NailyMapper } from "@org-naily/backend";
+import { NailyRepository } from "@org-naily/core";
 import { Middleware } from "koa";
 import Router from "koa-router";
 import { join } from "path";

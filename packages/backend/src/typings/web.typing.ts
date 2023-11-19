@@ -1,4 +1,4 @@
-import { Type } from "@naily/core";
+import { Type } from "@org-naily/core";
 
 export type NHttpMethod = "get" | "post" | "put" | "delete" | "patch" | "options" | "head" | "all" | "trace";
 export type NUpperCaseHttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "OPTIONS" | "HEAD" | "ALL" | "TRACE";
