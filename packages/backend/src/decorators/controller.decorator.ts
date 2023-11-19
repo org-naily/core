@@ -1,5 +1,5 @@
 import { NailyWebWatermark } from "@/constants";
-import { Configuration, Type } from "@naily/core";
+import { Configuration, Injectable, Type } from "@naily/core";
 
 export function Controller(path: string = "/") {
   return (target: Type) => {
@@ -13,5 +13,6 @@ export function Controller(path: string = "/") {
 export function Catch(...errorInstance: Type[]) {
   return (target: Type) => {
     Reflect.defineMetadata(NailyWebWatermark.CATCH, errorInstance, target);
+    Injectable()(target);
   };
 }

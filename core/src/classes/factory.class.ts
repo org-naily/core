@@ -1,6 +1,6 @@
 import { NailyWatermark, ScopeEnum } from "@/constants";
 import { Injectable } from "@/decorators";
-import { NConfigure, NIOC, Type } from "@/typings";
+import { NConfigure, Type } from "@/typings";
 import { NailyRepository } from "./repository.class";
 import sp from "synchronized-promise";
 import JEXL from "jexl";
@@ -58,6 +58,10 @@ export class NailyFactory<Instance extends Partial<NConfigure> | Object> {
     const options = this.getInjectableOptions();
     if (!options) throw new Error(`The class ${this.target.name} is not an injectable class.`);
     return options;
+  }
+
+  public getComponentOptions(): NIOC.ComponentRawOptions | undefined {
+    return Reflect.getMetadata(NailyWatermark.COMPONENT, this.target);
   }
 
   public getParamtypes(): any[] {

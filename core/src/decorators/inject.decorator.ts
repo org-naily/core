@@ -1,9 +1,11 @@
 import { Type } from "@/typings";
-import { NailyFactory } from "..";
+import { NailyWatermark } from "@/constants";
+import { NailyFactory } from "@/classes";
 import isClass from "is-class";
 
 export function Inject(val: Type) {
   return (target: Object, key: string | symbol) => {
+    Reflect.defineMetadata(NailyWatermark.INJECT, val, target, key);
     Object.defineProperty(target, key, {
       get: () => new NailyFactory(val).getInstance(),
     });

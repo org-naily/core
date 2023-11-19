@@ -5,5 +5,7 @@ export const enum ScopeEnum {
 
 export const enum NailyWatermark {
   INJECTABLE = "__INJECTABLE__",
+  INJECT = "__INJECT__",
+  COMPONENT = "__COMPONENT__",
   CONFIGURATION = "__CONFIGURATION__",
 }

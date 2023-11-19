@@ -1,11 +1,12 @@
 import { NailyWebWatermark } from "@/constants";
 import { NFilter, NailyMapper, NailyWebConfiguration, ReflectedType } from "@/typings";
-import { NailyFactory, NailyRepository, Type } from "@naily/core";
+import { NailyBaseFactory, NailyFactory, NailyRepository, Type } from "@naily/core";
 
-export class NailyWebFactory {
+export class NailyWebFactory extends NailyBaseFactory {
   public static mapper: NailyMapper[] = [];
 
-  constructor(private readonly configuration: NailyWebConfiguration = {}) {
+  constructor(protected readonly configuration: Partial<NailyWebConfiguration> = { EnableComponent: true }) {
+    super(configuration);
     this.initAllControllers();
   }
 

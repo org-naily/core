@@ -1,5 +1,5 @@
-import { NailyWebFactory } from "@naily/backend";
-import { Injectable, Value } from "@naily/core";
+import { NPipe, NUpperCaseHttpMethod, NailyWebConfiguration, NailyWebFactory, convertUppercase } from "@naily/backend";
+import { Injectable, NailyFactory, Type, Value } from "@naily/core";
 import express, { NextFunction, Request, Response } from "express";
 import { NailyExpressAnalyser } from "./analyser.class";
 
@@ -10,13 +10,41 @@ export class ExpressFactory extends NailyWebFactory {
   @Value("server.port")
   private readonly port: number;
 
-  constructor() {
-    super();
+  constructor(protected readonly configuration: Partial<NailyWebConfiguration> = { EnableComponent: true }) {
+    super(configuration);
   }
 
   use(handler: (req: Request, res: Response, next: NextFunction) => any): this {
     this.app.use(handler);
     return this;
+  }
+
+  useGlobalPipe(pipe: Type<NPipe>) {
+    this.app.use((req, res, next) => {
+      const instance = new NailyFactory(pipe).getInstance();
+      instance.transform(req.params, {
+        getName: () => undefined,
+        getRequest: <Request>() => req as Request,
+        getResponse: <Response>() => res as Response,
+        getDecoratorType: () => "params",
+        getHttpMethod: () => convertUppercase(req.method as NUpperCaseHttpMethod),
+      });
+      instance.transform(req.query, {
+        getName: () => undefined,
+        getRequest: <Request>() => req as Request,
+        getResponse: <Response>() => res as Response,
+        getDecoratorType: () => "query",
+        getHttpMethod: () => convertUppercase(req.method as NUpperCaseHttpMethod),
+      });
+      instance.transform(req.body, {
+        getName: () => undefined,
+        getRequest: <Request>() => req as Request,
+        getResponse: <Response>() => res as Response,
+        getDecoratorType: () => "body",
+        getHttpMethod: () => convertUppercase(req.method as NUpperCaseHttpMethod),
+      });
+      next();
+    });
   }
 
   public listen(callBack?: (port: number) => void) {

@@ -1,10 +1,11 @@
 import { Type } from "@naily/core";
 
 export type NHttpMethod = "get" | "post" | "put" | "delete" | "patch" | "options" | "head" | "all" | "trace";
+export type NUpperCaseHttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "OPTIONS" | "HEAD" | "ALL" | "TRACE";
 export type ReflectedType<T = any> = Function | Object | String | Number | Boolean | Symbol | undefined | null | Type<T>;
 export type DecoratorType = "request" | "response" | "next" | "body" | "query" | "params" | "headers" | "cookies" | "ip" | "ips" | "other";
 
-export interface NailyWebConfiguration {}
+export interface NailyWebConfiguration extends NIOC.BaseFactoryOptions {}
 
 export namespace NPipe {
   export interface Host {
@@ -27,5 +28,8 @@ export namespace NFilter {
   }
 }
 export interface NFilter {
-  catch(error: any, host: NFilter.Host): void | Promise<void>;
+  beforeExecute?(host: NFilter.Host): void | Promise<void>;
+  afterExecute?(host: NFilter.Host): void | Promise<void>;
+  catch?(error: any, host: NFilter.Host): void | Promise<void>;
+  finallyExecute?(host: NFilter.Host): void | Promise<void>;
 }

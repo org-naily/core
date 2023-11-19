@@ -1,22 +1,33 @@
-import { Autowired, Injectable } from "@naily/core";
-import { Catch, Controller, Get, Ip, NFilter, NPipe, Query, UseFilter } from "@naily/backend";
+import { Autowired, Component, Injectable } from "@naily/core";
+import { Controller, Get, NFilter, NPipe, Query, UseFilter } from "@naily/backend";
 import { ExpressFactory } from "@naily/backend-express";
 
-class TestError extends Error {
-  message: string = "TestError Throwed!";
-}
-
 @Injectable()
-@Catch(TestError)
 export class TestService implements NPipe, NFilter {
   getHello() {
     return "hello world";
   }
 
-  transform(value: any, host: NPipe.Host) {}
+  transform(value: any, host: NPipe.Host) {
+    console.log("pipe");
+    return value;
+  }
 
-  catch(error: TestError, host: NFilter.Host): void | Promise<void> {
+  catch(error: Error, host: NFilter.Host): void | Promise<void> {
+    console.log("error");
     host.getResponse().send(error.message);
+  }
+
+  beforeExecute(host: NFilter.Host): void | Promise<void> {
+    console.log("before");
+  }
+
+  afterExecute(host: NFilter.Host): void | Promise<void> {
+    console.log("after");
+  }
+
+  finallyExecute(host: NFilter.Host): void | Promise<void> {
+    console.log("finally");
   }
 }
 
@@ -28,9 +39,21 @@ export class AppController {
   @Get()
   @UseFilter(TestService)
   public getHello(@Query("name", TestService) name: string) {
-    throw new TestError("Method not implemented.");
+    console.log("controller");
   }
 }
+
+@Component({
+  Providers: [TestService],
+  Exports: [TestService],
+})
+export class AppComponent {}
+
+@Component({
+  Imports: [AppComponent],
+  Providers: [AppController],
+})
+export class TestComponent {}
 
 new ExpressFactory().listen((port) => {
   console.log(`Server is running on http://localhost:${port}`);
