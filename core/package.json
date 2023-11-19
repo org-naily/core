@@ -24,9 +24,6 @@
     "dist",
     "compiled"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
     "@types/jexl": "^2.3.4",
     "@types/md5": "^2.3.5",
