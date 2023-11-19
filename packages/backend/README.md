@@ -1,7 +1,7 @@
-# @naily/backend
+# @org-naily/backend
 
-[![NPM version](https://img.shields.io/npm/v/@naily/backend.svg?style=flat)](https://npmjs.org/package/@naily/backend)
-[![NPM downloads](http://img.shields.io/npm/dm/@naily/backend.svg?style=flat)](https://npmjs.org/package/@naily/backend)
+[![NPM version](https://img.shields.io/npm/v/@org-naily/backend.svg?style=flat)](https://npmjs.org/package/@org-naily/backend)
+[![NPM downloads](http://img.shields.io/npm/dm/@org-naily/backend.svg?style=flat)](https://npmjs.org/package/@org-naily/backend)
 
 ## Install
 

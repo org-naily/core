@@ -1,7 +1,7 @@
-# @naily/backend-koa
+# @org-naily/backend-koa
 
-[![NPM version](https://img.shields.io/npm/v/@naily/backend-koa.svg?style=flat)](https://npmjs.org/package/@naily/backend-koa)
-[![NPM downloads](http://img.shields.io/npm/dm/@naily/backend-koa.svg?style=flat)](https://npmjs.org/package/@naily/backend-koa)
+[![NPM version](https://img.shields.io/npm/v/@org-naily/backend-koa.svg?style=flat)](https://npmjs.org/package/@org-naily/backend-koa)
+[![NPM downloads](http://img.shields.io/npm/dm/@org-naily/backend-koa.svg?style=flat)](https://npmjs.org/package/@org-naily/backend-koa)
 
 ## Install
 

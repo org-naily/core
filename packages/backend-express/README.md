@@ -1,7 +1,7 @@
-# @naily/backend-express
+# @org-naily/backend-express
 
-[![NPM version](https://img.shields.io/npm/v/@naily/backend-express.svg?style=flat)](https://npmjs.org/package/@naily/backend-express)
-[![NPM downloads](http://img.shields.io/npm/dm/@naily/backend-express.svg?style=flat)](https://npmjs.org/package/@naily/backend-express)
+[![NPM version](https://img.shields.io/npm/v/@org-naily/backend-express.svg?style=flat)](https://npmjs.org/package/@org-naily/backend-express)
+[![NPM downloads](http://img.shields.io/npm/dm/@org-naily/backend-express.svg?style=flat)](https://npmjs.org/package/@org-naily/backend-express)
 
 ## Install
 
