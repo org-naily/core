@@ -6,6 +6,7 @@
   "dependencies": {
     "@naily/core": "workspace:*",
     "@naily/backend": "workspace:*",
-    "@naily/backend-express": "workspace:*"
+    "@naily/backend-express": "workspace:*",
+    "@naily/backend-koa": "workspace:*"
   }
 }

@@ -1,0 +1,34 @@
+{
+  "name": "@naily/backend-koa",
+  "version": "0.0.1",
+  "description": "Naily Backend Koa Adapter",
+  "main": "dist/cjs/index.js",
+  "types": "dist/cjs/index.d.ts",
+  "scripts": {
+    "dev": "father dev",
+    "build": "father build",
+    "build:deps": "father prebundle",
+    "prepublishOnly": "father doctor && npm run build"
+  },
+  "keywords": [],
+  "authors": [
+    "Zero <gczgroup@qq.com>"
+  ],
+  "license": "MIT",
+  "files": [
+    "dist",
+    "compiled"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@naily/core": "workspace:*",
+    "@naily/backend": "workspace:*",
+    "koa": "^2.14.2",
+    "@types/koa": "^2.13.11",
+    "koa-router": "^12.0.1",
+    "@types/koa-router": "^7.4.7",
+    "koa-body": "^6.0.1"
+  }
+}

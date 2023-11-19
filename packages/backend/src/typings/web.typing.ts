@@ -11,6 +11,7 @@ export namespace NPipe {
   export interface Host {
     getRequest<T = any>(): T;
     getResponse<T = any>(): T;
+    getContext<T = any>(): T;
     getHttpMethod(): NHttpMethod;
     getDecoratorType(): "body" | "query" | "params";
     getName(): string;
@@ -24,6 +25,7 @@ export namespace NFilter {
   export interface Host {
     getRequest<T = any>(): T;
     getResponse<T = any>(): T;
+    getContext<T = any>(): T;
     getHttpMethod(): NHttpMethod;
   }
 }

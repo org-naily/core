@@ -1,25 +1,19 @@
 import { NFilter, NPipe, NailyMapper } from "@naily/backend";
 import { NailyFactory } from "@naily/core";
-import { NextFunction, Request, Response } from "express";
+import { Context, Next } from "koa";
 
-export class NailyExpressHandler {
-  public useResponse = false;
-
+export class NailyKoaHandler {
   constructor(
-    private req: Request,
-    private res: Response,
-    private next: NextFunction,
+    private readonly ctx: Context,
+    private readonly next: Next,
   ) {}
 
   private getPipeHost(methodMapper: NailyMapper.MethodMapper, decoratorType: "body" | "query" | "params", name: string = undefined): NPipe.Host {
     return {
       getName: () => name,
-      getRequest: <Request>() => this.req as Request,
-      getResponse: <Response>() => {
-        this.useResponse = true;
-        return this.res as Response;
-      },
-      getContext: () => undefined,
+      getRequest: () => undefined,
+      getResponse: () => undefined,
+      getContext: <Context>() => this.ctx as Context,
       getDecoratorType: () => decoratorType,
       getHttpMethod: () => methodMapper.method,
     };
@@ -27,12 +21,9 @@ export class NailyExpressHandler {
 
   private getFilterHost(methodMapper: NailyMapper.MethodMapper): NFilter.Host {
     return {
-      getRequest: <Request>() => this.req as Request,
-      getResponse: <Response>() => {
-        this.useResponse = true;
-        return this.res as Response;
-      },
-      getContext: () => undefined,
+      getRequest: () => undefined,
+      getResponse: () => undefined,
+      getContext: <Context>() => this.ctx as Context,
       getHttpMethod: () => methodMapper.method,
     };
   }
@@ -40,49 +31,48 @@ export class NailyExpressHandler {
   public async getParameter(methodMapper: NailyMapper.MethodMapper, controllerMapper: NailyMapper.ControllerMapper) {
     const parameter = await Promise.all(
       controllerMapper.paramMapper.map(async (v) => {
-        if (v.decoratorType === "request") return this.req;
-        if (v.decoratorType === "response") return this.res;
+        if (v.decoratorType === "context") return this.ctx;
         if (v.decoratorType === "next") return this.next;
-        if (v.decoratorType === "headers") return this.req.headers;
-        if (v.decoratorType === "cookies") return this.req.cookies;
-        if (v.decoratorType === "ip") return this.req.ip;
-        if (v.decoratorType === "ips") return this.req.ips;
+        if (v.decoratorType === "headers") return this.ctx.request.headers;
+        if (v.decoratorType === "cookies") return this.ctx.cookies;
+        if (v.decoratorType === "ip") return this.ctx.ip;
+        if (v.decoratorType === "ips") return this.ctx.ips;
         if (v.decoratorType === "other") return undefined;
 
         if (v.decoratorType === "params") {
           for (const pipe of v.pipes) {
             const instance = new NailyFactory(pipe).getInstance();
             if (v.name) {
-              this.req.params[v.name] = await instance.transform(this.req.params[v.name], this.getPipeHost(methodMapper, "params"));
+              this.ctx.params[v.name] = await instance.transform(this.ctx.params[v.name], this.getPipeHost(methodMapper, "params"));
             } else {
-              this.req.params = await instance.transform(this.req.params, this.getPipeHost(methodMapper, "params"));
+              this.ctx.params = await instance.transform(this.ctx.params, this.getPipeHost(methodMapper, "params"));
             }
           }
-          return v.name ? this.req.params[v.name] : this.req.params;
+          return v.name ? this.ctx.params[v.name] : this.ctx.params;
         }
 
         if (v.decoratorType === "query") {
           for (const pipe of v.pipes) {
             const instance = new NailyFactory(pipe).getInstance();
             if (v.name) {
-              this.req.query[v.name] = await instance.transform(this.req.query[v.name], this.getPipeHost(methodMapper, "params", v.name));
+              this.ctx.query[v.name] = await instance.transform(this.ctx.query[v.name], this.getPipeHost(methodMapper, "params", v.name));
             } else {
-              this.req.query = await instance.transform(this.req.query, this.getPipeHost(methodMapper, "params"));
+              this.ctx.query = await instance.transform(this.ctx.query, this.getPipeHost(methodMapper, "params"));
             }
           }
-          return v.name ? this.req.query[v.name] : this.req.query;
+          return v.name ? this.ctx.query[v.name] : this.ctx.query;
         }
 
         if (v.decoratorType === "body") {
           for (const pipe of v.pipes) {
             const instance = new NailyFactory(pipe).getInstance();
             if (v.name) {
-              this.req.body[v.name] = await instance.transform(this.req.body[v.name], this.getPipeHost(methodMapper, "params", v.name));
+              this.ctx.body[v.name] = await instance.transform(this.ctx.body[v.name], this.getPipeHost(methodMapper, "params", v.name));
             } else {
-              this.req.body = await instance.transform(this.req.body, this.getPipeHost(methodMapper, "params"));
+              this.ctx.body = await instance.transform(this.ctx.body, this.getPipeHost(methodMapper, "params"));
             }
           }
-          return v.name ? this.req.body[v.name] : this.req.body;
+          return v.name ? this.ctx.body[v.name] : this.ctx.body;
         }
       }),
     );
@@ -104,14 +94,12 @@ export class NailyExpressHandler {
 
   public async getCatchFilter(methodMapper: NailyMapper.MethodMapper, controllerMapper: NailyMapper.ControllerMapper, error: Error) {
     if (controllerMapper.filters.length === 0) {
-      return this.res
-        .status(500)
-        .send({
-          statusCode: 500,
-          message: "Internal Server Error",
-          timestamp: new Date(),
-        })
-        .end();
+      this.ctx.status = 500;
+      this.ctx.body = {
+        statusCode: 500,
+        message: "Internal Server Error",
+        timestamp: new Date(),
+      };
     }
 
     for (const { filter, catcher } of controllerMapper.filters) {

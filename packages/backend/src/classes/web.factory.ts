@@ -1,9 +1,12 @@
 import { NailyWebWatermark } from "@/constants";
-import { NFilter, NailyMapper, NailyWebConfiguration, ReflectedType } from "@/typings";
-import { NailyBaseFactory, NailyFactory, NailyRepository, Type } from "@naily/core";
+import { NFilter, NPipe, NailyMapper, NailyWebConfiguration, ReflectedType } from "@/typings";
+import { NailyBaseFactory, NailyFactory, NailyRepository, Type, Value } from "@naily/core";
 
-export class NailyWebFactory extends NailyBaseFactory {
+export abstract class NailyWebFactory extends NailyBaseFactory {
   public static mapper: NailyMapper[] = [];
+
+  @Value("server.port")
+  protected readonly port: number;
 
   constructor(protected readonly configuration: Partial<NailyWebConfiguration> = { EnableComponent: true }) {
     super(configuration);
@@ -48,4 +51,10 @@ export class NailyWebFactory extends NailyBaseFactory {
       });
     }
   }
+
+  abstract use(handler: Function): this;
+
+  abstract useGlobalPipe(pipe: Type<NPipe>): this;
+
+  abstract listen(callBack: (port: number) => any): any;
 }

@@ -9,6 +9,7 @@ export namespace NailyMapper {
   export type ParamMapper =
     | ParamMapper.Request
     | ParamMapper.Response
+    | ParamMapper.Context
     | ParamMapper.Next
     | ParamMapper.Body
     | ParamMapper.Query
@@ -27,6 +28,9 @@ export namespace NailyMapper {
     }
     export interface Response extends Base {
       decoratorType: "response";
+    }
+    export interface Context extends Base {
+      decoratorType: "context";
     }
     export interface Next extends Base {
       decoratorType: "next";

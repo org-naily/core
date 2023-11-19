@@ -2,6 +2,7 @@
   "material-icon-theme.activeIconPack": "nest",
   "material-icon-theme.files.associations": {},
   "material-icon-theme.folders.associations": {
-    "backend-express": "server"
+    "backend-express": "server",
+    "backend-koa": "server"
   }
 }

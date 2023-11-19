@@ -26,6 +26,18 @@ export function Res() {
   };
 }
 
+export function Ctx(): ParameterDecorator;
+export function Ctx() {
+  return function (target: Object, propertyKey: string | symbol, parameterIndex: number) {
+    const oldMetadata: NailyMapper.ParamMapper[] = Reflect.getMetadata(NailyWebWatermark.PARAM, target, propertyKey) || [];
+    oldMetadata[parameterIndex] = {
+      type: Reflect.getMetadata("design:paramtypes", target, propertyKey)[parameterIndex],
+      decoratorType: "context",
+    };
+    Reflect.defineMetadata(NailyWebWatermark.PARAM, oldMetadata, target, propertyKey);
+  };
+}
+
 export function Next(): ParameterDecorator;
 export function Next() {
   return function (target: Object, propertyKey: string | symbol, parameterIndex: number) {

@@ -1,6 +1,7 @@
 import { Autowired, Component, Injectable } from "@naily/core";
 import { Controller, Get, NFilter, NPipe, Query, UseFilter } from "@naily/backend";
 import { ExpressFactory } from "@naily/backend-express";
+import { KoaFactory } from "@naily/backend-koa";
 
 @Injectable()
 export class TestService implements NPipe, NFilter {
@@ -40,6 +41,7 @@ export class AppController {
   @UseFilter(TestService)
   public getHello(@Query("name", TestService) name: string) {
     console.log("controller");
+    return "Hello world";
   }
 }
 
@@ -55,6 +57,6 @@ export class AppComponent {}
 })
 export class TestComponent {}
 
-new ExpressFactory().listen((port) => {
+new KoaFactory().listen((port) => {
   console.log(`Server is running on http://localhost:${port}`);
 });

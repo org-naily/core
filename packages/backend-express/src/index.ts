@@ -1,5 +1,5 @@
-import { NPipe, NUpperCaseHttpMethod, NailyWebConfiguration, NailyWebFactory, convertUppercase } from "@naily/backend";
-import { Injectable, NailyFactory, Type, Value } from "@naily/core";
+import { NPipe, NUpperCaseHttpMethod, NailyWebFactory, convertUppercase } from "@naily/backend";
+import { Injectable, NailyFactory, Type } from "@naily/core";
 import express, { NextFunction, Request, Response } from "express";
 import { NailyExpressAnalyser } from "./analyser.class";
 
@@ -7,25 +7,19 @@ import { NailyExpressAnalyser } from "./analyser.class";
 export class ExpressFactory extends NailyWebFactory {
   private readonly app = express();
 
-  @Value("server.port")
-  private readonly port: number;
-
-  constructor(protected readonly configuration: Partial<NailyWebConfiguration> = { EnableComponent: true }) {
-    super(configuration);
-  }
-
   use(handler: (req: Request, res: Response, next: NextFunction) => any): this {
     this.app.use(handler);
     return this;
   }
 
-  useGlobalPipe(pipe: Type<NPipe>) {
+  useGlobalPipe(pipe: Type<NPipe>): this {
     this.app.use((req, res, next) => {
       const instance = new NailyFactory(pipe).getInstance();
       instance.transform(req.params, {
         getName: () => undefined,
         getRequest: <Request>() => req as Request,
         getResponse: <Response>() => res as Response,
+        getContext: () => undefined,
         getDecoratorType: () => "params",
         getHttpMethod: () => convertUppercase(req.method as NUpperCaseHttpMethod),
       });
@@ -33,6 +27,7 @@ export class ExpressFactory extends NailyWebFactory {
         getName: () => undefined,
         getRequest: <Request>() => req as Request,
         getResponse: <Response>() => res as Response,
+        getContext: () => undefined,
         getDecoratorType: () => "query",
         getHttpMethod: () => convertUppercase(req.method as NUpperCaseHttpMethod),
       });
@@ -40,11 +35,13 @@ export class ExpressFactory extends NailyWebFactory {
         getName: () => undefined,
         getRequest: <Request>() => req as Request,
         getResponse: <Response>() => res as Response,
+        getContext: () => undefined,
         getDecoratorType: () => "body",
         getHttpMethod: () => convertUppercase(req.method as NUpperCaseHttpMethod),
       });
       next();
     });
+    return this;
   }
 
   public listen(callBack?: (port: number) => void) {
