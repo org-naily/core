@@ -1,0 +1,96 @@
+{
+  "title": "Naily Backend package Mapper",
+  "required": ["root"],
+  "properties": {
+    "root": {
+      "type": "array",
+      "items": {
+        "required": ["token", "controllerPaths", "mapper"],
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "The unique token for a Injectable"
+          },
+          "controllerPaths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "mapper": {
+            "type": "array",
+            "required": ["propertyKey", "returnType", "methods", "paramMapper"],
+            "items": {
+              "properties": {
+                "propertyKey": {
+                  "type": "string"
+                },
+                "returnType": {
+                  "description": "The type of the property"
+                },
+                "methods": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["method", "path"],
+                    "properties": {
+                      "method": {
+                        "type": "string",
+                        "enum": ["get", "post", "put", "delete", "patch", "options", "head", "all", "trace"]
+                      },
+                      "path": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "paramMapper": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["type", "descoratorType"],
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "required": ["type", "descoratorType"],
+                        "properties": {
+                          "type": {
+                            "description": "The type of the parameter"
+                          },
+                          "decoratorType": {
+                            "type": "string",
+                            "enum": ["body", "query", "params"]
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "pipes": {
+                            "type": "array",
+                            "description": "The pipes to be applied to the parameter"
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "required": ["type", "descoratorType"],
+                        "properties": {
+                          "type": {
+                            "description": "The type of the parameter"
+                          },
+                          "decoratorType": {
+                            "type": "string",
+                            "enum": ["request", "response", "next", "headers", "cookies", "other"]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

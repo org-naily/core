@@ -1,0 +1,11 @@
+import { NailyWebWatermark } from "@/constants";
+import { Configuration, Type } from "@naily/core";
+
+export function Controller(path: string = "/") {
+  return (target: Type) => {
+    const oldMetadata: string[] = Reflect.getMetadata(NailyWebWatermark.CONTROLLER, target) || [];
+    oldMetadata.push(path);
+    Reflect.defineMetadata(NailyWebWatermark.CONTROLLER, oldMetadata, target);
+    Configuration()(target);
+  };
+}

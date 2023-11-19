@@ -1,0 +1,22 @@
+{
+  "$schema": "./mapper.schema.json",
+  "root": [
+    {
+      "token": "AppService",
+      "controllerPaths": ["/"],
+      "mapper": [
+        {
+          "propertyKey": "getHello",
+          "returnType": "",
+          "methods": [
+            {
+              "method": "get",
+              "path": "/"
+            }
+          ],
+          "paramMapper": []
+        }
+      ]
+    }
+  ]
+}

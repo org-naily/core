@@ -1,0 +1,36 @@
+{
+  "name": "@naily/backend-express",
+  "version": "0.0.1",
+  "description": "Naily Backend Express Adapter",
+  "main": "dist/cjs/index.js",
+  "types": "dist/cjs/index.d.ts",
+  "scripts": {
+    "dev": "father dev",
+    "build": "father build",
+    "build:deps": "father prebundle",
+    "prepublishOnly": "father doctor && npm run build"
+  },
+  "keywords": [],
+  "authors": [
+    "Zero <gczgroup@qq.com>"
+  ],
+  "license": "MIT",
+  "files": [
+    "dist",
+    "compiled"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@naily/core": "workspace:*",
+    "@naily/backend": "workspace:*",
+    "express": "^4.18.2",
+    "@types/express": "^4.17.21",
+    "cookie-parser": "^1.4.6",
+    "@types/cookie-parser": "^1.4.6"
+  },
+  "devDependencies": {
+    "@types/express-serve-static-core": "^4.17.41"
+  }
+}

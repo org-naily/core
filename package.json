@@ -1,0 +1,25 @@
+{
+  "name": "v21",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:core": "pnpm -F @naily/core build",
+    "build:backend": "pnpm -F @naily/backend build",
+    "build:express": "pnpm -F @naily/backend-express build",
+    "dev": "pnpm -F test dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^20.9.1",
+    "reflect-metadata": "^0.1.13",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.53.0",
+    "prettier": "^3.1.0",
+    "father": "^4.3.7"
+  }
+}

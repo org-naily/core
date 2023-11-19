@@ -1,0 +1,11 @@
+{
+  "name": "test",
+  "scripts": {
+    "dev": "tsc && node dist/main"
+  },
+  "dependencies": {
+    "@naily/core": "workspace:*",
+    "@naily/backend": "workspace:*",
+    "@naily/backend-express": "workspace:*"
+  }
+}
