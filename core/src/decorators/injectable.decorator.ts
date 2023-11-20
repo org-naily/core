@@ -25,12 +25,12 @@ export function Configuration(injectableOptions: Partial<NIOC.InjectableOptions>
   };
 }
 
-export function Component(componentOptions: Partial<NIOC.ComponentOptions> = { Imports: [], Exports: [], Providers: [] }) {
+export function Component<T>(componentOptions: Partial<NIOC.ComponentOptions> = { Imports: [], Exports: [], Providers: [] }) {
   if (!componentOptions.Providers) componentOptions.Providers = [];
   if (!componentOptions.Imports) componentOptions.Imports = [];
   if (!componentOptions.Exports) componentOptions.Exports = [];
 
-  return (target: Type) => {
+  return (target: Type<T>) => {
     Reflect.defineMetadata(
       NailyWatermark.COMPONENT,
       { Imports: componentOptions.Imports, Exports: componentOptions.Exports, Providers: componentOptions.Providers },

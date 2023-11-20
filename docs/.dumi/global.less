@@ -1,0 +1,71 @@
+* {
+  font-family:
+    "HarmonyOS Sans",
+    "Segoe UI",
+    "SF Pro Display",
+    -apple-system,
+    BlinkMacSystemFont,
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif,
+    "HarmonyOS Sans SC",
+    "PingFang SC",
+    "Hiragino Sans GB",
+    "Microsoft Yahei UI",
+    "Microsoft Yahei",
+    "Source Han Sans CN",
+    sans-serif,
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Apple Color Emoji",
+    "Twemoji Mozilla",
+    "Noto Color Emoji",
+    "Android Emoji";
+}
+
+@media screen and (min-width: 768px) {
+  .dumi-default-features {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .dumi-default-features-item {
+    background-color: #3f567d1c;
+    padding: 9px 20px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 10px !important;
+    position: relative;
+    width: calc(25% - 62px) !important;
+    border: 1px solid #fff0;
+    transition: ease 0.2s;
+
+    &:hover {
+      border: 1px solid #0053c8;
+      transition: ease 0.2s;
+    }
+
+    i {
+      font-size: 34px !important;
+    }
+
+    h3 {
+      font-size: 18px !important;
+      font-weight: bold !important;
+    }
+
+    p {
+      font-size: 14px !important;
+    }
+  }
+
+  .dumi-default-navbar > li > .dumi-default-navbar-dropdown {
+    min-width: calc(100% + 50px) !important;
+    margin-top: 10px !important;
+  }
+}

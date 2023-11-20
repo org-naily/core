@@ -1,0 +1,18 @@
+{
+  "name": "docs",
+  "version": "0.21.2",
+  "description": "Progressive fullstack web framework for Node.js",
+  "private": true,
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "dumi dev",
+    "build": "dumi build"
+  },
+  "authors": [
+    "Zero <gczgroup@qq.com>"
+  ],
+  "devDependencies": {
+    "dumi": "^2.2.13",
+    "husky": "^8.0.1"
+  }
+}

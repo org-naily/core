@@ -1,4 +1,5 @@
 packages:
   - core
   - test
+  - docs
   - packages/*

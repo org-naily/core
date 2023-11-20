@@ -1,6 +1,7 @@
 {
   "name": "test",
   "private": true,
+  "version": "0.21.2",
   "scripts": {
     "dev": "tsc && node dist/main"
   },
@@ -15,6 +16,5 @@
     "@types/koa": "^2.13.11",
     "koa-response-time": "^2.1.0",
     "@types/koa-response-time": "^2.1.5"
-  },
-  "version": null
+  }
 }

@@ -1,7 +1,7 @@
 import { Autowired, Component, Injectable } from "@org-naily/core";
 import { Catch, Controller, Get, NFilter, NPipe, Query, UseFilter } from "@org-naily/backend";
 import { KoaFactory } from "@org-naily/backend-koa";
-import Time from "koa-response-time"
+import Time from "koa-response-time";
 import { Context } from "koa";
 
 @Catch()
@@ -17,7 +17,7 @@ export class TestFilter implements NPipe, NFilter {
 
   catch(error: Error, host: NFilter.Host): void | Promise<void> {
     console.log("error");
-    host.getContext<Context>().body = "error"
+    host.getContext<Context>().body = "error";
   }
 
   beforeExecute(host: NFilter.Host): void | Promise<void> {
@@ -41,7 +41,7 @@ export class AppController {
   @Get()
   @UseFilter(TestFilter)
   public getHello(@Query("name", TestFilter) name: string) {
-    return this.testFilter.getHello()
+    return this.testFilter.getHello();
   }
 }
 
