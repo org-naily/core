@@ -1,6 +1,6 @@
 import { NPipe, NUpperCaseHttpMethod, NailyWebConfiguration, NailyWebFactory, convertUppercase } from "@org-naily/backend";
 import { Injectable, NailyFactory, Type, Value } from "@org-naily/core";
-import Koa, { Context, Next } from "koa";
+import Koa, { Context, Middleware, Next } from "koa";
 import Router from "koa-router";
 import { koaBody } from "koa-body";
 import { NailyKoaAnalyser } from "./analyser.class";
@@ -13,15 +13,14 @@ export class KoaFactory extends NailyWebFactory {
   constructor(protected readonly configuration: Partial<NailyWebConfiguration> = { EnableComponent: true }) {
     super(configuration);
     this.app.use(koaBody());
-    this.app.use(this.router.routes()).use(this.router.allowedMethods());
   }
 
-  use(handler: (ctx: Context, next: Next) => any): this {
+  public use(handler: Middleware): this {
     this.app.use(handler);
     return this;
   }
 
-  useGlobalPipe(pipe: Type<NPipe>): this {
+  public useGlobalPipe(pipe: Type<NPipe>): this {
     this.app.use((ctx, next) => {
       const instance = new NailyFactory(pipe).getInstance();
       instance.transform(ctx.params, {
@@ -53,8 +52,9 @@ export class KoaFactory extends NailyWebFactory {
     return this;
   }
 
-  listen(callBack: (port: number) => any) {
+  public listen(callBack: (port: number) => any) {
     new NailyKoaAnalyser(KoaFactory.mapper, this.router);
+    this.app.use(this.router.routes()).use(this.router.allowedMethods());
     return this.app.listen(this.port, () => (callBack ? callBack(this.port) : void 0));
   }
 }

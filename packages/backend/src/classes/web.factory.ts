@@ -52,9 +52,9 @@ export abstract class NailyWebFactory extends NailyBaseFactory {
     }
   }
 
-  abstract use(handler: Function): this;
+  public abstract use(handler: Function): this;
 
-  abstract useGlobalPipe(pipe: Type<NPipe>): this;
+  public abstract useGlobalPipe(pipe: Type<NPipe>): this;
 
-  abstract listen(callBack: (port: number) => any): any;
+  public abstract listen(callBack: (port: number) => any): any;
 }

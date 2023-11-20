@@ -1,9 +1,11 @@
 import { Autowired, Component, Injectable } from "@org-naily/core";
-import { Controller, Get, NFilter, NPipe, Query, UseFilter } from "@org-naily/backend";
+import { Catch, Controller, Get, NFilter, NPipe, Query, UseFilter } from "@org-naily/backend";
 import { KoaFactory } from "@org-naily/backend-koa";
+import Time from "koa-response-time"
+import { Context } from "koa";
 
-@Injectable()
-export class TestService implements NPipe, NFilter {
+@Catch()
+export class TestFilter implements NPipe, NFilter {
   getHello() {
     return "hello world";
   }
@@ -15,7 +17,7 @@ export class TestService implements NPipe, NFilter {
 
   catch(error: Error, host: NFilter.Host): void | Promise<void> {
     console.log("error");
-    host.getResponse().send(error.message);
+    host.getContext<Context>().body = "error"
   }
 
   beforeExecute(host: NFilter.Host): void | Promise<void> {
@@ -34,19 +36,18 @@ export class TestService implements NPipe, NFilter {
 @Controller()
 export class AppController {
   @Autowired
-  private readonly testService: TestService;
+  private readonly testFilter: TestFilter;
 
   @Get()
-  @UseFilter(TestService)
-  public getHello(@Query("name", TestService) name: string) {
-    console.log("controller");
-    return "Hello world";
+  @UseFilter(TestFilter)
+  public getHello(@Query("name", TestFilter) name: string) {
+    return this.testFilter.getHello()
   }
 }
 
 @Component({
-  Providers: [TestService],
-  Exports: [TestService],
+  Providers: [TestFilter],
+  Exports: [TestFilter],
 })
 export class AppComponent {}
 
@@ -56,6 +57,14 @@ export class AppComponent {}
 })
 export class TestComponent {}
 
-new KoaFactory().listen((port) => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+new KoaFactory()
+  .use(Time())
+  .use(async (ctx, next) => {
+    const start = Date.now();
+    await next();
+    const ms = Date.now() - start;
+    console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
+  })
+  .listen((port) => {
+    console.log(`Server is running on http://localhost:${port}`);
+  });
