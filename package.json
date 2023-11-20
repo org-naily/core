@@ -1,6 +1,6 @@
 {
   "name": "v21",
-  "version": "0.21.0",
+  "version": "0.21.1",
   "scripts": {
     "build": "sh ./bin/build.sh",
     "build:core": "pnpm -F @org-naily/core build",
@@ -8,17 +8,18 @@
     "build:express": "pnpm -F @org-naily/backend-express build",
     "build:koa": "pnpm -F @org-naily/backend-koa build",
     "dev": "pnpm -F test dev",
-    "pub": "sh ./bin/publish.sh"
+    "version-packages": "changeset version"
   },
   "dependencies": {
+    "@babel/runtime": "^7.23.2",
     "@types/node": "^20.9.1",
     "reflect-metadata": "^0.1.13",
-    "typescript": "^5.2.2",
-    "@babel/runtime": "^7.23.2"
+    "typescript": "^5.2.2"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.26.2",
     "eslint": "^8.53.0",
-    "prettier": "^3.1.0",
-    "father": "^4.3.7"
+    "father": "^4.3.7",
+    "prettier": "^3.1.0"
   }
 }

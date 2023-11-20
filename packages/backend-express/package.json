@@ -1,6 +1,6 @@
 {
   "name": "@org-naily/backend-express",
-  "version": "0.21.1",
+  "version": "0.21.2",
   "description": "Naily Backend Express Adapter",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -15,7 +15,17 @@
     "url": "https://github.com/org-naily/core.git"
   },
   "homepage": "https://github.com/org-naily/core.git",
-  "keywords": ["naily", "nestjs", "midway", "malagu", "backend", "frontend", "koa", "express", "web"],
+  "keywords": [
+    "naily",
+    "nestjs",
+    "midway",
+    "malagu",
+    "backend",
+    "frontend",
+    "koa",
+    "express",
+    "web"
+  ],
   "authors": [
     "Zero <gczgroup@qq.com>"
   ],

@@ -7,15 +7,14 @@
   "dependencies": {
     "@org-naily/core": "workspace:*",
     "@org-naily/backend": "workspace:*",
-
     "@org-naily/backend-express": "workspace:*",
     "express": "^4.18.2",
     "@types/express": "^4.17.21",
-
     "@org-naily/backend-koa": "workspace:*",
     "koa": "^2.14.2",
     "@types/koa": "^2.13.11",
     "koa-response-time": "^2.1.0",
     "@types/koa-response-time": "^2.1.5"
-  }
+  },
+  "version": null
 }
