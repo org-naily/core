@@ -1,0 +1,24 @@
+{
+  "name": "@org-naily/core",
+  "version": "0.26.0",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "types": "lib/types/index.d.ts",
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json && rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
+    "prepare": "npm run build"
+  },
+  "files": [
+    "lib",
+    "bin"
+  ],
+  "dependencies": {
+    "@types/jexl": "^2.3.4",
+    "@types/md5": "^2.3.5",
+    "is-class": "^0.0.9",
+    "jexl": "^2.3.0",
+    "md5": "^2.3.0",
+    "synchronized-promise": "^0.3.1",
+    "yaml": "^2.3.4"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "target": "ES2021",
+    "moduleResolution": "Node",
+    "module": "ES6"
+  },
+  "include": ["src/**/*", "rollup.config.ts"]
+}

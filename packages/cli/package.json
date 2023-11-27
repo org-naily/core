@@ -1,0 +1,32 @@
+{
+  "name": "@org-naily/cli",
+  "version": "0.26.0",
+  "bin": {
+    "naily": "./bin/naily"
+  },
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/types/index.d.ts",
+  "files": [
+    "lib",
+    "bin"
+  ],
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json && rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "commander": "^11.1.0",
+    "inquirer": "^8",
+    "glob": "^10.3.10",
+    "@types/glob": "^8.1.0",
+    "@org-naily/core": "workspace:*",
+    "rollup": "^4.6.0",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@org-naily/unplugin": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.7"
+  }
+}

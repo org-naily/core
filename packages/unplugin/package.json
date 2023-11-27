@@ -1,0 +1,23 @@
+{
+  "name": "@org-naily/unplugin",
+  "version": "0.26.0",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/types/index.d.ts",
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json && rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript"
+  },
+  "files": [
+    "lib",
+    "bin"
+  ],
+  "dependencies": {
+    "unplugin": "^1.5.1"
+  },
+  "devDependencies": {
+    "webpack": "^5.89.0",
+    "vite": "^5.0.2",
+    "esbuild": "^0.19.8",
+    "@rspack/core": "^0.4.0"
+  }
+}
