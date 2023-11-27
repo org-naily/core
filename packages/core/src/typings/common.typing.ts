@@ -19,6 +19,9 @@ declare global {
       Rebind: boolean;
     }
     export interface ConfigurationMetadata extends Omit<InjectableMeta, "Initialize"> {}
+    export interface ComponentMetadata extends Omit<InjectableMeta, "Initialize"> {
+      Providers: Type[];
+    }
 
     export interface ClassElementConfigure {
       isConfigure: boolean;
