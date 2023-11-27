@@ -1,6 +1,6 @@
 <div align="center">
 
-![Logo]("assets/logo.png")
+<img src="./logo.png" width="150" />
 
 # Naily
 
