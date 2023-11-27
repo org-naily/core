@@ -1,5 +1,7 @@
 <div align="center">
 
+![Logo]("assets/logo.png")
+
 # Naily
 
 A progressive enterprise web framework for TypeScript & Node.js.
