@@ -1,8 +1,9 @@
 export const enum NailyWatermark {
   INJECTABLE = "__injectable__",
+  COMPONENT = "__component__",
 }
 
 export const enum Scope {
-  SINGLETON = "singleton",
-  PROTOTYPE = "prototype",
+  SINGLETON = "__singleton__",
+  PROTOTYPE = "__prototype__",
 }
