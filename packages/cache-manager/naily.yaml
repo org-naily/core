@@ -1,4 +1,4 @@
 naily:
   cli:
     source: ./src
-    output: ./lib
+    output: "./lib"

@@ -1,12 +1,13 @@
+import { sync } from "glob";
 import { rollup } from "rollup";
-import typescript from "@rollup/plugin-typescript";
-import nodeResolve from "@rollup/plugin-node-resolve";
-import { Bean, Value } from "@org-naily/core";
 import { readFileSync } from "fs";
 import { extname, join, relative } from "path";
+import typescript from "@rollup/plugin-typescript";
+import nodeResolve from "@rollup/plugin-node-resolve";
 import { NailyRollupPlugin } from "@org-naily/unplugin";
-import { sync } from "glob";
+import { Bean, Service, Value } from "@org-naily/core";
 
+@Service
 export class BuildService {
   @Value("naily.cli.source")
   private readonly source: string;
@@ -14,7 +15,7 @@ export class BuildService {
   @Value("naily.cli.output")
   private readonly output: string;
 
-  constructor() {
+  validate() {
     if (!this.source) throw new Error(`naily.cli.source is required`);
     if ((!this.source.startsWith("./") || !this.source.startsWith("../")) && this.source.endsWith("/")) {
       throw new Error(`naily.cli.source must be a relative path`);
@@ -33,6 +34,7 @@ export class BuildService {
 
   @Bean()
   public async build() {
+    this.validate();
     const builder = await rollup({
       plugins: [nodeResolve(), typescript(), NailyRollupPlugin()],
       external: [...this.getExternal()],

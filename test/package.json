@@ -1,0 +1,12 @@
+{
+  "name": "test",
+  "scripts": {
+    "dev": "naily watch"
+  },
+  "dependencies": {
+    "@org-naily/core": "workspace:*",
+    "@org-naily/cli": "workspace:*",
+    "@org-naily/cache-manager": "workspace:*",
+    "@org-naily/class-validator": "workspace:*"
+  }
+}

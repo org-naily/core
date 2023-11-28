@@ -1,0 +1,9 @@
+{
+  "material-icon-theme.activeIconPack": "nest",
+  "material-icon-theme.files.associations": {},
+  "material-icon-theme.folders.associations": {
+    "cache-manager": "temp",
+    "unplugin": "plugin",
+    "class-validator": "rules"
+  }
+}

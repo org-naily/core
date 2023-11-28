@@ -1,11 +1,13 @@
-import { Bean } from "@org-naily/core";
+import { Bean, Injectable } from "@org-naily/core";
 import inquirer from "inquirer";
 
 interface PromptValue {
   name: string;
+  type: "standard" | "library";
   dependencies: string[];
 }
 
+@Injectable
 export class CreateService {
   @Bean()
   public async newProject() {
@@ -102,6 +104,5 @@ export class CreateService {
         ],
       },
     ]);
-    console.log(value);
   }
 }

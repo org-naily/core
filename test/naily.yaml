@@ -1,4 +1,3 @@
 naily:
   cli:
     source: ./src
-    output: ./lib

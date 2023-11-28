@@ -1,0 +1,19 @@
+{
+  "name": "@org-naily/cache-manager",
+  "version": "0.26.0",
+  "description": "Cache manager support for Naily",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "types": "lib/types/index.d.ts",
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json && naily build"
+  },
+  "dependencies": {
+    "@org-naily/core": "workspace:*",
+    "@org-naily/class-validator": "workspace:*",
+    "cache-manager-ioredis-yet": "^1.2.2",
+    "ioredis": "^5.3.2",
+    "cache-manager": "^5.3.1",
+    "synchronized-promise": "^0.3.1"
+  }
+}
